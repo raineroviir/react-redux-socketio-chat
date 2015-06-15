@@ -1,8 +1,8 @@
 'use strict';
 
 var React = require('react');
-var createUsr = require('./create_user.jsx');
-var login = require('./log_in.jsx');
+var createUsr = require('./create_usr.jsx');
+var login = require('./login.jsx');
 
 var WelcomePage = React.createClass({
   render: function() {
