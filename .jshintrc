@@ -1,0 +1,13 @@
+{
+  "node": true,
+  "mocha": true,
+  "indent": true,
+  "globals": {
+    "describe": true,
+    "it": true,
+    "before": true,
+    "after": true,
+    "beforeEach": true,
+    "afterEach": true
+  }
+}
