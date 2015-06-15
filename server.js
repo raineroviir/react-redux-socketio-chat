@@ -8,7 +8,7 @@ var app      = express();
 // set environment var
 process.env.PORT = process.env.PORT || 3000;
 process.env.AUTH_SECRET = process.env.AUTH_SECRET || 'this is a temp AUTH_SECRET';
-process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/turtle_dev'
+process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/turtle_dev';
 
 // connect mongoose
 mongoose.connect(process.env.MONGOLAB_URI);
