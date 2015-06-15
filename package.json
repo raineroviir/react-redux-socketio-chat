@@ -20,10 +20,12 @@
   },
   "homepage": "https://github.com/dwolfm/turtle",
   "devDependencies": {
+    "eslint": "^0.23.0",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-eslint": "^15.0.0",
     "grunt-nodemon": "^0.4.0",
     "grunt-simple-mocha": "^0.4.0",
     "grunt-webpack": "^1.0.8",
