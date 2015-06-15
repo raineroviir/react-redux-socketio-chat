@@ -1,8 +1,9 @@
 'use strict';
 
 module.exports = function(grunt) {
-  var serverFiles = ['lib/**/*.js', 'tests/srv/**/*.js', 'models/**/*.js', 'routes/**/*.js', '*.js', 'app/**/*.js'];
+  var serverFiles = ['lib/**/*.js', 'tests/srv/**/*.js', 'models/**/*.js', 'routes/**/*.js', '*.js'];
 
+ 	var clientFiles = ['app/**/*.js', 'app/**/*.jsx','app/app.jsx', 'app/index.html']
   // load npm tasks
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -10,14 +11,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-webpack');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-eslint');
+  grunt.loadNpmTasks('grunt-jsxhint');
 
   // configure tasks
   grunt.initConfig({
-  	eslint: {
-        target: ['app/**/*.jsx','app/app.jsx']
-    },
-
     webpack: {
       client: {
         entry: __dirname + '/app/app.jsx',
@@ -58,6 +55,19 @@ module.exports = function(grunt) {
         options: {
           jshintrc: true
         }
+      },
+      client: {
+      	files: {
+      		src: clientFiles
+      	},
+      	options: {
+      		"globals": {
+	          "require": true,
+	          "window": true,
+	          "module": true,
+	          "document": true
+          }
+        }
       }
     },
 
@@ -83,7 +93,7 @@ module.exports = function(grunt) {
         }
       },
       build_client: {
-      	files: [serverFiles, 'app/**/*.jsx', 'app/app.jsx', 'app/index.html'],
+      	files: [clientFiles, 'Gruntfile.js'],
       	tasks: ['client'],
       	options: {
           spawn: false
