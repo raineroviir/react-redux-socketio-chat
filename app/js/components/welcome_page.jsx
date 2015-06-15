@@ -1,8 +1,6 @@
 'use strict';
 
 var React = require('react');
-var createUsr = require('./create_user.jsx');
-var login = require('./log_in.jsx');
 
 var WelcomePage = React.createClass({
   render: function() {
@@ -15,4 +13,4 @@ var WelcomePage = React.createClass({
   }
 });
 
-module.exports = WelcomePage;
+module.export = WelcomePage;
