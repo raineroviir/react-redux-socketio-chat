@@ -113,5 +113,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['simplemocha:dev']);
   grunt.registerTask('default', ['lint', 'test']);
   grunt.registerTask('client', ['build:dev']);
-  grunt.registerTask('build:dev', ['webpack:client', 'copy:html']);
+  grunt.registerTask('build', ['webpack:client', 'copy:html']);
 };

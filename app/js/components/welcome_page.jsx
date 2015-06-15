@@ -2,7 +2,6 @@
 
 var React = require('react');
 var Router = require('react-router');
-var
 var createUsr = require('./create_usr.jsx');
 var login = require('./login.jsx');
 
