@@ -1,0 +1,34 @@
+{
+  "name": "turtle",
+  "version": "0.1.0",
+  "description": "a simple social media platform focused on privacy",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dwolfm/turtle.git"
+  },
+  "author": "dwolfm@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dwolfm/turtle/issues"
+  },
+  "homepage": "https://github.com/dwolfm/turtle",
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-nodemon": "^0.4.0",
+    "grunt-simple-mocha": "^0.4.0"
+  },
+  "dependencies": {
+    "express": "^4.12.4",
+    "mongoose": "^4.0.5",
+    "passport": "^0.2.2",
+    "passport-http": "^0.2.2"
+  }
+}
