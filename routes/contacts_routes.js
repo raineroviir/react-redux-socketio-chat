@@ -34,3 +34,5 @@ module.exports = function (router) {
   });
 
 }
+
+};
