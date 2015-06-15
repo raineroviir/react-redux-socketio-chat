@@ -20,14 +20,17 @@ require('./lib/passport_strategy.js');
 // routers
 var usersRouter = express.Router();
 var authRouter = express.Router();
+var contactRouter = express.Router();
 
 // load routers
 require('./routes/user_routes.js')(usersRouter);
 require('./routes/auth_routes.js')(authRouter, passport);
+require('./routes/contacts_routes.js')(contactRouter);
 
 // assign base routes to routers
 app.use('/api', usersRouter);
 app.use('/api', authRouter);
+app.use('/api', contactRouter);
 
 // start server
 app.listen(process.env.PORT, function() {
