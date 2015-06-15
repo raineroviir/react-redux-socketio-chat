@@ -1,0 +1,5 @@
+**/node_modules/
+**/*.sw*
+**/db/**/*
+.env
+npm-debug.log
