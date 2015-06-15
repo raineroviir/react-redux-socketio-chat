@@ -32,6 +32,9 @@ app.use('/api', usersRouter);
 app.use('/api', authRouter);
 app.use('/api', contactRouter);
 
+//load our build
+app.use(express.static(__dirname + '/build'));
+
 // start server
 app.listen(process.env.PORT, function() {
   console.log('server running on port: ' + process.env.PORT );
