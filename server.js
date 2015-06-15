@@ -29,6 +29,9 @@ require('./routes/auth_routes.js')(authRouter, passport);
 app.use('/api', usersRouter);
 app.use('/api', authRouter);
 
+//load our build
+app.use(express.static(__dirname + '/build'));
+
 // start server
 app.listen(process.env.PORT, function() {
   console.log('server running on port: ' + process.env.PORT );
