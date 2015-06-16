@@ -1,63 +1,38 @@
-'use strict';
-
-var React = require('react');
-
-var create_user = require('./js/components/create_user.jsx');
-var log_in = require('./js/components/log_in.jsx');
-var WelcomePage = require('./js/components/welcome_page.jsx');
-var Router = require('react-router');
-var Route = Router.Route;
-var RouteHandler = Router.RouteHandler;
-
-var About = React.createClass({
-  render: function () {
-    return <h2>About</h2>;
-  }
-});
-
-var Inbox = React.createClass({
-  render: function () {
-    return <h2>Inbox</h2>;
-  }
-});
-
-var Home = React.createClass({
-  render: function () {
-    return <h2>Home</h2>;
-  }
-});
+import React from 'react/addons';
+import dashboard from './js/components/dashboard.jsx';
+import create_user from './js/components/create_user.jsx';
+import log_in from './js/components/log_in.jsx';
+import Router, { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
 
 var App = React.createClass({
-  render () {
+  render() {
     return (
       <div>
-        <h1>App</h1>
+        <h1>Turtle App</h1>
+          <ul>
+          <li>
+            <Link to="/log_in">Login</Link>
+          </li>
+          <li>
+            <Link to="/create_user">Create User</Link>
+          </li>
+          </ul>
         <RouteHandler/>
       </div>
     )
   }
 });
 
-
-
 // declare our routes and their hierarchy
 
 var routes = (
   <Route handler={App}>
-    <Route path="about" handler={About}/>
-    <Route path="inbox" handler={Inbox}/>
+    <Route path="/log_in" handler={log_in}/>
+    <Route path="/create_user" handler={create_user}/>
+    <Route path="/dashboard" handler={dashboard}/>
   </Route>
 );
 
 Router.run(routes, Router.HashLocation, (Root) => {
-  React.render(<Root/>, document.body);
+  React.render(<Root />, document.body);
 });
-
-// function render () {
-//   var route = window.location.hash.substr(1);
-//   React.render(<App route={route} />, document.body);
-// }
-
-// window.addEventListener('hashchange', render);
-// render(); // render initially
-

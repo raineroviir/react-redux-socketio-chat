@@ -1,6 +1,6 @@
 import React from 'react/addons';
 import ReactMixin from 'react-mixin';
-import Auth from '../services/AuthService';
+// import Auth from '../services/AuthService';
 
 export default class CreateUser extends React.Component {
 
@@ -15,7 +15,7 @@ export default class CreateUser extends React.Component {
 
   createUser(e) {
     e.preventDefault();
-    Auth.createUser(this.state.user, this.state.password, this.state.email);
+    Auth.createUser(this.state.user, this.state.password, this.state.email)
       .catch(function(err) {
         alert('There was an error creating a user');
         console.log('Error when creating user: ' + err);
