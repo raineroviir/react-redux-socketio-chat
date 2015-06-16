@@ -119,6 +119,6 @@ module.exports = function(grunt) {
   grunt.registerTask('lint', ['jshint:server:files']);
   grunt.registerTask('test', ['simplemocha:dev']);
   grunt.registerTask('default', ['lint', 'test']);
-  grunt.registerTask('client', ['build:dev']);
+  grunt.registerTask('client', ['build']);
   grunt.registerTask('build', ['webpack:client', 'copy:html']);
 };
