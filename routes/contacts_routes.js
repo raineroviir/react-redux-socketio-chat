@@ -27,7 +27,7 @@ module.exports = function (router) {
       if (err) {
         console.log(err);
       }
-      res.json(data);
+      res.json({msg: 'contact added'});
     });
 
   });
@@ -42,7 +42,7 @@ module.exports = function (router) {
       if (err) {
         console.log(err);
       }
-      res.json(data);
+      res.json({msg: 'contact removed'});
     });
 
   });
