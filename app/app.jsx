@@ -2,6 +2,10 @@
 
 var React = require('react');
 
+var createUsr = require('./js/components/create_user.jsx');
+var logIn = require('./js/components/log_in.jsx');
+
+
 var WelcomePage = require('./js/components/welcome_page.jsx');
 var Router = require('react-router');
 var Route = Router.Route;
@@ -35,6 +39,8 @@ var App = React.createClass({
     )
   }
 });
+
+
 
 // declare our routes and their hierarchy
 

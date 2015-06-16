@@ -14,4 +14,4 @@ var WelcomePage = React.createClass({
   }
 });
 
-module.exports = WelcomePage;
+module.export = WelcomePage;
