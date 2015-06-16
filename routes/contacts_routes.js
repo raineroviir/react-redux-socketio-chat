@@ -19,20 +19,32 @@ module.exports = function (router) {
   });
 
   // create temporary route to make test contact list
-  router.post('/contacts/makelist', function (req, res) {
-    var newContactList = new ContactList(req.body);
+  router.post('/contacts/:ownerId', function (req, res) {
 
-    newContactList.save(function (err, data) {
+    var dynSet = {$set: {}};
+    dynSet.$set["friends." + req.body._id] = req.body.friend;
+    ContactList.update({listOwnerId: req.params.ownerId}, dynSet, {safe: true, upsert: true}, function (err, data) {
       if (err) {
         console.log(err);
-        res.status(500).json({msg: 'internal server error'});
       }
-      // display saved data
       res.json(data);
     });
 
   });
 
-}
+  router.delete('/contacts/:ownerId', function (req, res) {
+
+    var dynSet = {$set: {}};
+    var key = 'friends.' + req.body._id;
+    var delobj = {};
+    delobj[key] = '';
+    ContactList.update({listOwnerId: req.params.ownerId}, {$unset: delobj} , null , function (err, data) {
+      if (err) {
+        console.log(err);
+      }
+      res.json(data);
+    });
+
+  });
 
 };
