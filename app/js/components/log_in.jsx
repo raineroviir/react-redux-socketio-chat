@@ -1,6 +1,6 @@
 import React from 'react/addons';
 import ReactMixin from 'react-mixin';
-import Auth from '../services/AuthService';
+// import Auth from '../services/AuthService';
 
 export default class Login extends React.Component {
 
