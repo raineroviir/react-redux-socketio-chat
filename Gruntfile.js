@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(grunt) {
-  var serverFiles = ['lib/**/*.js', 'tests/srv/**/*.js', 'models/**/*.js', 'routes/**/*.js', '*.js', 'app/**/*.js', 'app/**/*.jsx', 'app/app.jsx', 'app/index.html'];
+  var serverFiles = ['lib/**/*.js', 'test/srv/**/*.js', 'models/**/*.js', 'routes/**/*.js', '*.js', 'app/**/*.js', 'app/**/*.jsx', 'app/app.jsx', 'app/index.html'];
 
   // load npm tasks
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -58,12 +58,12 @@ module.exports = function(grunt) {
 
     simplemocha: {
       dev: {
-        src:['test/**/*.js']
+        src:['test/*.js']
       },
       options: {
         globals: ['should'],
         timeout: 3000,
-        ignoreLeaks: false,
+        ignoreLeaks: true,
         ul: 'bdd',
         reporter: 'tap'
       }
