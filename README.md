@@ -23,19 +23,19 @@ come by. Turtle celebrates conversaions in the present. Turtle is simply text ch
 ## API docks
 ## User Routes
 #### Create 
-* **POST /api/users**
+* **POST /api/users**  
  * **Post Body:** ```{email: [unique email], username: [unique username], password: [passwd]}```
-  * **Response** 
+ * **Response** 
    * **Success:** ```{sucess: true:, usernamePass: true, emailPass: true, passwordPass: true}```
-   * **Failure:** ```{sucess: false:, usernamePass: [false if not unique], emailPass: [false if not unique], passwordPass: [false if empty]}```
+    * **Failure:** ```{sucess: false:, usernamePass: [false if not unique], emailPass: [false if not unique], passwordPass: [false if empty]}```
 
 #### Login
 * **GET /api/login**
-* **Header**
-* **Auth: ** ```email:password``` 
-* **Response**
-* **Success:** ``` {success: true, eat: eat} ``` 
-* **Failure:** ``` {success: false, msg: 'error logging in'}``` 
+ * **Header**
+   * **Auth:**  ```email:password``` 
+ * **Response**
+   * **Success:** ``` {success: true, eat: eat} ``` 
+    * **Failure:** ``` {success: false, msg: 'error logging in'}``` 
 
 ## Contacts List Routes
 #### Friend Request
