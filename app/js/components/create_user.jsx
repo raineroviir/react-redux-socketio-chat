@@ -29,15 +29,15 @@ export default class CreateUser extends React.Component {
           <form>
           <div>
             <label htmlFor="username">Username</label>
-            <input type="text" value="" name="username" placeholder="Please enter desired username"/>
+            <input type="text" valueLink={this.linkState('user')} name="username" placeholder="Please enter desired username"/>
           </div>
           <div>
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" placeholder="Please enter your password here"/>
+            <input type="password" valueLink={this.linkState('password')} name="password" placeholder="Please enter your password here"/>
           </div>
           <div>
             <label htmlFor="email">Email</label>
-            <input type="text" value="" name="email" placeholder="Please enter your email here"/>
+            <input type="text" valueLink={this.linkState('email')} name="email" placeholder="Please enter your email here"/>
           </div>
           </form>
           <button type="submit"value="Sign up">Create User</button>
