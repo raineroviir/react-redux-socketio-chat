@@ -8,7 +8,7 @@ var App = React.createClass({
   render() {
     return (
       <div>
-        <h1>Turtle App</h1>
+        <h1>TURTLE</h1>
           <ul>
           <li>
             <Link to="/log_in">Login</Link>
