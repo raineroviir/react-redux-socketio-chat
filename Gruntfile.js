@@ -81,12 +81,12 @@ module.exports = function(grunt) {
 
     simplemocha: {
       dev: {
-        src:['test/**/*.js']
+        src:['test/*.js']
       },
       options: {
         globals: ['should'],
         timeout: 3000,
-        ignoreLeaks: false,
+        ignoreLeaks: true,
         ul: 'bdd',
         reporter: 'tap'
       }

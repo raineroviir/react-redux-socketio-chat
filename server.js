@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGOLAB_URI);
 
 // init passport strat
 app.use(passport.initialize());
-require('./lib/passport_strategy.js');
+require('./lib/passport_strategy.js')(passport);;
 
 // routers
 var usersRouter = express.Router();
