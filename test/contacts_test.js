@@ -35,8 +35,9 @@ describe('Test Contact List Requests', function () {
   });
 
   // test for making test contact list
-  it('Should create a test contact list beforeEach test', function () {
+  it('Should create a test contact list beforeEach test', function (done) {
     expect(this.testContactList.listOwnerId.toString()).to.eql('557f896e8d8eec45fe3a0954');
+    done();
   });
 
 })

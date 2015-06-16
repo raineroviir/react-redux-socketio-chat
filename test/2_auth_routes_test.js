@@ -29,11 +29,8 @@ describe('Authentication', function() {
           });
         });
     });
-	
+
     after(function(done) {
-			User.remove({}, function(err, data){
-				done();	
-			});
       mongoose.connection.db.dropDatabase(function(){ done(); });
     });
 
