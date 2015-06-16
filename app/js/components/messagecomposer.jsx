@@ -1,7 +1,5 @@
-
 // var ChatMessageActionCreators = require('../actions/ChatMessageActionCreators');
 var React = require('react');
-
 var ENTER_KEY_CODE = 13;
 
 var MessageComposer = React.createClass({
@@ -21,8 +19,7 @@ var MessageComposer = React.createClass({
         name="message"
         value={this.state.text}
         onChange={this._onChange}
-        onKeyDown={this._onKeyDown}
-      />
+        onKeyDown={this._onKeyDown}/>
     );
   },
 
