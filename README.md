@@ -24,10 +24,10 @@ come by. Turtle celebrates conversaions in the present. Turtle is simply text ch
 ## User Routes
 #### Create 
 * **POST /api/users**
-* **Post Body:** ```{email: [unique email], username: [unique username], password: [passwd]}```
-* **Response** 
-* **Success:** ```{sucess: true:, usernamePass: true, emailPass: true, passwordPass: true}```
-* **Failure:** ```{sucess: false:, usernamePass: [false if not unique], emailPass: [false if not unique], passwordPass: [false if empty]}```
+ * **Post Body:** ```{email: [unique email], username: [unique username], password: [passwd]}```
+  * **Response** 
+   * **Success:** ```{sucess: true:, usernamePass: true, emailPass: true, passwordPass: true}```
+   * **Failure:** ```{sucess: false:, usernamePass: [false if not unique], emailPass: [false if not unique], passwordPass: [false if empty]}```
 
 #### Login
 * **GET /api/login**
