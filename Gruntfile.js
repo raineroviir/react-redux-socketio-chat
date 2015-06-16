@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(grunt) {
-  var serverFiles = ['lib/**/*.js', 'test/srv/**/*.js', 'models/**/*.js', 'routes/**/*.js', '*.js', 'app/**/*.js', 'app/**/*.jsx', 'app/app.jsx', 'app/index.html'];
+  var serverFiles = ['lib/**/*.js', 'tests/srv/**/*.js', 'models/**/*.js', 'routes/**/*.js', '*.js', 'app/**/*.js'];
 
   // load npm tasks
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -10,9 +10,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-webpack');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-eslint');
 
   // configure tasks
   grunt.initConfig({
+  	eslint: {
+        target: ['app/**/*.jsx','app/app.jsx']
+    },
+
     webpack: {
       client: {
         entry: __dirname + '/app/app.jsx',
@@ -72,9 +77,16 @@ module.exports = function(grunt) {
     watch: {
       lint: {
         files: serverFiles,
-        tasks: ['jshint:server:dev', 'build:dev'],
+        tasks: ['jshint:server:dev'],
           options: {
           spawn: false,
+        }
+      },
+      build_client: {
+      	files: [serverFiles, 'app/**/*.jsx', 'app/app.jsx', 'app/index.html'],
+      	tasks: ['client'],
+      	options: {
+          spawn: false
         }
       }
     },
@@ -89,6 +101,7 @@ module.exports = function(grunt) {
   // register custom task chains
   grunt.registerTask('lint', ['jshint:server:files']);
   grunt.registerTask('test', ['simplemocha:dev']);
-  grunt.registerTask('default', ['lint', 'test', 'build:dev']);
-  grunt.registerTask('build:dev', ['webpack:client', 'copy:html']);
+  grunt.registerTask('default', ['lint', 'test']);
+  grunt.registerTask('client', ['build:dev']);
+  grunt.registerTask('build', ['webpack:client', 'copy:html']);
 };
