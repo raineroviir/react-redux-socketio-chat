@@ -1,24 +1,59 @@
 'use strict';
 
 var React = require('react');
+
 var WelcomePage = require('./js/components/welcome_page.jsx');
-var createUsr = require('./js/components/create_usr.jsx');
-var login = require('./js/components/login.jsx');
+var Router = require('react-router');
+var Route = Router.Route;
+var RouteHandler = Router.RouteHandler;
 
-var ReactRouter = require('react-router');
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
+var About = React.createClass({
+  render: function () {
+    return <h2>About</h2>;
+  }
+});
 
-window.React = React; //react dev tools
+var Inbox = React.createClass({
+  render: function () {
+    return <h2>Inbox</h2>;
+  }
+});
+
+var Home = React.createClass({
+  render: function () {
+    return <h2>Home</h2>;
+  }
+});
+
+var App = React.createClass({
+  render () {
+    return (
+      <div>
+        <h1>App</h1>
+        <RouteHandler/>
+      </div>
+    )
+  }
+});
+
+// declare our routes and their hierarchy
 
 var routes = (
-  <Route handler={WelcomePage}>
-    <Route name="welcomepage" path="/" handler={WelcomePage} />
-    <Route name="login" path="/login" handler={login} />
+  <Route handler={App}>
+    <Route path="about" handler={About}/>
+    <Route path="inbox" handler={Inbox}/>
   </Route>
-)
+);
 
-
-Router.run(routes, function (Handler) {
-  React.render(<Handler />, document.getElementById('react'));
+Router.run(routes, Router.HashLocation, (Root) => {
+  React.render(<Root/>, document.body);
 });
+
+// function render () {
+//   var route = window.location.hash.substr(1);
+//   React.render(<App route={route} />, document.body);
+// }
+
+// window.addEventListener('hashchange', render);
+// render(); // render initially
+

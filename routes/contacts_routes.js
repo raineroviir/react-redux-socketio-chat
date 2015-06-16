@@ -33,6 +33,4 @@ module.exports = function (router) {
 
   });
 
-}
-
 };

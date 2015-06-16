@@ -23,10 +23,17 @@ module.exports = function(grunt) {
         file: 'bundle.js'
         },
         module: {
-          loaders: [{
+          loaders: [
+            {
             test: /\.jsx$/,
             loader: 'jsx-loader'
-            }]
+            },
+            {
+            test: /\.jsx?$/,
+            exclude: /(node_modules|bower_components)/,
+            loader: 'babel'
+            }
+          ]
         }
       }
     },
