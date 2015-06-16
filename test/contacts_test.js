@@ -51,6 +51,17 @@ describe('Test Contact List Requests', function () {
       expect(typeof(res.body)).to.eql('object');
       done();
     })
-  })
+  });
+
+  it('should add a new contact on POST request', function (done) {
+    chai.request('localhost:3000')
+    .post('/api/contacts/557f896e8d8eec45fe3a0954')
+    .send({_id: 'testId3', friend: {'testId3': 'test friend 3'}})
+    .end(function (err, res) {
+      expect(err).to.eql(null);
+      expect(res.body.ok).to.eql(1);
+      done();
+    });
+  });
 
 })
