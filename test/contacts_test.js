@@ -59,9 +59,20 @@ describe('Test Contact List Requests', function () {
     .send({_id: 'testId3', friend: {'testId3': 'test friend 3'}})
     .end(function (err, res) {
       expect(err).to.eql(null);
-      expect(res.body.ok).to.eql(1);
+      expect(res.body.msg).to.eql('contact added');
       done();
     });
   });
+
+  it('should delete a contact on DELETE request' , function (done) {
+    chai.request('localhost:3000')
+    .del('/api/contacts/557f896e8d8eec45fe3a0954')
+    .send({_id: 'testId1'})
+    .end(function (err, res) {
+      expect(err).to.eql(null);
+      expect(res.body.msg).to.eql('contact removed');
+      done();
+    })
+  })
 
 })
