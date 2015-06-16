@@ -24,6 +24,8 @@
     "babel-loader": "^5.1.4",
     "eslint": "^0.23.0",
     "grunt-babel": "^5.0.1",
+    "chai": "^3.0.0",
+    "chai-http": "^1.0.0",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-jshint": "^0.11.2",
@@ -36,6 +38,7 @@
     "jsx-loader": "^0.13.2",
     "react-tools": "^0.13.3",
     "superagent": "^1.2.0",
+    "mocha": "^2.2.5",
     "webpack": "^1.9.10",
     "webpack-dev-server": "^1.9.0"
   },
