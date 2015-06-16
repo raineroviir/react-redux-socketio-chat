@@ -3,7 +3,8 @@
 module.exports = function(grunt) {
   var serverFiles = ['lib/**/*.js', 'tests/srv/**/*.js', 'models/**/*.js', 'routes/**/*.js', '*.js'];
 
- 	var clientFiles = ['app/**/*.js', 'app/**/*.jsx','app/app.jsx', 'app/index.html']
+ 	var clientFiles = ['app/**/*.js', 'app/**/*.jsx','app/app.jsx', 'app/index.html'];
+
   // load npm tasks
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
