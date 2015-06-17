@@ -37,6 +37,7 @@ var FluxMixin = Fluxxor.FluxMixin(React);
 var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var App = React.createClass({
+
   mixins: [FluxMixin, StoreWatchMixin('UserStore')],
 
   getStateFromFlux: function() {

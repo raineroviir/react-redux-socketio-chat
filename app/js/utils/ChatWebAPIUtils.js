@@ -13,8 +13,22 @@ module.exports = {
     // simulate retrieving data from a database
     var rawMessages = JSON.parse(localStorage.getItem('messages'));
 
+    var serverReq =
+      request
+        .get('/api/messages/getmessages')
+        .end(function(err, res) {
+          if(err) {
+            return console.log(err);
+          }
+          var rawMessages = res.body;
+          console.log('server hit get');
+
+        }.bind(this));
+
+      ChatServerActionCreators.receiveAll(rawMessages);
+        console.log(serverReq);
     // simulate success callback
-    ChatServerActionCreators.receiveAll(rawMessages);
+
   },
 
   createMessage: function(message, threadName) {
@@ -47,15 +61,7 @@ module.exports = {
       console.log('server post msg hit');
     }.bind(this));
 
-    request
-    .get('/api/messages/getmessages')
-    .end(function(err, res) {
-      if(err) {
-        return console.log(err);
-      }
-      console.log(res.body);
-      console.log('server hit get');
-    }.bind(this));
+
 
     rawMessages.push(createdMessage);
     localStorage.setItem('messages', JSON.stringify(rawMessages));

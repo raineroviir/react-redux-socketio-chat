@@ -24,16 +24,4 @@ module.exports = {
     var message = ChatMessageUtils.getCreatedMessageData(text, currentThreadID, user);
     ChatWebAPIUtils.createMessage(message, user);
   }
-
-  // createThread: function(name) {
-  //   ChatAppDispatcher.dispatch({
-  //     type: ActionTypes.CREATE_THREAD,
-  //     name: name
-  //   });
-
-  //   var thread = ThreadUtils.getCreatedThreadData(name);
-  //   var timestamp = Date.now();
-  //   alert('create thread hit');
-  // }
-
 };
