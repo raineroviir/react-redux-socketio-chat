@@ -1,11 +1,13 @@
 var React = require('react');
-import TurtleStore from '../stores/TurtleStore';
+import MessageStore from '../stores/MessageStore';
+import ThreadStore from '../stores/ThreadStore';
 import MessageComposer from './MessageComposer.jsx';
 import MessageListItem from './MessageListItem.jsx';
 
 function getStateFromStores() {
   return {
-    messages: TurtleStore.getAllForThread()
+    messages: MessageStore.getAllForCurrentThread(),
+    thread: ThreadStore.getCurrent()
   };
 }
 
@@ -25,25 +27,36 @@ var MessageSection = React.createClass({
   },
 
   componentDidMount: function() {
-    TurtleStore.addChangeListener(this._onChange);
+    this._scrollToBottom();
+    MessageStore.addChangeListener(this._onChange);
+    ThreadStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
-    TurtleStore.removeChangeListener(this._onChange);
+    MessageStore.removeChangeListener(this._onChange);
+    ThreadStore.removeChangeListener(this._onChange);
   },
 
   render: function() {
-    console.log(this.state.messages);
     var messageListItems = this.state.messages.map(getMessageListItem);
     return (
       <div className="message-section">
-        <h3 className="message-thread-heading">Placeholder thread name</h3>
+        <h3 className="message-thread-heading">{this.state.thread.name}</h3>
         <ul className="message-list" ref="messageList">
           {messageListItems}
         </ul>
-        <MessageComposer />
+        <MessageComposer threadID={this.state.thread.id}/>
       </div>
-      )
+    )
+  },
+
+  componentDidUpdate: function() {
+    this._scrollToBottom();
+  },
+
+  _scrollToBottom: function() {
+    var ul = this.refs.messageList.getDOMNode();
+    ul.scrollTop = ul.scrollHeight;
   },
 
   _onChange: function() {
