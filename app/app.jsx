@@ -8,7 +8,7 @@ require("./css/chatapp.css");
 window.React = React;
 
 var App = React.createClass({
-  render() {
+  render: function() {
     return (
       <div>
         <h1>TURTLE</h1>

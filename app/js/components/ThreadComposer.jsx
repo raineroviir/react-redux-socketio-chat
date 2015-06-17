@@ -42,9 +42,9 @@ var ThreadComposer = React.createClass({
     event.preventDefault();
     var text = this.state.text.trim();
     var user = this.state.user.trim();
-    var threadName = user
+    var threadID = null;
     if (text && user) {
-      ChatThreadActionCreators.createMessage(text, threadName, user);
+      ChatThreadActionCreators.createMessage(text, threadID, user);
     }
     this.setState({text: '', user: ''});
 
