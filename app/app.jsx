@@ -7,34 +7,63 @@ require("./css/chatapp.css");
 
 window.React = React;
 
+var request = require('superagent');
+var constants = require('./js/constants/login_constants');
+var Fluxxor = require('fluxxor');
+var UserStore = require('./js/stores/user_stores');
+var Users = require('./js/components/users.jsx');
+
+var actions = {
+  login: function(user) {
+    this.dispatch(constants.LOGIN, user);
+  },
+
+  logout: function() {
+    this.dispatch(constants.LOGOUT);
+  },
+
+  createUser: function(user) {
+    this.dispatch(constants.CREATE_USER, user);
+  },
+};
+
+var stores = {
+  UserStore: new UserStore()
+};
+
+var flux = new Fluxxor.Flux(stores, actions);
+
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
 var App = React.createClass({
+
+  mixins: [FluxMixin, StoreWatchMixin('UserStore')],
+
+  getStateFromFlux: function() {
+    var flux = this.getFlux();
+    return {
+      userData: flux.store('UserStore').getState()
+    };
+  },
   render: function() {
     return (
-      <div>
-        <h1>TURTLE</h1>
-          <ul>
-          <li>
-            <Link to="/log_in">Login</Link>
-          </li>
-          <li>
-            <Link to="/create_user">Create User</Link>
-          </li>
-          </ul>
-        <RouteHandler/>
-      </div>
+      <main>
+      <h1>WADDUP TURTLE</h1>
+        <Users eat={this.state.userData.eat}/>
+      <RouteHandler/>
+      </main>
     )
   }
 });
 
-// declare our routes and their hierarchy
+// Declare our routes and their hierarchy
 var routes = (
   <Route handler={App}>
-    <Route path="/log_in" handler={log_in}/>
-    <Route path="/create_user" handler={create_user}/>
     <Route path="/dashboard" handler={dashboard}/>
   </Route>
 );
 
 Router.run(routes, Router.HashLocation, (Root) => {
-  React.render(<Root />, document.body);
+  React.render(<Root flux={flux}/>, document.body);
 });
