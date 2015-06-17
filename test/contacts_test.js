@@ -1,78 +1,169 @@
 'use strict';
 
-process.env.MONGOLAB_URI = 'mongodb://localhost/contacts_test';
+process.env.MONGOLAB_URI = 'mongodb://localhost/turtle_test';
 require('../server.js');
 
-var fs = require('fs');
-var bodyparser = require('body-parser');
 var chai = require('chai');
 var chaihttp = require('chai-http');
 var expect = chai.expect;
+var User = require('../models/User.js');
 var ContactList = require('../models/ContactList');
 var mongoose = require('mongoose');
-
 chai.use(chaihttp);
 
-describe('Test Contact List Requests', function () {
+var server_url = 'localhost:3000';
+describe('contact_routes.js', function () {
+	// create users before running tests
+	var userKeys = {};
 
-  // create test contact list
-  beforeEach(function (done) {
-    var testContactList = new ContactList({listOwnerId: '557f896e8d8eec45fe3a0954', friends: {'testId1': 'test friend 1', 'testId2': 'test friend 2'}});
-    testContactList.save(function (err, data) {
-    if (err) {
-      throw err;
-    }
-    this.testContactList = data;
-    done();
-  }.bind(this))
+	before(function(done){
+		var users_created_count = 0;
+		var users = ['monica', 'daren', 'harvey', 'cleo', 'darnet'];
+		var getUserList = function(){
+			chai.request(server_url)
+				.get('/api/users')
+				.set('eat', userKeys.daren.key)
+				.end(function(err, res){
+					if (err) console.log(err); 		
+					for (var i=0; i<res.body.length; i++){
+						userKeys[res.body[i].username]._id = res.body[i]._id;
+					}	
+					done();
+				});
+		};
+		var loginUser = function(name){
+			chai.request(server_url)
+				.get('/api/login')
+				.auth(name, name)
+				.end(function(err, res){
+					if (err) console.log(err);
+					userKeys[name] = {};
+					userKeys[name].key = res.body.eat;
+					users_created_count++;
+					if (users_created_count === users.length){
+						getUserList();
+					}
+				});
+		};
+		users.forEach(function(user){
+			chai.request(server_url)
+				.post('/api/users')
+				.send({username: user, email: user, password: user})
+				.end(function(err, res) {
+					if (err) console.log(err);
+					loginUser(user);
+				});
+		});
+	});
+
+	// delete all the test users when your done
+	after(function(done){
+		User.remove({}, function(err, data){
+			if (err) console.log(err);
+			done();
+		});
+	});
+
+	// test friend requset
+	describe('create friend request with valid input', function(){
+		it('should return success true', function(done){
+			chai.request(server_url)
+				.post('/api/contacts/request')
+				.send({eat: userKeys.cleo.key, user_id: userKeys.daren._id})
+				.end(function(err, res){
+					if (err) console.log(err);
+					expect(res.status).to.eql(200);
+					expect(res.body.success).to.eql(true);
+					done();
+				});
+		});
+	});
+
+	describe('create friend request with invalid user_id', function(){
+		it('should return success false', function(done){
+			chai.request(server_url)
+				.post('/api/contacts/request')
+				.send({eat: userKeys.cleo.key, user_id: 'wat'})
+				.end(function(err, res){
+					if (err) console.log(err);
+					expect(res.body.success).to.eql(false);
+					done();
+				});
+		});
+	});
+
+	describe('create friend request with invalid eat token', function(){
+		it('should return msg : please sign in to do that', function(done){
+			chai.request(server_url)
+				.post('/api/contacts/request')
+				.send({eat: 'yoloslugwatup?nmu', user_id: userKeys.daren._id})
+				.end(function(err, res){
+					if (err) console.log(err);
+					expect(res.body.msg).to.eql('please sign in to do that');
+					done();
+				});
+		});
+	});
+
+	describe('fetch darens conact list and make sure cleo is has requested', function(){
+		it('should return a list with daren as a friend', function(done){
+			chai.request(server_url)
+				.get('/api/contacts/')
+				.set({eat: userKeys.daren.key})
+				.end(function(err, res){
+					if (err) console.log(err);
+					expect(!!res.body[0].receivedRequests[userKeys.cleo._id]).to.be.eql(true);
+					done();
+				});
+		});
+	});
+	
+	// tset frined request accept
+	describe('daren will try to accpet cleos frined request', function(){
+		it('should return success true', function(done){
+			chai.request(server_url)
+				.post('/api/contacts/request/accept')
+				.send({eat: userKeys.daren.key,user_id:userKeys.cleo._id})
+				.end(function(err, res){
+					if (err) console.log(err);
+					expect(res.body.success).to.be.eql(true);
+					done();
+				});
+		});
+	});
+	
+	describe('daren will try to accpet a friend that does not exist', function(){
+		it('should return success false', function(done){
+			chai.request(server_url)
+				.post('/api/contacts/request/accept')
+				.send({eat: userKeys.daren.key,user_id:'wat lulz slug'})
+				.end(function(err, res){
+					if (err) console.log(err);
+					expect(res.body.success).to.be.eql(false);
+					done();
+				});
+		});
+	});
+	
+	// test friend request deny
+	describe('daren will deny a friend requset so someone daren does not know', function(){
+		// make a new friend req to deny
+		before(function(done){
+			chai.request(server_url)
+				.post('/api/contacts/request')
+				.send({eat: userKeys.monica.key, user_id: userKeys.daren._id})
+				.end(function(err, res){
+					if (err) console.log(err);
+					done();
+				});
+		});
+		it('should return success true', function(done){
+			chai.request(server_url)
+				.post('/api/contacts/deny')
+				.send({eat: userKeys.daren.key, user_id: userKeys.monica._id})
+				.end(function(err, res){
+					if (err) console.log(err);	
+				});
+		});
+	});
 });
-
-  // dump test database
-  after(function (done) {
-    mongoose.connection.db.dropDatabase(function () {
-      done();
-    });
-  });
-
-  // test for making test contact list
-  it('Should create a test contact list beforeEach test', function (done) {
-    expect(this.testContactList.listOwnerId.toString()).to.eql('557f896e8d8eec45fe3a0954');
-    expect(this.testContactList.friends.testId1).to.eql('test friend 1');
-    expect(Object.keys(this.testContactList.friends).length).to.eql(2);
-    done();
-  });
-
-  // test get request
-  it('should display users contacts on GET request', function (done) {
-    chai.request('localhost:3000')
-    .get('/api/contacts/557f896e8d8eec45fe3a0954')
-    .end(function (err, res) {
-      expect(err).to.eql(null);
-      expect(typeof(res.body)).to.eql('object');
-      done();
-    })
-  });
-
-  it('should add a new contact on POST request', function (done) {
-    chai.request('localhost:3000')
-    .post('/api/contacts/557f896e8d8eec45fe3a0954')
-    .send({_id: 'testId3', friend: {'testId3': 'test friend 3'}})
-    .end(function (err, res) {
-      expect(err).to.eql(null);
-      expect(res.body.msg).to.eql('contact added');
-      done();
-    });
-  });
-
-  it('should delete a contact on DELETE request' , function (done) {
-    chai.request('localhost:3000')
-    .del('/api/contacts/557f896e8d8eec45fe3a0954')
-    .send({_id: 'testId1'})
-    .end(function (err, res) {
-      expect(err).to.eql(null);
-      expect(res.body.msg).to.eql('contact removed');
-      done();
-    })
-  })
-
-})
