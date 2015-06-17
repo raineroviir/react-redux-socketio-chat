@@ -16,7 +16,7 @@ require('../server.js');
 
 describe('Authentication', function() {
   // var currentUser;
-  describe('GET /login', function() {
+  describe('GET /log_in', function() {
     before(function(done) {   // Make a new user in db
       chai.request('localhost:3000')
         .post('/api/users/')
@@ -37,8 +37,8 @@ describe('Authentication', function() {
     describe('with VALID info', function() {
       var responseBody;
       before(function(done) {
-        chai.request('localhost:3000')  // make call to login user
-          .get('/api/login')
+        chai.request('localhost:3000')  // make call to log_in user
+          .get('/api/log_in')
           .auth('unicorn@example.com', 'foobar')
           .end(function(err, res) {
             expect(err).to.eq(null);
@@ -61,7 +61,7 @@ describe('Authentication', function() {
       var responseBody;
       before(function(done) {
         chai.request('localhost:3000')
-          .get('/api/login')
+          .get('/api/log_in')
           .auth('unicorn@example.com', 'wrongpassword')
           .end(function(err, res) {
             expect(err).to.eq(null);
@@ -86,7 +86,7 @@ describe('Authentication', function() {
       var responseBody;
       before(function(done) {
         chai.request('localhost:3000')
-          .get('/api/login')
+          .get('/api/log_in')
           .auth('vampire@example.com', 'foobar')
           .end(function(err, res) {
             expect(err).to.eq(null);
