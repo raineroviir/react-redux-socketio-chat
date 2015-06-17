@@ -158,7 +158,6 @@ describe('contact_routes.js', function () {
 				});
 		});
 
-		describe('lala', function(){
 		it('should return success true', function(done){
 			chai.request(server_url)
 				.del('/api/contacts/request/deny')
@@ -169,6 +168,6 @@ describe('contact_routes.js', function () {
 					done();
 				});
 		});
-		});
 	});
+
 });
