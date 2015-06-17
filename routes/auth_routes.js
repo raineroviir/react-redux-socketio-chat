@@ -8,7 +8,7 @@ module.exports = function(router, passport) {
   router.use(bodyparser.json());
 
   // Existing user login
-  router.get('/login', passport.authenticate('basic', {session: false}), function(req, res) {
+  router.get('/log_in', passport.authenticate('basic', {session: false}), function(req, res) {
     req.user.generateToken(process.env.AUTH_SECRET, function(err, eat) {  // passport_strategy adds req.user
       if (err) {
         console.log('Error signin user in. Error: ', err);

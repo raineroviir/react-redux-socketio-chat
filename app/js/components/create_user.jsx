@@ -1,49 +1,64 @@
-import React from 'react/addons';
-import ReactMixin from 'react-mixin';
-// import Auth from '../services/AuthService';
+'use strict';
 
-export default class CreateUser extends React.Component {
+var React = require('react');
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
-  constructor() {
-    super()
-    this.state = {
-      user: '',
-      password: '',
-      email: ''
-    }
-  }
+var CreateUser = React.createClass({
+  mixins: [FluxMixin],
+  getInitialState: function() {
+    return {newUser: {username: '', password: '', email: ''}, changed: false};
+  },
+  handleChange: function(event) {
+    var stateCopy = this.state;
+    stateCopy.changed = true;
+    if (event.target.name === 'user-email')
+      stateCopy.newUser.email = event.target.value;
+    if (event.target.name === 'user-username')
+      stateCopy.newUser.username = event.target.value;
+    if (event.target.name === 'user-password')
+      stateCopy.newUser.password = event.target.value;
 
-  createUser(e) {
-    e.preventDefault();
-    Auth.createUser(this.state.user, this.state.password, this.state.email)
-      .catch(function(err) {
-        alert('There was an error creating a user');
-        console.log('Error when creating user: ' + err);
-      });
-  }
+    this.setState(stateCopy);
 
-  render() {
+  },
+  handleSubmit: function(event) {
+    event.preventDefault();
+
+    this.getFlux().actions.createUser(this.state.newUser);
+
+  },
+  render: function() {
+    var usernameError;
+    var passwordError;
+    var emailError;
+    var submitButton;
+    if (this.state.newUser.email.length < 1 && this.state.changed)
+      emailError = <span>email cannot be blank</span>;
+    if (this.state.newUser.username.length < 1 && this.state.changed)
+      usernameError = <span>user name cannot be blank</span>;
+    if (this.state.newUser.password.length < 1 && this.state.changed)
+      passwordError = <span>password cannot be blank</span>;
+    if (usernameError || passwordError || !this.state.changed)
+      submitButton = <button type="submit" disabled>Create a new user</button>;
+    else
+      submitButton = <button type="submit" >Create a new user</button>;
+
     return (
-        <div>
-          <h1>Join Turtle</h1>
-          <form>
-          <div>
-            <label htmlFor="username">Username</label>
-            <input type="text" valueLink={this.linkState('user')} name="username" placeholder="Please enter desired username"/>
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input type="password" valueLink={this.linkState('password')} name="password" placeholder="Please enter your password here"/>
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input type="text" valueLink={this.linkState('email')} name="email" placeholder="Please enter your email here"/>
-          </div>
-          </form>
-          <button type="submit"value="Sign up">Create User</button>
-        </div>
-    );
+      <form name="signupform" onSubmit={this.handleSubmit}>
+        <label htmlFor="email">Email:</label>
+        <input type="text" name="user-email" id="email" value={this.state.newUser.email} onChange={this.handleChange} />
+        <label htmlFor="username">User Name:</label>
+        {usernameError}
+        <input type="text" name="user-username" id="username" value={this.state.newUser.username} onChange={this.handleChange} />
+        <label htmlFor="password">Password:</label>
+        {passwordError}
+        <input type="password" name="user-password" id="password" value={this.state.newUser.password} onChange={this.handleChange} />
+        {submitButton}
+      </form>
+    )
   }
-}
+});
 
-ReactMixin(CreateUser.prototype, React.addons.LinkedStateMixin);
+module.exports = CreateUser;

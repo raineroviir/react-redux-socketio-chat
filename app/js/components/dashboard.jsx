@@ -1,13 +1,13 @@
-var React = require('react');
+import React from 'react/addons';
 import MessageSection from './MessageSection.jsx';
-var Navbar = require('./nav_bar.jsx');
+import Navbar from './nav_bar.jsx';
 
 export default class Dashboard extends React.Component {
   render() {
     return (
       <div className="dashboard">
-        <MessageSection />
         <Navbar />
+        <MessageSection />
       </div>
     );
   }
