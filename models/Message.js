@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 
 var messageSchema = mongoose.Schema({
+  id: String,
   threadID: String,
   threadName: String,
   authorName: String,

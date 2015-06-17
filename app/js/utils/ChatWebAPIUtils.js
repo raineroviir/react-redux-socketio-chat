@@ -15,32 +15,29 @@ module.exports = {
 
     var serverReq =
       request
-        .get('/api/messages/getmessages')
+        .get('/api/dashboard')
         .end(function(err, res) {
           if(err) {
             return console.log(err);
           }
-          var rawMessages = res.body;
-          console.log('server hit get');
 
+          ChatServerActionCreators.receiveAll(res.body);
         }.bind(this));
-
       ChatServerActionCreators.receiveAll(rawMessages);
-        console.log(serverReq);
+
+
     // simulate success callback
 
   },
 
   createMessage: function(message, threadName) {
     // simulate writing to a database
-
-
-
-    var rawMessages = JSON.parse(localStorage.getItem('messages'));
+    console.log('ChatWebAPICreateMsg()');
+    // var rawMessages = JSON.parse(localStorage.getItem('messages'));
     var timestamp = Date.now();
     var id = 'm_' + timestamp;
     var threadID = message.threadID || ('t_' + Date.now());
-    var threadName = threadName || message.authorName
+    var threadName = message.authorName
     var createdMessage = {
       id: id,
       threadID: threadID,
@@ -57,19 +54,13 @@ module.exports = {
       if(err) {
         return console.log(err);
       }
-      console.log(res);
-      console.log('server post msg hit');
+      console.log('.post()');
+      ChatServerActionCreators.receiveCreatedMessage(createdMessage);
     }.bind(this));
 
+    // rawMessages.push(createdMessage);
+    // localStorage.setItem('messages', JSON.stringify(rawMessages));
 
-
-    rawMessages.push(createdMessage);
-    localStorage.setItem('messages', JSON.stringify(rawMessages));
-
-    // simulate success callback
-    setTimeout(function() {
-      ChatServerActionCreators.receiveCreatedMessage(createdMessage);
-    }, 0);
   }
 
 };

@@ -14,7 +14,7 @@ module.exports = {
     });
   },
 
-  createMessage: function(text, currentThreadID, user) {
+  createThread: function(text, currentThreadID, user) {
     ChatAppDispatcher.dispatch({
       type: ActionTypes.CREATE_THREAD,
       text: text,
