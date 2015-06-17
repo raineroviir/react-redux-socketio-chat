@@ -36,6 +36,7 @@ var MessageComposer = React.createClass({
       var text = this.state.text.trim();
       if (text) {
         ChatMessageActionCreators.createMessage(text, this.props.threadID);
+        console.log('_onKeyDown()')
       }
       this.setState({text: ''});
     }

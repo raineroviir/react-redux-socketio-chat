@@ -6,7 +6,7 @@ var bodyparser = require('body-parser');
 module.exports = function (router) {
   router.use(bodyparser.json());
   //get all messages
-  router.get('/messages/getmessages', function (req, res) {
+  router.get('/dashboard', function (req, res) {
 
     Message.find({}, function (err, data) {
       if (err) {
