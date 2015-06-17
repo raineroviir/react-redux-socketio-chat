@@ -31,9 +31,9 @@ describe('contact_routes.js', function () {
 					done();
 				});
 		};
-		var loginUser = function(name){
+		var log_inUser = function(name){
 			chai.request(server_url)
-				.get('/api/login')
+				.get('/api/log_in')
 				.auth(name, name)
 				.end(function(err, res){
 					if (err) console.log(err);
@@ -51,7 +51,7 @@ describe('contact_routes.js', function () {
 				.send({username: user, email: user, password: user})
 				.end(function(err, res) {
 					if (err) console.log(err);
-					loginUser(user);
+					log_inUser(user);
 				});
 		});
 	});
