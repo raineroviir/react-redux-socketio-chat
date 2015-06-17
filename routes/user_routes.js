@@ -4,7 +4,7 @@ var bodyparser = require('body-parser');
 var eatAuth    = require('../lib/eat_auth.js')(process.env.AUTH_SECRET);
 var User       = require('../models/User.js');
 var _          = require("lodash");
-var roleAuth  = require("../lib/role_auth.js");
+var roleAuth   = require("../lib/role_auth.js");
 
 
 module.exports = function loadUserRoutes(router) {
@@ -51,7 +51,7 @@ module.exports = function loadUserRoutes(router) {
       return res.status(401).json({msg: 'Unauthorized.'});
     }
 
-    User.update({'username': req.params.username}, function() {
+    User.update({'username': req.body.username}, function() {
       switch(true) {
         case !!(err && err.code === 11000):
           return res.json({msg: 'username already exists - please try a different username'});
@@ -64,13 +64,13 @@ module.exports = function loadUserRoutes(router) {
 
       res.json({msg: 'user updated'});
     });
-  }); 
-	
+  });
+
   router.delete('/users/:username', eatAuth, function(req, res) {
 		router.use(adminAuth);
     var username = req.params.username;
 
-    User.findOne({ username: req.params.username }, function (err, user){
+    User.findOne({ username: req.body.username }, function (err, user){
       user.suspended = true;
       user.save();
     });

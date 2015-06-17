@@ -1,41 +1,56 @@
-import React from 'react/addons';
-import ReactMixin from 'react-mixin';
-// import Auth from '../services/AuthService';
+'use strict';
 
-export default class Login extends React.Component {
+var React = require('react');
+var Fluxxor = require('fluxxor')
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
-  constructor() {
-    super()
-    this.state = { user: '', password: '' };
-  }
+var Login = React.createClass({
+  mixins: [FluxMixin],
+  getInitialState: function() {
+    return {user: {username: '', password: ''}};
+  },
+  handleChange: function(event) {
+    var stateCopy = this.state;
+    stateCopy.changed = true;
+    if (event.target.name === 'user-username')
+      stateCopy.user.username = event.target.value;
+    if (event.target.name === 'user-password')
+      stateCopy.user.password = event.target.value;
 
-  login(e) {
-    e.preventDefault();
-    Auth.login(this.state.user, this.state.password)
-      .catch(function(err) {
-        alert('There was an error logging in');
-        console.log('Error when trying to login: ' + err);
-      });
-  }
+    this.setState(stateCopy);
+  },
+  handleSubmit: function(event) {
+    event.preventDefault();
 
-  render() {
+    console.log(this.state.user);
+    this.getFlux().actions.login(this.state.user);
+  },
+  render: function() {
+    var usernameError;
+    var passwordError;
+    var submitButton;
+    if (this.state.user.username.length < 1 && this.state.changed)
+      usernameError = <span>user name cannot be blank</span>;
+    if (this.state.user.password.length < 1 && this.state.changed)
+      passwordError = <span>password cannot be blank</span>;
+    if (usernameError || passwordError && !this.state.changed)
+      submitButton = <button type="submit" disabled>Log In to Exising User</button>;
+    else
+      submitButton = <button type="submit" >Log In to Exising User</button>;
+
     return (
-      <div>
-        <h1>Login</h1>
-        <form>
-          <div>
-            <label htmlFor="username">Username</label>
-            <input type="text" valueLink={this.linkState('user')} placeholder="Please enter your username"/>
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input type="password" valueLink={this.linkState('password')} placeholder="Please enter your password"/>
-          </div>
-        <button type="submit" onClick={this.login.bind(this)}>Log in</button>
-        </form>
-      </div>
-    );
+      <form name="signinform" onSubmit={this.handleSubmit}>
+        <label htmlFor="username">User Name:</label>
+        {usernameError}
+        <input type="text" name="user-username" id="username" value={this.state.user.username} onChange={this.handleChange} />
+        <label htmlFor="password">Password:</label>
+        {passwordError}
+        <input type="password" name="user-password" id="password" value={this.state.user.password} onChange={this.handleChange} />
+        {submitButton}
+      </form>
+    )
   }
-}
+});
 
-ReactMixin(Login.prototype, React.addons.LinkedStateMixin);
+module.exports = Login;
