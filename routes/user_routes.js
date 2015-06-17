@@ -77,4 +77,21 @@ module.exports = function loadUserRoutes(router) {
 
     res.json({msg: "user successfully suspended"});
   });
+
+	router.get('/users', eatAuth, function(req, res){
+		User.find({},function(err, data){
+			if (err) {
+				console.log(err);
+				res.status(500).json({success: false, msg: 'server found no users'});
+			}
+			var userList = [];
+			for ( userIndex in data ){
+				var user = {};
+				user.username = data[userIndex].username;
+				user._id = data[userIndex]._id;
+				userList.push(user);
+			}
+ 			res.json(userList);	
+		});
+	});
 };

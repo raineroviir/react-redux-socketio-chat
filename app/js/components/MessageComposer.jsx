@@ -1,9 +1,16 @@
 var React = require('react');
 
-import TurtleActions from '../actions/TurtleActions';
+import ChatMessageActionCreators from '../actions/ChatMessageActionCreators';
+
+var ReactPropTypes = React.PropTypes;
 
 var ENTER_KEY_CODE = 13;
 var MessageComposer = React.createClass({
+
+  propTypes: {
+    threadID: React.PropTypes.string.isRequired
+  },
+
   getInitialState: function() {
     return {text: ''};
   },
@@ -28,7 +35,7 @@ var MessageComposer = React.createClass({
       event.preventDefault();
       var text = this.state.text.trim();
       if (text) {
-        TurtleActions.createMsg(text);
+        ChatMessageActionCreators.createMessage(text, this.props.threadID);
       }
       this.setState({text: ''});
     }

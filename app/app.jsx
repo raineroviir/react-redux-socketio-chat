@@ -3,6 +3,9 @@ import dashboard from './js/components/dashboard.jsx';
 import create_user from './js/components/create_user.jsx';
 import log_in from './js/components/log_in.jsx';
 import Router, { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
+require("./css/chatapp.css");
+
+window.React = React;
 
 var request = require('superagent');
 var constants = require('./js/constants/login_constants');
@@ -53,7 +56,7 @@ var App = React.createClass({
   }
 });
 
-// Declare our routes
+// Declare our routes and their hierarchy
 var routes = (
   <Route handler={App}>
     <Route path="/dashboard" handler={dashboard}/>

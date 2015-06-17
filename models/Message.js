@@ -3,10 +3,11 @@
 var mongoose = require('mongoose');
 
 var messageSchema = mongoose.Schema({
-  messageText: String,
-  createdAt: {type: Date, default: Date.now},
-  authorId: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-  read: Boolean
+  threadID: String,
+  threadName: String,
+  authorName: String,
+  text: String,
+  timestamp: {type: Date, default: Date.now()},
 });
 
 module.exports = mongoose.model('Message', messageSchema);

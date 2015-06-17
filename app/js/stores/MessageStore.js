@@ -1,13 +1,11 @@
-import TurtleDispatcher from '../dispatcher/TurtleDispatcher';
-import TurtleConstants from '../constants/TurtleConstants';
-import TurtleUtils from '../utils/TurtleUtils';
-import ThreadStore from '../stores/ThreadStore';
-
-var ActionTypes = TurtleConstants.ActionTypes;
-
-var assign = require('object-assign');
+var ChatAppDispatcher = require('../dispatcher/ChatAppDispatcher');
+var ChatConstants = require('../constants/ChatConstants');
+var ChatMessageUtils = require('../utils/ChatMessageUtils');
 var EventEmitter = require('events').EventEmitter;
+var ThreadStore = require('../stores/ThreadStore');
+var assign = require('object-assign');
 
+var ActionTypes = ChatConstants.ActionTypes;
 var CHANGE_EVENT = 'change';
 
 var _messages = {};
@@ -15,7 +13,7 @@ var _messages = {};
 function _addMessages(rawMessages) {
   rawMessages.forEach(function(message) {
     if (!_messages[message.id]) {
-      _messages[message.id] = TurtleUtils.convertRawMessage(
+      _messages[message.id] = ChatMessageUtils.convertRawMessage(
         message,
         ThreadStore.getCurrentID()
       );
@@ -31,12 +29,15 @@ function _markAllInThreadRead(threadID) {
   }
 }
 
+var MessageStore = assign({}, EventEmitter.prototype, {
 
-var TurtleStore = assign({}, EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
 
+  /**
+   * @param {function} callback
+   */
   addChangeListener: function(callback) {
     this.on(CHANGE_EVENT, callback);
   },
@@ -45,10 +46,17 @@ var TurtleStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  getAll: function() {
-    return _messages
+  get: function(id) {
+    return _messages[id];
   },
 
+  getAll: function() {
+    return _messages;
+  },
+
+  /**
+   * @param {string} threadID
+   */
   getAllForThread: function(threadID) {
     var threadMessages = [];
     for (var id in _messages) {
@@ -73,35 +81,36 @@ var TurtleStore = assign({}, EventEmitter.prototype, {
 
 });
 
-TurtleStore.dispatchToken = TurtleDispatcher.register(function(action) {
-  var text;
+MessageStore.dispatchToken = ChatAppDispatcher.register(function(action) {
 
-  switch(action.actionType) {
-    case TurtleConstants.CREATE_MESSAGE:
-      var message = TurtleUtils.getCreatedMessageData(
+  switch(action.type) {
+
+    case ActionTypes.CLICK_THREAD:
+      ChatAppDispatcher.waitFor([ThreadStore.dispatchToken]);
+      _markAllInThreadRead(ThreadStore.getCurrentID());
+      MessageStore.emitChange();
+      break;
+
+    case ActionTypes.CREATE_MESSAGE:
+      var message = ChatMessageUtils.getCreatedMessageData(
         action.text,
         action.currentThreadID
       );
       _messages[message.id] = message;
-      TurtleStore.emitChange();
-      break;
-
-    case ActionTypes.CLICK_THREAD:
-      TurtleDispatcher.waitFor([ThreadStore.dispatchToken]);
-      _markAllInThreadRead(ThreadStore.getCurrentID());
       MessageStore.emitChange();
       break;
 
     case ActionTypes.RECEIVE_RAW_MESSAGES:
       _addMessages(action.rawMessages);
-      TurtleDispatcher.waitFor([ThreadStore.dispatchToken]);
+      ChatAppDispatcher.waitFor([ThreadStore.dispatchToken]);
       _markAllInThreadRead(ThreadStore.getCurrentID());
       MessageStore.emitChange();
       break;
 
-  default:
-    // do nothing
+    default:
+      // do nothing
   }
+
 });
 
-module.exports = TurtleStore;
+module.exports = MessageStore;

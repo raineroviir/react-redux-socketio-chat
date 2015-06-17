@@ -1,0 +1,48 @@
+'use strict';
+
+process.env.MONGOLAB_URI = 'mongodb://localhost/turtle_test';
+require('../server.js');
+
+var chai = require('chai');
+var chaihttp = require('chai-http');
+var expect = chai.expect;
+var User = require('../models/User.js');
+var ContactList = require('../models/ContactList');
+var mongoose = require('mongoose');
+chai.use(chaihttp);
+
+var server_url = 'localhost:3000';
+describe('contact_routes.js', function () {
+	// create users before running tests
+	var monicakey = null;
+	var darenkey = null;
+	before(function(done){
+		var users_created_count = 0;
+		var users = ['monica', 'daren', 'harvey', 'cleo', 'darnet'];
+		users.forEach(function(user){
+			console.log(user);
+			chai.request(server_url)
+				.post('/api/users')
+				.send({username: user, email: user, password: user})
+				.end(function(err, res) {
+					if (err) console.log(err);
+					users_created_count++;
+					if (users_created_count === users.length){
+						done();
+					}
+				});
+		});
+	});
+
+	// delete all the test users when your done
+	after(function(done){
+		User.remove({}, function(err, data){
+			if (err) console.log(err);
+			done();
+		});
+	});
+
+	// test friend requset
+	// tset frined request accept
+	// test friend request deny
+});
