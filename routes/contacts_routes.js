@@ -61,23 +61,56 @@ module.exports = function (router) {
     ContactList.find({listOwnerId: req.body.from_user_id}, function (err, data){
       if (err) {
         console.log(err);
-        res.status(500).json({msg: 'server failed to complete your request'});
+        return res.status(500).json({msg: 'server failed to complete your request'});
       }
-      console.log(data);
-      console.log(data[0].receivedRequests[req.body.to_user_id]);
-      // console.log('HHHHH', data._id);
+
+      if (!data[0].receivedRequests[req.body.to_user_id]){
+        return res.status(400).json({msg: 'friend request not found'});
+      }
+      console.log('data[0]', data[0])
       var userToAdd = data[0].receivedRequests[req.body.to_user_id];
+      console.log('user to add', userToAdd);
       var dynSet = {$set:userToAdd};
-      dynSet.$set['friends.' + req.body.to_user_id] = {name: userToAdd[req.body.to_user_id]};
+
+      dynSet.$set['friends.' + req.body.to_user_id] = {name: userToAdd.name};
       ContactList.update({listOwnerId: req.body.from_user_id}, dynSet ,null , function (err, data){
         if (err) {
           console.log(err);
-          res.status(500).json({msg: 'server failed to complete your request'});
+          return res.status(500).json({msg: 'server failed to complete your request'});
         }
-        res.status(200).json({success: true});
+        // res.status(200).json({success: true});
+
+        var reckey = 'receivedRequests.' + req.body.to_user_id;
+        var sentkey = 'sentRequests.' + req.body.from_user_id;
+        var recDelobj = {};
+        var sentDelobj = {};
+        recDelobj[reckey] = '';
+        sentDelobj[sentkey] = '';
+
+        console.log(req.body.from_user_id, 'rec del obj ', recDelobj );
+                console.log(req.body.to_user_id, 'rec del obj ', sentDelobj );
+
+        console.log('sent del obj', sentDelobj);
+        ContactList.update({listOwnerId: req.body.from_user_id}, {$unset: recDelobj} , null , function (err, data) {
+          if (err) {
+            console.log(err);
+            return res.status(500).json({success: false});
+          }
+          console.log('this happend')
+          ContactList.update({listOwnerId: req.body.to_user_id}, {$unset: sentDelobj} , null , function (err, data) {
+            if (err) {
+              console.log(err);
+              res.status(500).json({success: false});
+           }
+            console.log('this  also happend')
+            return res.json({msg: 'contact removed'});
+          });
+        });
+
       });
     });
-    // delete requset
+    // delete request to remove from pending lists
+
   });
 
 
