@@ -11,7 +11,7 @@ module.exports = {
 
   getAllMessages: function() {
     // simulate retrieving data from a database
-    // var rawMessages = JSON.parse(localStorage.getItem('messages'));
+    var rawMessages = JSON.parse(localStorage.getItem('messages'));
 
     var serverReq =
       request
