@@ -157,13 +157,18 @@ describe('contact_routes.js', function () {
 					done();
 				});
 		});
+
+		describe('lala', function(){
 		it('should return success true', function(done){
 			chai.request(server_url)
-				.post('/api/contacts/deny')
+				.del('/api/contacts/request/deny')
 				.send({eat: userKeys.daren.key, user_id: userKeys.monica._id})
 				.end(function(err, res){
 					if (err) console.log(err);	
+					expect(res.body.success).to.eql(true);
+					done();
 				});
+		});
 		});
 	});
 });

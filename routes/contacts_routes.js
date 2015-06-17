@@ -51,8 +51,8 @@ module.exports = function (router) {
 
   });
 
-  router.delete('/contacts/requests/deny/', eatAuth, function (req, res) {
-		console.log('hit delete /contacts/requests/deny/');
+  router.delete('/contacts/request/deny/', eatAuth, function (req, res) {
+		console.log('hit delete /contacts/request/deny/');
 
     var dynSet = {$set: {}};
     var key = 'friends.' + req.body.user_id;
