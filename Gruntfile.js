@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = function(grunt) {
+
   var serverFiles = ['lib/**/*.js', 'tests/srv/**/*.js', 'models/**/*.js', 'routes/**/*.js', '*.js'];
 
  	var clientFiles = ['app/**/*.js', 'app/**/*.jsx','app/app.jsx', 'app/index.html'];
@@ -13,6 +14,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-webpack');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-jsxhint');
+
 
   // configure tasks
   grunt.initConfig({
@@ -33,6 +35,10 @@ module.exports = function(grunt) {
             test: /\.jsx?$/,
             exclude: /(node_modules|bower_components)/,
             loader: 'babel'
+            },
+            {
+            test: /\.css$/,
+            loader: "style-loader!css-loader"
             }
           ]
         }
