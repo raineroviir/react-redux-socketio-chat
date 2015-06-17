@@ -21,16 +21,19 @@ require('./lib/passport_strategy.js')(passport);;
 var usersRouter = express.Router();
 var authRouter = express.Router();
 var contactRouter = express.Router();
+var messageRouter = express.Router();
 
 // load routers
 require('./routes/user_routes.js')(usersRouter);
 require('./routes/auth_routes.js')(authRouter, passport);
 require('./routes/contacts_routes.js')(contactRouter);
+require('./routes/message_routes.js')(messageRouter);
 
 // assign base routes to routers
 app.use('/api', usersRouter);
 app.use('/api', authRouter);
 app.use('/api', contactRouter);
+app.use('/api', messageRouter);
 
 //load our build
 app.use(express.static(__dirname + '/build'));
