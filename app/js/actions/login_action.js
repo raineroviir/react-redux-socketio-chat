@@ -6,9 +6,11 @@ import eat from 'eat';
 export default {
   loginUser: function(eat) {
     var savedEat = localStorage.getItem('eat');
+    console.log('user logged in');
 
     if(savedEat !== eat) {
-      var nextPath = RouterContainer.get().getCurrentQuery.nextpath || '/dashboard';
+      console.log('eat token good, redirect to /dashboard');
+      var nextPath = '/dashboard';
 
       RouterContainer.get().transitionTo(nextPath);
       localStorage.setItem('eat', eat);
