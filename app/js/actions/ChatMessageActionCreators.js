@@ -1,7 +1,7 @@
 var ChatAppDispatcher = require('../dispatcher/ChatAppDispatcher');
-var ChatConstants = require('../constants/ChatConstants');
-var ChatWebAPIUtils = require('../utils/ChatWebAPIUtils');
-var ChatMessageUtils = require('../utils/ChatMessageUtils');
+var ChatConstants     = require('../constants/ChatConstants'     );
+var ChatWebAPIUtils   = require('../utils/ChatWebAPIUtils'       );
+var ChatMessageUtils  = require('../utils/ChatMessageUtils'      );
 
 var ActionTypes = ChatConstants.ActionTypes;
 

@@ -1,9 +1,9 @@
 'user strict';
 
-var bodyparser = require('body-parser');
-var eatAuth    = require('../lib/eat_auth.js')(process.env.AUTH_SECRET);
-var User       = require('../models/User.js');
-var _          = require("lodash");
+var bodyparser = require('body-parser'        );
+var eatAuth    = require('../lib/eat_auth.js' )(process.env.AUTH_SECRET);
+var User       = require('../models/User.js'  );
+var _          = require("lodash"             );
 var roleAuth   = require("../lib/role_auth.js");
 
 
@@ -91,7 +91,7 @@ module.exports = function loadUserRoutes(router) {
 				user._id = data[userIndex]._id;
 				userList.push(user);
 			}
- 			res.json(userList);	
+ 			res.json(userList);
 		});
 	});
 };

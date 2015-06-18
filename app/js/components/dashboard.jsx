@@ -1,9 +1,10 @@
-import React from 'react/addons';
-import MessageSection from './MessageSection.jsx';
-import Navbar from './nav_bar.jsx';
-import ThreadSection from './ThreadSection.jsx';
-import ChatExampleData from './ChatExampleData';
-import ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
+var React           = require('react/addons'            );
+var MessageSection  = require('./MessageSection.jsx'    );
+var Navbar          = require('./nav_bar.jsx'           );
+var ThreadSection   = require('./ThreadSection.jsx'     );
+var ChatExampleData = require('./ChatExampleData'       );
+var ChatWebAPIUtils = require('../utils/ChatWebAPIUtils');
+
 ChatExampleData.init();
 ChatWebAPIUtils.getAllMessages()
 
