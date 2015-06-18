@@ -2,6 +2,7 @@ import ChatAppDispatcher from '../dispatcher/ChatAppDispatcher';
 import ChatConstants from '../constants/ChatConstants';
 import ChatMessageUtils from '../utils/ChatMessageUtils';
 var ActionTypes = ChatConstants.ActionTypes;
+var Cookies = require('cookies-js');
 
 var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
@@ -105,7 +106,6 @@ ThreadStore.dispatchToken = ChatAppDispatcher.register(function(action) {
       break;
 
     case ActionTypes.RECEIVE_RAW_MESSAGES:
-      console.log('ThreadStore: RECEIVE_RAW_MESSAGES');
       ThreadStore.init(action.rawMessages);
       ThreadStore.emitChange();
       break;

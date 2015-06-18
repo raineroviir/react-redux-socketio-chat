@@ -9,6 +9,7 @@ var messageSchema = mongoose.Schema({
   authorName: String,
   text: String,
   timestamp: {type: Date, default: Date.now()},
+  users: Array
 });
 
 module.exports = mongoose.model('Message', messageSchema);

@@ -17,7 +17,7 @@ var ThreadComposer = React.createClass({
       <section>
         <form>
         <div>
-          <label className="user">User</label>
+          <label className="user">To:</label>
           <input onChange={this._onChangeUser} type="text" name="username" placeholder="type in the username" value={this.state.user}/>
         </div>
         <div>

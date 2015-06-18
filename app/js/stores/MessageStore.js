@@ -59,6 +59,7 @@ var MessageStore = assign({}, EventEmitter.prototype, {
    */
   getAllForThread: function(threadID) {
     var threadMessages = [];
+    console.log(_messages)
     for (var id in _messages) {
       if (_messages[id].threadID === threadID) {
         threadMessages.push(_messages[id]);

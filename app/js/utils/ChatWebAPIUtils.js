@@ -20,7 +20,6 @@ module.exports = {
           if(err) {
             return console.log(err);
           }
-
           ChatServerActionCreators.receiveAll(res.body);
         }.bind(this));
       ChatServerActionCreators.receiveAll(rawMessages);
@@ -46,6 +45,7 @@ module.exports = {
       authorName: message.authorName,
       text: message.text,
       timestamp: timestamp,
+      users: message.authorName
     };
 
     request
@@ -55,14 +55,27 @@ module.exports = {
       if(err) {
         return console.log(err);
       }
-      console.log('.post()');
       ChatServerActionCreators.receiveCreatedMessage(createdMessage);
     }.bind(this));
 
     // rawMessages.push(createdMessage);
     // localStorage.setItem('messages', JSON.stringify(rawMessages));
+  },
 
+  updateMessageOwners: function(message) {
+    var patchpackage = {
+      username: message.authorName,
+      threadID: message.threadID
+    request
+    .patch('/api/messages/patchmessage')
+    .send(patchpackage)
+    .end(function(err, res) {
+      if(err) {
+        return console.log(err);
+      }
+      console.log('.patch() !');
+
+    })
   }
 
 };
-
