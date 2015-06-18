@@ -32,6 +32,7 @@ module.exports = {
 
   createMessage: function(message, threadName) {
     // simulate writing to a database
+
     console.log('ChatWebAPICreateMsg()');
     // var rawMessages = JSON.parse(localStorage.getItem('messages'));
     var timestamp = Date.now();
