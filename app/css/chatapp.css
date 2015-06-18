@@ -1,3 +1,26 @@
+@import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+  background-color: #70DBDB;
+  /*margin: 0 auto;*/
+  margin: 0 0 80px; /* bottom = footer height */
+  background-image: url(./background_image/bg-pattern.png);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100%;
+}
+
+h1 {
+  font-family: 'Press Start 2P', cursive;
+  color: #1DAF04;
+}
+
 .chatapp {
   font-family: 'Muli', 'Helvetica Neue', helvetica, arial;
   max-width: 760px;

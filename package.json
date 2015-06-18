@@ -21,7 +21,9 @@
   "homepage": "https://github.com/dwolfm/turtle",
   "jest": {
     "scriptPreprocessor": "<rootDir/>/preprocessor.js",
-    "unmockedModulePathPatterns": ["<rootDir/>/node_modules/react"]
+    "unmockedModulePathPatterns": [
+      "<rootDir/>/node_modules/react"
+    ]
   },
   "devDependencies": {
     "babel-core": "^5.5.8",
@@ -29,8 +31,9 @@
     "chai": "^3.0.0",
     "chai-http": "^1.0.0",
     "cookies-js": "^1.2.1",
-    "css-loader": "^0.14.5",
+    "css-loader": "^0.15.1",
     "eslint": "^0.23.0",
+    "file-loader": "^0.8.4",
     "fluxxor": "^1.6.0",
     "grunt": "^0.4.5",
     "grunt-babel": "^5.0.1",
@@ -48,7 +51,9 @@
     "jsx-loader": "^0.13.2",
     "mocha": "^2.2.5",
     "react-tools": "^0.13.3",
+    "style-loader": "^0.12.3",
     "superagent": "^1.2.0",
+    "url-loader": "^0.5.6",
     "webpack": "^1.9.10",
     "webpack-dev-server": "^1.9.0"
   },
