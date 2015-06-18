@@ -1,11 +1,12 @@
 'use strict';
 
-var React = require('react');
-var Fluxxor = require('fluxxor');
+var React      = require('react'            );
+var Fluxxor    = require('fluxxor'          );
+var CreateUser = require('./create_user.jsx');
+var Login      = require('./log_in.jsx'     );
+
 var FluxMixin = Fluxxor.FluxMixin(React);
 var StoreWatchMixin = Fluxxor.StoreWatchMixin;
-var CreateUser = require('./create_user.jsx');
-var Login = require('./log_in.jsx');
 
 var UsersForm = React.createClass({
   mixins: [FluxMixin],

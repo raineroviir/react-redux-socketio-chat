@@ -1,7 +1,7 @@
-import TurtleDispatcher from '../dispatcher/TurtleDispatcher';
-import TurtleConstants from '../constants/TurtleConstants';
+var TurtleDispatcher = require('../dispatcher/TurtleDispatcher');
+var TurtleConstants  = require('../constants/TurtleConstants'  );
 
-var ActionTypes = TurtleConstants.ActionTypes;
+var ActionTypes      = TurtleConstants.ActionTypes;
 
 var ThreadActions = {
 

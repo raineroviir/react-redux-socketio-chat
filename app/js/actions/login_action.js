@@ -1,7 +1,7 @@
-import TurtleDispatcher from '../dispatcher/TurtleDispatcher.js'
-import {LOGIN_USER, LOGOUT_USER} from '../constants/login_constants';
-import RouterContainer from '../services/router_container.js';
-import eat from 'eat';
+var TurtleDispatcher          = require('../dispatcher/TurtleDispatcher.js');
+var {LOGIN_USER, LOGOUT_USER} = require('../constants/login_constants'     );
+var RouterContainer           = require('../services/router_container.js'  );
+var eat                       = require('eat'                              );
 
 export default {
   loginUser: function(eat) {

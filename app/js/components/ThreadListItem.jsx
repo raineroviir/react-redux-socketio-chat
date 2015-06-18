@@ -1,7 +1,8 @@
-var React = require('react');
-var ReactPropTypes = React.PropTypes;
+var React                    = require('react'                              );
 var ChatThreadActionCreators = require('../actions/ChatThreadActionCreators');
-var cx = require('react/lib/cx');
+var cx                       = require('react/lib/cx'                       );
+
+var ReactPropTypes = React.PropTypes;
 
 var ThreadListItem = React.createClass({
 
