@@ -1,6 +1,7 @@
 var React = require('react');
 
 import ChatMessageActionCreators from '../actions/ChatMessageActionCreators';
+var Cookies = require('cookies-js');
 
 var ReactPropTypes = React.PropTypes;
 
@@ -34,9 +35,9 @@ var MessageComposer = React.createClass({
     if (event.keyCode === ENTER_KEY_CODE) {
       event.preventDefault();
       var text = this.state.text.trim();
+      var username = Cookies.get('username');
       if (text) {
-        ChatMessageActionCreators.createMessage(text, this.props.threadID);
-        console.log('_onKeyDown()')
+        ChatMessageActionCreators.createMessage(text, this.props.threadID, username);
       }
       this.setState({text: ''});
     }

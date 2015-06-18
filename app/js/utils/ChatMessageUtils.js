@@ -1,6 +1,6 @@
 module.exports = {
 
-  convertRawMessage: function(rawMessage, currentThreadID, user) {
+  convertRawMessage: function(rawMessage, currentThreadID, username) {
     return {
       id: rawMessage.id,
       threadID: rawMessage.threadID,
@@ -8,16 +8,16 @@ module.exports = {
       date: new Date(rawMessage.timestamp),
       text: rawMessage.text,
       isRead: rawMessage.threadID === currentThreadID,
-      user: user
+      username: username
     };
   },
 
-  getCreatedMessageData: function(text, currentThreadID) {
+  getCreatedMessageData: function(text, currentThreadID, username) {
     var timestamp = Date.now();
     return {
       id: 'm_' + timestamp,
       threadID: currentThreadID,
-      authorName: 'Bill', // hard coded for the example
+      authorName: username || 'Bill Nye',
       date: new Date(timestamp),
       text: text,
       isRead: true
