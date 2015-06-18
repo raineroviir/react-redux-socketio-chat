@@ -24,8 +24,8 @@ var ThreadComposer = React.createClass({
           <label className="message">Message</label>
           <input onChange={this._onChangeText} type="text"  name="message" placeholder="type in your msg" value={this.state.text}/>
         </div>
-        </form>
         <button type="submit" onClick={this._onClick}>Send Message</button>
+        </form>
       </section>
     )
   },

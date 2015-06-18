@@ -169,6 +169,7 @@ padding-left: 2%;
   margin: 0;
   overflow-y: auto;
   padding: 0;
+  background-color: hsla(130, 100%, 97%, 0.69);
 }
 
 .message-section {
