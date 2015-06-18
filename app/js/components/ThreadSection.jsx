@@ -1,8 +1,8 @@
-var React = require('react');
-var MessageStore = require('../stores/MessageStore');
-var ThreadStore = require('../stores/ThreadStore');
-var ThreadListItem = require('./ThreadListItem.jsx');
-import ThreadComposer from './ThreadComposer.jsx';
+var React             = require('react'                      );
+var MessageStore      = require('../stores/MessageStore'     );
+var ThreadStore       = require('../stores/ThreadStore'      );
+var ThreadListItem    = require('./ThreadListItem.jsx'       );
+var ThreadComposer    = require('./ThreadComposer.jsx'       );
 var UnreadThreadStore = require('../stores/UnreadThreadStore');
 
 function getStateFromStores() {

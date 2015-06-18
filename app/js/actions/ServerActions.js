@@ -1,5 +1,5 @@
-import TurtleDispatcher from '../dispatcher/TurtleDispatcher';
-import TurtleConstants from '../constants/TurtleConstants';
+var TurtleDispatcher = ('../dispatcher/TurtleDispatcher');
+var TurtleConstants  = ('../constants/TurtleConstants'  );
 
 var ActionTypes = TurtleConstants.ActionTypes;
 

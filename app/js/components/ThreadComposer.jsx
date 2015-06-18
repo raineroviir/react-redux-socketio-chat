@@ -1,8 +1,8 @@
 var React = require('react');
 
-import ChatThreadActionCreators from '../actions/ChatThreadActionCreators';
-import ChatMessageActionCreators from '../actions/ChatMessageActionCreators';
-import ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
+var ChatThreadActionCreators  = require('../actions/ChatThreadActionCreators' );
+var ChatMessageActionCreators = require('../actions/ChatMessageActionCreators');
+var ChatWebAPIUtils           = require('../utils/ChatWebAPIUtils'            );
 
 var ENTER_KEY_CODE = 13;
 
@@ -25,7 +25,7 @@ var ThreadComposer = React.createClass({
           <input onChange={this._onChangeText} type="text"  name="message" placeholder="type in your msg" value={this.state.text}/>
         </div>
         </form>
-        <button type="submit" onClick={this._onClick}>Send Message</button>
+        <input type="submit" onClick={this._onClick}></input>
       </section>
     )
   },

@@ -1,7 +1,7 @@
 'use strict';
 
-var Message = require('../models/Message');
-var bodyparser = require('body-parser');
+var Message    = require('../models/Message');
+var bodyparser = require('body-parser'      );
 
 module.exports = function (router) {
   router.use(bodyparser.json());
