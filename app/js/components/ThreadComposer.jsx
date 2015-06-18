@@ -48,7 +48,20 @@ var ThreadComposer = React.createClass({
     }
     this.setState({text: '', user: ''});
 
+    var friendList = ChatWebAPIUtils.getAllFriends();
+    console.log('friendlist:');
+    console.log(friendList);
+    if (friendList) {
+    friendList.forEach(function(array) {
+      console.log('iterated the array');
+      var text = 'Chat between you and ..'
+      var threadID = null;
+      var user = 'placeholder user for now'
+      ChatThreadActionCreators.createThread(text, threadID, user);
+    });
+
     ChatWebAPIUtils.getAllMessages();
+    }
   }
 
 });

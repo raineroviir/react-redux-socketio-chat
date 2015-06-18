@@ -4,6 +4,7 @@ var ChatMessageUtils = require('../utils/ChatMessageUtils');
 var EventEmitter = require('events').EventEmitter;
 var ThreadStore = require('../stores/ThreadStore');
 var assign = require('object-assign');
+var Cookies = require('cookies-js');
 
 var ActionTypes = ChatConstants.ActionTypes;
 var CHANGE_EVENT = 'change';
@@ -59,7 +60,6 @@ var MessageStore = assign({}, EventEmitter.prototype, {
    */
   getAllForThread: function(threadID) {
     var threadMessages = [];
-    console.log(_messages)
     for (var id in _messages) {
       if (_messages[id].threadID === threadID) {
         threadMessages.push(_messages[id]);

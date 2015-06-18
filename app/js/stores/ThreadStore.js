@@ -2,7 +2,7 @@ import ChatAppDispatcher from '../dispatcher/ChatAppDispatcher';
 import ChatConstants from '../constants/ChatConstants';
 import ChatMessageUtils from '../utils/ChatMessageUtils';
 var ActionTypes = ChatConstants.ActionTypes;
-var Cookies = require('cookies-js');
+
 
 var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
@@ -15,8 +15,8 @@ var _threads = {};
 var ThreadStore = assign({}, EventEmitter.prototype, {
 
   init: function(rawMessages) {
-    console.log('ThreadStore: Init()');
-    console.log(rawMessages);
+    // console.log('ThreadStore: Init()');
+    // console.log(rawMessages);
     rawMessages.forEach(function(message) {
       var threadID = message.threadID;
       var thread = _threads[threadID];
@@ -35,7 +35,7 @@ var ThreadStore = assign({}, EventEmitter.prototype, {
       _currentID = allChrono[allChrono.length - 1].id;
     }
 
-    console.log(_currentID);
+    // console.log(_currentID);
     _threads[_currentID].lastMessage.isRead = true;
   },
 
