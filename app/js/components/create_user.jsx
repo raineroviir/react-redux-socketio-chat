@@ -46,15 +46,17 @@ var CreateUser = React.createClass({
       submitButton = <button type="submit" >Create a new user</button>;
 
     return (
-      <form name="signupform" onSubmit={this.handleSubmit}>
-        <label htmlFor="email">Email:</label>{emailError}<br/>
-        <input type="text" name="user-email" id="email" value={this.state.newUser.email} onChange={this.handleChange} /><br/>
-        <label htmlFor="username">User Name:</label>{usernameError}<br/>
-        <input type="text" name="user-username" id="username" value={this.state.newUser.username} onChange={this.handleChange} /><br/>
-        <label htmlFor="password">Password:</label>{passwordError}<br/>
-        <input type="password" name="user-password" id="password" value={this.state.newUser.password} onChange={this.handleChange} /><br/>
-        {submitButton}
-      </form>
+      <section  className="sign-in">
+        <form name="signupform" onSubmit={this.handleSubmit}>
+          <label htmlFor="email">Email:</label>{emailError}
+          <input type="text" name="user-email" id="email" value={this.state.newUser.email} onChange={this.handleChange} />
+          <label htmlFor="username">User Name:</label>{usernameError}
+          <input type="text" name="user-username" id="username" value={this.state.newUser.username} onChange={this.handleChange} />
+          <label htmlFor="password">Password:</label>{passwordError}
+          <input type="password" name="user-password" id="password" value={this.state.newUser.password} onChange={this.handleChange} />
+          {submitButton}
+        </form>
+      </section>
     )
   }
 });

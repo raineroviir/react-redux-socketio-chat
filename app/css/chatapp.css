@@ -1,4 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
+@import url(http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic);
+
+* {
+  font-family: 'Arimo';
+}
 
 html {
     position: relative;
@@ -19,6 +24,135 @@ body {
 h1 {
   font-family: 'Press Start 2P', cursive;
   color: #1DAF04;
+  text-align: center;
+}
+
+h2, h3 {
+  font-family: 'Press Start 2P', cursive;
+  color: #1DAF04;
+}
+
+li {
+  float: left;
+}
+
+form {
+  float: left;
+  display: block;
+}
+
+input {
+  margin: 0 10px 0 5px;
+  height: 25px;
+}
+
+label {
+  font-size: 22px;
+}
+
+button {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #24ff5e), color-stop(1, #5cbf2a));
+  background:-moz-linear-gradient(top, #24ff5e 5%, #5cbf2a 100%);
+  background:-webkit-linear-gradient(top, #24ff5e 5%, #5cbf2a 100%);
+  background:-o-linear-gradient(top, #24ff5e 5%, #5cbf2a 100%);
+  background:-ms-linear-gradient(top, #24ff5e 5%, #5cbf2a 100%);
+  background:linear-gradient(to bottom, #24ff5e 5%, #5cbf2a 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#24ff5e', endColorstr='#5cbf2a',GradientType=0);
+  background-color:#24ff5e;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border:1px solid #18ab29;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:Arimo;
+  font-size:17px;
+  padding:5px 31px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #2f6627;
+}
+button:hover {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cbf2a), color-stop(1, #24ff5e));
+  background:-moz-linear-gradient(top, #5cbf2a 5%, #24ff5e 100%);
+  background:-webkit-linear-gradient(top, #5cbf2a 5%, #24ff5e 100%);
+  background:-o-linear-gradient(top, #5cbf2a 5%, #24ff5e 100%);
+  background:-ms-linear-gradient(top, #5cbf2a 5%, #24ff5e 100%);
+  background:linear-gradient(to bottom, #5cbf2a 5%, #24ff5e 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cbf2a', endColorstr='#24ff5e',GradientType=0);
+  background-color:#5cbf2a;
+}
+button:active {
+  position:relative;
+  top:1px;
+}
+
+.nav-button {
+  -moz-box-shadow:inset 0px 1px 0px 0px #3dc21b;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #3dc21b;
+  box-shadow:inset 0px 1px 0px 0px #3dc21b;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #44c767), color-stop(1, #5cbf2a));
+  background:-moz-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+  background:-webkit-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+  background:-o-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+  background:-ms-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+  background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#44c767', endColorstr='#5cbf2a',GradientType=0);
+  background-color:#44c767;
+  border:1px solid #18ab29;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:13px;
+  font-weight:bold;
+  padding:6px 12px;
+  text-decoration:none;
+}
+.nav-button:hover {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cbf2a), color-stop(1, #44c767));
+  background:-moz-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+  background:-webkit-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+  background:-o-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+  background:-ms-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+  background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cbf2a', endColorstr='#44c767',GradientType=0);
+  background-color:#5cbf2a;
+}
+.nav-button:active {
+  position:relative;
+  top:1px;
+}
+
+.main-nav {
+  padding: 2% 0 5% 0;
+  width: 100%;
+}
+
+.main-nav ul {
+    list-style-type: none;
+}
+
+.search {
+  float: right;
+  padding-right: 15%;
+}
+
+.message-section {
+  width: 100px;
+}
+
+.create-or-login-button {
+padding-left: 2%;
+}
+
+.sign-in {
+  padding: 2% 0 1% 2%;
+}
+
+.sign-in button {
+  margin-right: 2%;
+  margin-left: -3%;
 }
 
 .chatapp {
@@ -39,12 +173,14 @@ h1 {
 
 .message-section {
   float: right;
-  width: 65%;
+  width: 63%;
+  padding-right: 2%
 }
 
 .thread-section {
   float: left;
-  width: 32.5%;
+  width: 30%;
+  padding-left: 2%;
 }
 
 .message-thread-heading,
