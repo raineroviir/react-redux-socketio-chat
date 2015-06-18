@@ -5,9 +5,9 @@ var ThreadSection   = require('./ThreadSection.jsx'     );
 var ChatExampleData = require('./ChatExampleData'       );
 var ChatWebAPIUtils = require('../utils/ChatWebAPIUtils');
 
+
 ChatExampleData.init();
 ChatWebAPIUtils.getAllMessages();
-
 
 export default class Dashboard extends React.Component {
   render() {

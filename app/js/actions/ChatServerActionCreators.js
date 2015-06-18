@@ -17,12 +17,13 @@ module.exports = {
       type: ActionTypes.RECEIVE_RAW_CREATED_MESSAGE,
       rawMessage: createdMessage
     });
-  }
+  },
 
-  // receiveFriends: function(friends) {
-  //   ChatAppDispatcher.dispatch({
-  //     type: ActionTypes.
-  //   })
-  // }
+  receiveFriends: function(friends) {
+    ChatAppDispatcher.dispatch({
+      type: ActionTypes.RECEIVE_FRIENDS,
+      rawFriends: friends
+    });
+  }
 
 };

@@ -7,7 +7,8 @@ module.exports = {
     CREATE_THREAD: null,
     CREATE_MESSAGE: null,
     RECEIVE_RAW_CREATED_MESSAGE: null,
-    RECEIVE_RAW_MESSAGES: null
+    RECEIVE_RAW_MESSAGES: null,
+    RECEIVE_FRIENDS: null
   })
 
 };

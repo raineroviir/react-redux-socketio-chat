@@ -24,6 +24,12 @@ module.exports = {
       isRead: true,
       users: username
     };
+  },
+
+  getFriendData: function(friends) {
+    return {
+      friends: friends
+    }
   }
 
 };

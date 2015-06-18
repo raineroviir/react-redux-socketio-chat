@@ -2,7 +2,7 @@ import ChatAppDispatcher from '../dispatcher/ChatAppDispatcher';
 import ChatConstants from '../constants/ChatConstants';
 import ChatMessageUtils from '../utils/ChatMessageUtils';
 var ActionTypes = ChatConstants.ActionTypes;
-
+var Cookies = require('cookies-js');
 
 var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
@@ -85,6 +85,11 @@ var ThreadStore = assign({}, EventEmitter.prototype, {
     return orderedThreads;
   },
 
+  getAllForUser: function() {
+    var orderedThreads = [];
+
+  },
+
   getCurrentID: function() {
     return _currentID;
   },
@@ -112,6 +117,9 @@ ThreadStore.dispatchToken = ChatAppDispatcher.register(function(action) {
 
     case ActionTypes.CREATE_THREAD:
       ThreadStore.emitChange();
+      break;
+
+    case ActionTypes.RECEIVE_FRIENDS:
       break;
 
     default:

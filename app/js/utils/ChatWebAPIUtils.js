@@ -24,7 +24,7 @@ module.exports = {
 
   },
 
-  getAllFriends: function() {
+  getAllFriends: function(callback) {
     var currentEAT = Cookies.get('eat');
     request
     .get('/api/contacts')
@@ -33,8 +33,9 @@ module.exports = {
       if(err) {
         return console.log(err);
       }
-      console.log(res.body);
-      return res.body
+      // Cookies.set('friendzz', res.body);
+      // localStorage.setItem('friends', res.body);
+      callback(res.body)
     });
   },
 
