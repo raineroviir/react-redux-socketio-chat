@@ -37,7 +37,9 @@ var UsersForm = React.createClass({
     return (
       <div>
         <h1>{h1Text}</h1>
-        <a href onClick={this.toggleExisting}>{linkText}</a>
+        <a href onClick={this.toggleExisting}>
+        <button>{linkText}</button>
+        </a>
         {userForm}
       </div>
     )
