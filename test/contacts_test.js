@@ -57,12 +57,12 @@ describe('contact_routes.js', function () {
 	});
 
 	// delete all the test users when your done
-	after(function(done){
-		User.remove({}, function(err, data){
-			if (err) console.log(err);
-			done();
-		});
-	});
+	//after(function(done){
+		//User.remove({}, function(err, data){
+			//if (err) console.log(err);
+			//done();
+		//});
+	//});
 
 	// test friend requset
 	describe('create friend request with valid input', function(){
