@@ -83,10 +83,11 @@ module.exports = function (router) {
       }
       var userToAdd = data[0].receivedRequests[req.body.user_id];
       var dynSet = {$set:userToAdd};
+			console.log(req.body);
 			console.log('user to add', userToAdd);
 
       dynSet.$set['friends.' + req.body.user_id] = {name: userToAdd.name};
-      ContactList.update({listOwnerId: req.body.from_user_id}, dynSet ,null , function (err, data){
+      ContactList.update({listOwnerId: req.body.user_id}, dynSet ,null , function (err, data){
         if (err) {
           console.log(err);
           return res.status(500).json({success: false, msg: 'server failed to complete your request'});

@@ -77,28 +77,28 @@ describe('create users with friends',function(){
 		});
 	});
 
-	//describe('accept all the friend requests', function(){
-		//it('should return true', function(done){
-			//var friendsDoneMakingRequestCount = 0;	
-			//users.forEach(function(userFrom){
-				//var freindsMadeCount = 0;
-				//users.forEach(function(userTo){
-					//console.log('userFrom:', userFrom, 'userTo:', userTo);
-					//chai.request(server_url)
-						//.post('/api/contacts/request/accept')
-						//.send({eat: userKeys[userFrom].key , user_id: userKeys[userTo]._id})
-						//.end(function(err, res){
-							//if (err) console.log(err);
-							//freindsMadeCount++;
-							//if (freindsMadeCount === users.length) {
-								//friendsDoneMakingRequestCount++;
-								//if (friendsDoneMakingRequestCount === users.length){
-									//done();
-								//}
-							//}	
-					//});
-				//});		
-			//});		
-		//});
-	//});
+	describe('accept all the friend requests', function(){
+		it('should return true', function(done){
+			var friendsDoneMakingRequestCount = 0;	
+			users.forEach(function(userFrom){
+				var freindsMadeCount = 0;
+				users.forEach(function(userTo){
+					console.log('userFrom:', userFrom, 'userTo:', userTo);
+					chai.request(server_url)
+						.post('/api/contacts/request/accept')
+						.send({eat: userKeys[userFrom].key , user_id: userKeys[userTo]._id})
+						.end(function(err, res){
+							if (err) console.log(err);
+							freindsMadeCount++;
+							if (freindsMadeCount === users.length) {
+								friendsDoneMakingRequestCount++;
+								if (friendsDoneMakingRequestCount === users.length){
+									done();
+								}
+							}	
+					});
+				});		
+			});		
+		});
+	});
 });
