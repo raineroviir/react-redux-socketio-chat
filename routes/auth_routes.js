@@ -15,7 +15,8 @@ module.exports = function(router, passport) {
         return res.status(500).json({success: false, eat: null, msg: 'error logging in'});
       }
 			console.log('hit login route');
-      res.json({success: true, eat: eat});
+      res.json({success: true, eat: eat, username: req.user.username});
+
     });
   });
 };
