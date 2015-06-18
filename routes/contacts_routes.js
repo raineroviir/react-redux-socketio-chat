@@ -8,7 +8,7 @@ var eatAuth     = require('../lib/eat_auth.js')(process.env.AUTH_SECRET);
 module.exports = function (router) {
   router.use(bodyparser.json());
 
-  // create route to show all contacts
+  // create route to show all contact[MaA[M`A[M`${HOME}/.bashrc s
   router.get('/contacts', eatAuth, function (req, res) {
     //find contacts
     ContactList.find({listOwnerId: req.user._id}, function (err, data) {
@@ -83,9 +83,11 @@ module.exports = function (router) {
       }
       var userToAdd = data[0].receivedRequests[req.body.user_id];
       var dynSet = {$set:userToAdd};
+			console.log(req.body);
+			console.log('user to add', userToAdd);
 
       dynSet.$set['friends.' + req.body.user_id] = {name: userToAdd.name};
-      ContactList.update({listOwnerId: req.body.from_user_id}, dynSet ,null , function (err, data){
+      ContactList.update({listOwnerId: req.body.user_id}, dynSet ,null , function (err, data){
         if (err) {
           console.log(err);
           return res.status(500).json({success: false, msg: 'server failed to complete your request'});
