@@ -3,7 +3,7 @@ var React = require('react');
 var ChatThreadActionCreators  = require('../actions/ChatThreadActionCreators' );
 var ChatMessageActionCreators = require('../actions/ChatMessageActionCreators');
 var ChatWebAPIUtils           = require('../utils/ChatWebAPIUtils'            );
-
+var Cookies = require('cookies-js');
 var ENTER_KEY_CODE = 13;
 
 var ThreadComposer = React.createClass({
@@ -17,7 +17,7 @@ var ThreadComposer = React.createClass({
       <section>
         <form>
         <div>
-          <label className="user">User</label>
+          <label className="user">To:</label>
           <input onChange={this._onChangeUser} type="text" name="username" placeholder="type in the username" value={this.state.user}/>
         </div>
         <div>
@@ -47,8 +47,38 @@ var ThreadComposer = React.createClass({
       ChatThreadActionCreators.createThread(text, threadID, user);
     }
     this.setState({text: '', user: ''});
-
     ChatWebAPIUtils.getAllMessages();
+
+  getFriends();
+
+  function getFriends() {
+    console.log('1');
+    ChatWebAPIUtils.getAllFriends(foo);
+
+    function foo(result) {
+      console.log('2');
+      console.log(result);
+      result.push('testing');
+      var text = '';
+      var user = 'placeholder';
+      var threadID = null;
+      result.forEach(function(friend) {
+        ChatThreadActionCreators.createThread(text, threadID, user)
+      });
+      Cookies.set('friendlist', JSON.stringify(result));
+      localStorage.setItem('friends', JSON.stringify(result));
+    }
+  }
+
+    // if (friendList) {
+    // friendList.forEach(function(array) {
+    //   console.log('iterated the array');
+    //   var text = 'Chat between you and ..'
+    //   var threadID = null;
+    //   var user = 'placeholder user for now'
+    //   ChatThreadActionCreators.createThread(text, threadID, user);
+    // });
+    // }
   }
 
 });

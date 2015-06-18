@@ -7,7 +7,7 @@ var log_in      = require('./js/components/log_in.jsx'     );
 var Users       = require('./js/components/users.jsx'      );
 var constants   = require('./js/constants/login_constants' );
 var UserStore   = require('./js/stores/user_stores'        );
-var Router, { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
+import Router, { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
 
 require("./css/chatapp.css");
 

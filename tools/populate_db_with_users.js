@@ -21,7 +21,7 @@ describe('create users with friends',function(){
 				.end(function(err, res){
 					if (err) console.log(err); 		
 					for (var i=0; i<res.body.length; i++){
-						userKeys[res.body[i].username]._id = res.body[i]._id;
+						userKeys[res.body[i].username] = {_id : res.body[i]._id};
 					}	
 					done();
 				});

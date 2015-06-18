@@ -39,7 +39,7 @@ var UserStore = Fluxxor.createStore({
 
         this.eat = res.body.eat;
         this.username = res.body.username;
-        Cookies.set('username', this.username)
+        Cookies.set('username', this.username);
         Cookies.set('eat', this.eat);
         this.emit('change');
       }.bind(this));
