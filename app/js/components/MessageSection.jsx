@@ -1,8 +1,8 @@
 var React = require('react');
-import MessageStore from '../stores/MessageStore';
-import ThreadStore from '../stores/ThreadStore';
-import MessageComposer from './MessageComposer.jsx';
-import MessageListItem from './MessageListItem.jsx';
+var MessageStore = require('../stores/MessageStore'  );
+var ThreadStore = require('../stores/ThreadStore'    );
+var MessageComposer = require('./MessageComposer.jsx');
+var MessageListItem = require('./MessageListItem.jsx');
 
 function getStateFromStores() {
   return {
