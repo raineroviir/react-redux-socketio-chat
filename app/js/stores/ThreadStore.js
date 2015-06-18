@@ -88,6 +88,9 @@ var ThreadStore = assign({}, EventEmitter.prototype, {
   getAllForUser: function() {
     var orderedThreads = [];
 
+    for (var id in _threads) {
+      var thread = _threads[id]
+    }
   },
 
   getCurrentID: function() {
