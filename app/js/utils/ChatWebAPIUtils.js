@@ -27,6 +27,20 @@ module.exports = {
 
   },
 
+  refresh: function() {
+    var userName = Cookies.get('username')
+    request
+        .get('/api/dashboard/' + userName)
+        .set('eat', Cookies.get('eat'))
+        .end(function(err, res) {
+          if(err) {
+            return console.log(err);
+          }
+          // console.log(res.body);
+          ChatServerActionCreators.refresh(res.body);
+        }.bind(this));
+  },
+
   getAllFriends: function(callback) {
     var currentEAT = Cookies.get('eat');
     request

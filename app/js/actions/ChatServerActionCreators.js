@@ -24,6 +24,13 @@ module.exports = {
       type: ActionTypes.RECEIVE_FRIENDS,
       rawFriends: friends
     });
+  },
+
+  refresh: function(rawMessages) {
+    ChatAppDispatcher.dispatch({
+      type: ActionTypes.REFRESH,
+      rawMessages: rawMessages
+    });
   }
 
 };
