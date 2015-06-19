@@ -42,11 +42,11 @@ var Login = React.createClass({
     return (
       <section  className="sign-in">
         <form name="signinform" onSubmit={this.handleSubmit}>
-          <ul>
-            <li><label htmlFor="username">User Name:</label>{usernameError}</li>
-            <li><input type="text" name="user-username" id="username" value={this.state.user.username} onChange={this.handleChange} /></li>
-            <li><label htmlFor="password">Password:</label>{passwordError}</li>
-            <li><input type="password" name="user-password" id="password" value={this.state.user.password} onChange={this.handleChange} /></li>
+          <ul className="sign-in-form">
+            <li><label htmlFor="username">User Name:</label></li>
+            <li><input type="text" name="user-username" id="username" placeholder="User Name Required" value={this.state.user.username} onChange={this.handleChange} /></li>
+            <li><label htmlFor="password">Password:</label></li>
+            <li><input type="password" name="user-password" id="password" placeholder="Password Required" value={this.state.user.password} onChange={this.handleChange} /></li>
             <li>{submitButton}</li>
           </ul>
         </form>
