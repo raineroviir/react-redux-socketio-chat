@@ -32,9 +32,9 @@ h2, h3 {
   color: #1DAF04;
 }
 
-li {
+/*li {
   float: left;
-}
+}*/
 
 form {
   float: left;
@@ -148,6 +148,10 @@ button:active {
     list-style-type: none;
 }
 
+.main-nav li {
+  float: left;
+}
+
 .search {
   float: right;
   padding-right: 15%;
@@ -159,6 +163,10 @@ button:active {
 
 .create-or-login-button {
 padding-left: 2%;
+}
+
+.logout-button {
+  margin-left: 3%;
 }
 
 .sign-in {
