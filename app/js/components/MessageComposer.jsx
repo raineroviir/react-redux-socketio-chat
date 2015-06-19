@@ -38,7 +38,6 @@ var MessageComposer = React.createClass({
       var text = this.state.text.trim();
       var username = Cookies.get('username');
       var threadname = this.props.threadName;
-      console.log(this.props);
       if (text) {
         ChatMessageActionCreators.createMessage(text, this.props.threadID, username, threadname);
       }

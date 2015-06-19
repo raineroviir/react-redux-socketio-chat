@@ -43,18 +43,14 @@ var App = React.createClass({
   getStateFromFlux: function() {
     var flux = this.getFlux();
     return {
-      userData: flux.store('UserStore').getState(),
-      loggedin: ''
+      userData: flux.store('UserStore').getState()
     };
-  },
-  requireAuth: function() {
-    return this.state.loggedin;
   },
   render: function() {
     return (
       <main>
       <h1>WADDUP TURTLE</h1>
-        <Users loggedin={this.state.userData.loggedin} eat={this.state.userData.eat}/>
+        <Users eat={this.state.userData.eat}/>
       <RouteHandler/>
       </main>
     )
@@ -64,7 +60,7 @@ var App = React.createClass({
 // Declare our routes and their hierarchy
 var routes = (
   <Route handler={App}>
-    <Route path="/dashboard" handler={dashboard} onEnter={App.requireAuth}/>
+    <Route path="/" handler={dashboard} onEnter={App.requireAuth}/>
   </Route>
 );
 
