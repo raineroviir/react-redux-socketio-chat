@@ -12,6 +12,7 @@ module.exports = {
     var serverReq =
       request
         .get('/api/dashboard/' + userName)
+        .set('eat', Cookies.get('eat'))
         .end(function(err, res) {
           if(err) {
             return console.log(err);
@@ -63,6 +64,7 @@ module.exports = {
 
     request
     .post('/api/messages/createmessage')
+    .set('eat', Cookies.get('eat'))
     .send(createdMessage)
     .end(function(err, res) {
       if(err) {
