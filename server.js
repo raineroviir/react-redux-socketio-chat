@@ -8,8 +8,11 @@ var http = require('http').createServer(app);
 var io = require('socket.io').listen(http);
 var eat_io_auth = require('./lib/eat_auth_io.js');
 var cors = require('./cors');
+var redirect = require("express-redirect");
 
 var connectedUses = {};
+
+redirect(app);
 
 // set environment var
 process.env.PORT = process.env.PORT || 3000;
@@ -47,6 +50,7 @@ app.use('/api', usersRouter);
 app.use('/api', authRouter);
 app.use('/api', contactRouter);
 app.use('/api', messageRouter);
+// app.redirect('/dashboard', '/#/dashboard');
 
 
 io.on('connection', function(socket){

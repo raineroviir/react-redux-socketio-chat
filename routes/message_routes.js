@@ -2,11 +2,12 @@
 
 var Message = require('../models/Message');
 var bodyparser = require('body-parser');
+var eatAuth = require('../lib/eat_auth.js')(process.env.AUTH_SECRET);
 
 module.exports = function (router) {
   router.use(bodyparser.json());
   //get all messages
-  router.get('/dashboard', function (req, res) {
+  router.get('/dashboard', eatAuth, function (req, res) {
 
     Message.find({}, function (err, data) {
       if (err) {
@@ -17,7 +18,7 @@ module.exports = function (router) {
     });
   });
 
-  router.get('/dashboard/:user', function (req, res) {
+  router.get('/dashboard/:user', eatAuth, function (req, res) {
 
     Message.find({users: req.params.user}, function (err, data) {
       if (err) {
@@ -30,7 +31,7 @@ module.exports = function (router) {
   });
 
   //create message
-  router.post('/messages/createmessage', function (req, res) {
+  router.post('/messages/createmessage', eatAuth, function (req, res) {
     var newMessage = new Message(req.body);
     newMessage.save(function (err, data) {
       if (err) {
@@ -42,7 +43,7 @@ module.exports = function (router) {
   });
 
   //edit messages
-  router.patch('/messages/patchmessage', function(req, res) {
+  router.patch('/messages/patchmessage', eatAuth, function(req, res) {
     var threadID = req.body.threadID
     var userToBeAdded = req.body.username
     if (err) {
