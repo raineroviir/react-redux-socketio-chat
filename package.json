@@ -62,6 +62,7 @@
     "body-parser": "^1.13.0",
     "eat": "^0.1.1",
     "express": "^4.12.4",
+    "express-redirect": "^1.1.1",
     "flux": "^2.0.3",
     "keymirror": "^0.1.1",
     "lodash": "^3.9.3",
