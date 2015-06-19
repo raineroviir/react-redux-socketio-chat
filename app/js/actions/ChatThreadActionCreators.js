@@ -15,11 +15,13 @@ module.exports = {
   },
 
   createThread: function(text, currentThreadID, user, sendMessageTo) {
+    console.log('ChatThreadActionCreators');
+    console.log(sendMessageTo);
     ChatAppDispatcher.dispatch({
       type: ActionTypes.CREATE_THREAD,
       text: text,
       currentThreadID: currentThreadID,
-      user: user
+      users: [user, sendMessageTo]
     });
     var message = ChatMessageUtils.getCreatedMessageData(text, currentThreadID, user, sendMessageTo);
     ChatWebAPIUtils.createMessage(message, user);

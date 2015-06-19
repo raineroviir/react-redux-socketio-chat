@@ -16,7 +16,7 @@ module.exports = {
           if(err) {
             return console.log(err);
           }
-          console.log(res.body);
+          // console.log(res.body);
           ChatServerActionCreators.receiveAll(res.body);
         }.bind(this));
     ChatServerActionCreators.receiveAll(welcomeMessage);
@@ -43,11 +43,14 @@ module.exports = {
 
   createMessage: function(message, threadName) {
 
+    // console.log('ChatWebAPIUtils');
+    // console.log(message.sendMessageTo);
+    // console.log(message.authorName);
     // var rawMessages = JSON.parse(localStorage.getItem('messages'));
     var timestamp = Date.now();
     var id = 'm_' + timestamp;
     var threadID = message.threadID || ('t_' + Date.now());
-    var threadName = message.authorName
+    var threadName = message.sendMessageTo ? message.sendMessageTo : message.authorName;
     var createdMessage = {
       id: id,
       threadID: threadID,
@@ -55,7 +58,7 @@ module.exports = {
       authorName: message.authorName,
       text: message.text,
       timestamp: timestamp,
-      users: message.authorName
+      users: [message.authorName, message.sendMessageTo]
     };
 
     request
@@ -73,12 +76,18 @@ module.exports = {
   },
 
   updateMessageOwners: function(message) {
+
+    var currentEAT = Cookies.get('eat');
+    var username = Cookies.get('username');
+
     var patchpackage = {
-      username: message.authorName,
+      username: username,
       threadID: message.threadID
     }
+
     request
-    .patch('/api/messages/patchmessage')
+    .patch('/api/users/' + username)
+    .set('eat', currentEAT)
     .send(patchpackage)
     .end(function(err, res) {
       if(err) {
@@ -87,5 +96,4 @@ module.exports = {
 
     })
   }
-
-};
+}

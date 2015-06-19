@@ -45,7 +45,7 @@ var MessageSection = React.createClass({
         <ul className="message-list" ref="messageList">
           {messageListItems}
         </ul>
-        <MessageComposer threadID={this.state.thread.id}/>
+        <MessageComposer threadID={this.state.thread.id} threadName={this.state.thread.name} messaGes={this.state.messages}/>
       </div>
     )
   },

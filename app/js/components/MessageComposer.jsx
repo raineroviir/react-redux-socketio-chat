@@ -1,7 +1,7 @@
 var React                     = require('react'                               );
 var ChatMessageActionCreators = require('../actions/ChatMessageActionCreators');
 var Cookies                   = require('cookies-js'                          );
-
+var ThreadStore       = require('../stores/ThreadStore'      );
 var ReactPropTypes            = React.PropTypes;
 var ENTER_KEY_CODE            = 13;
 
@@ -12,7 +12,9 @@ var MessageComposer = React.createClass({
   },
 
   getInitialState: function() {
-    return {text: ''};
+    return {
+      text: ''
+    };
   },
   render: function() {
     return (
@@ -35,8 +37,10 @@ var MessageComposer = React.createClass({
       event.preventDefault();
       var text = this.state.text.trim();
       var username = Cookies.get('username');
+      var threadname = this.props.threadName;
+      console.log(this.props);
       if (text) {
-        ChatMessageActionCreators.createMessage(text, this.props.threadID, username);
+        ChatMessageActionCreators.createMessage(text, this.props.threadID, username, threadname);
       }
       this.setState({text: ''});
     }

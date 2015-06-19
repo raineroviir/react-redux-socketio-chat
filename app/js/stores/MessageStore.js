@@ -97,7 +97,8 @@ MessageStore.dispatchToken = ChatAppDispatcher.register(function(action) {
         action.text,
         action.currentThreadID,
         action.username,
-        action.users
+        action.users,
+        action.threadname
       );
       _messages[message.id] = message;
       MessageStore.emitChange();

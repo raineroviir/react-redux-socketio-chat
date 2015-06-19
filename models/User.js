@@ -14,7 +14,8 @@ var UserSchema = mongoose.Schema({
   basic: {
     email:    { type: String, required: true, unique: true },
     password: { type: String, required: true               }
-  }
+  },
+  threads: Array
 });
 
 // Validations

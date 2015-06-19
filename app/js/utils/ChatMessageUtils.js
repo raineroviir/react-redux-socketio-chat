@@ -8,12 +8,15 @@ module.exports = {
       date: new Date(rawMessage.timestamp),
       text: rawMessage.text,
       isRead: rawMessage.threadID === currentThreadID,
-      username: username,
-      users: username
+      username: rawMessage.username,
+      users: rawMessage.users,
+      sendMessageTo: rawMessage.sendMessageTo
     };
   },
 
-  getCreatedMessageData: function(text, currentThreadID, username, sendMessageTo) {
+  getCreatedMessageData: function(text, currentThreadID, username, sendMessageTo, threadname) {
+    // console.log('getCreatedMessageData');
+    // console.log(sendMessageTo);
     var timestamp = Date.now();
     return {
       id: 'm_' + timestamp,
@@ -22,7 +25,8 @@ module.exports = {
       date: new Date(timestamp),
       text: text,
       isRead: true,
-      users: [username, sendMessageTo]
+      users: [username, sendMessageTo, threadname],
+      sendMessageTo: sendMessageTo
     };
   },
 

@@ -20,10 +20,6 @@ var ThreadComposer = React.createClass({
             <label className="user">User</label>
             <input onChange={this._onChangeUser} type="text" name="username" placeholder="type in the username" value={this.state.user}/>
           </div>
-          <div>
-            <label className="message">Message</label>
-            <input className="new-thread-textbox" onChange={this._onChangeText} type="textbox"  name="message" placeholder="type in your msg" value={this.state.text}/>
-          </div>
           <button type="submit" onClick={this._onClick}>Start New Thread</button>
         </form>
       </section>
@@ -40,15 +36,11 @@ var ThreadComposer = React.createClass({
 
   _onClick: function(event) {
     event.preventDefault();
-    var text = this.state.text.trim();
+    var text = this.state.text.trim() || '';
     var user = Cookies.get('username');
     var sendMessageTo = this.state.user.trim();
     var threadID = null;
-    if (text && user) {
-      ChatThreadActionCreators.createThread(text, threadID, user, sendMessageTo);
-    }
-    this.setState({text: '', user: ''});
-    ChatWebAPIUtils.getAllMessages();
+    ChatThreadActionCreators.createThread(text, threadID, user, sendMessageTo);
 
   // getFriends();
 
@@ -70,6 +62,9 @@ var ThreadComposer = React.createClass({
   //     localStorage.setItem('friends', JSON.stringify(result));
   //   }
   // }
+
+  this.setState({text: '', user: ''});
+  ChatWebAPIUtils.getAllMessages();
 
     // if (friendList) {
     // friendList.forEach(function(array) {
