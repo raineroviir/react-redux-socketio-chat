@@ -41,34 +41,35 @@ var ThreadComposer = React.createClass({
   _onClick: function(event) {
     event.preventDefault();
     var text = this.state.text.trim();
-    var user = this.state.user.trim();
+    var user = Cookies.get('username');
+    var sendMessageTo = this.state.user.trim();
     var threadID = null;
     if (text && user) {
-      ChatThreadActionCreators.createThread(text, threadID, user);
+      ChatThreadActionCreators.createThread(text, threadID, user, sendMessageTo);
     }
     this.setState({text: '', user: ''});
     ChatWebAPIUtils.getAllMessages();
 
-  getFriends();
+  // getFriends();
 
-  function getFriends() {
-    console.log('1');
-    ChatWebAPIUtils.getAllFriends(foo);
+  // function getFriends() {
+  //   console.log('1');
+  //   ChatWebAPIUtils.getAllFriends(foo);
 
-    function foo(result) {
-      console.log('2');
-      console.log(result);
-      result.push('testing');
-      var text = '';
-      var user = 'placeholder';
-      var threadID = null;
-      result.forEach(function(friend) {
-        ChatThreadActionCreators.createThread(text, threadID, user)
-      });
-      Cookies.set('friendlist', JSON.stringify(result));
-      localStorage.setItem('friends', JSON.stringify(result));
-    }
-  }
+  //   function foo(result) {
+  //     console.log('2');
+  //     console.log(result);
+  //     result.push('testing');
+  //     var text = '';
+  //     var user = 'placeholder';
+  //     var threadID = null;
+  //     result.forEach(function(friend) {
+  //       ChatThreadActionCreators.createThread(text, threadID, user)
+  //     });
+  //     Cookies.set('friendlist', JSON.stringify(result));
+  //     localStorage.setItem('friends', JSON.stringify(result));
+  //   }
+  // }
 
     // if (friendList) {
     // friendList.forEach(function(array) {

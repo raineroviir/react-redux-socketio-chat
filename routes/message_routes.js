@@ -16,6 +16,19 @@ module.exports = function (router) {
       res.json(data);
     });
   });
+
+  router.get('/dashboard/:user', function (req, res) {
+
+    Message.find({users: req.params.user}, function (err, data) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({msg: 'internal server error'});
+      }
+      console.log(data);
+      res.json(data);
+    });
+  });
+
   //create message
   router.post('/messages/createmessage', function (req, res) {
     var newMessage = new Message(req.body);

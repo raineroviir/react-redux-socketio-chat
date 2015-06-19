@@ -14,7 +14,6 @@ module.exports = {
       currentThreadID: currentThreadID,
       username: username
     });
-    console.log('ChatMessageAction.createMsg()');
     var message = ChatMessageUtils.getCreatedMessageData(text, currentThreadID, username);
     ChatWebAPIUtils.createMessage(message);
   }

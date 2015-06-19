@@ -6,18 +6,20 @@ module.exports = {
 
   getAllMessages: function() {
 
-    var rawMessages = JSON.parse(localStorage.getItem('messages'));
+    var welcomeMessage = JSON.parse(localStorage.getItem('messages'));
 
+    var userName = Cookies.get('username')
     var serverReq =
       request
-        .get('/api/dashboard')
+        .get('/api/dashboard/' + userName)
         .end(function(err, res) {
           if(err) {
             return console.log(err);
           }
+          console.log(res.body);
           ChatServerActionCreators.receiveAll(res.body);
         }.bind(this));
-    ChatServerActionCreators.receiveAll(rawMessages);
+    ChatServerActionCreators.receiveAll(welcomeMessage);
 
 
     // simulate success callback
