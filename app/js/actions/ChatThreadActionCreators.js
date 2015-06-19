@@ -15,8 +15,6 @@ module.exports = {
   },
 
   createThread: function(text, currentThreadID, user, sendMessageTo) {
-    console.log('ChatThreadActionCreators');
-    console.log(sendMessageTo);
     ChatAppDispatcher.dispatch({
       type: ActionTypes.CREATE_THREAD,
       text: text,

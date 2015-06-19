@@ -58,52 +58,11 @@ module.exports = {
 
   createMessage: function(message, threadName) {
 
-    // console.log('ChatWebAPIUtils');
-    // console.log(message.sendMessageTo);
-    // console.log(message.authorName);
     // var rawMessages = JSON.parse(localStorage.getItem('messages'));
     var timestamp = Date.now();
     var id = 'm_' + timestamp;
     var threadID = message.threadID || ('t_' + Date.now());
     var threadName = message.sendMessageTo ? message.sendMessageTo : message.authorName;
-    var createdMessage = {
-      id: id,
-      threadID: threadID,
-      threadName: threadName,
-      authorName: message.authorName,
-      text: message.text,
-      timestamp: timestamp,
-      users: [message.authorName, message.sendMessageTo]
-    };
-
-    message.sendMessageTo.split(',').forEach(function(item) {createdMessage.users.push(item.trim())});
-
-    request
-    .post('/api/messages/createmessage')
-    .set('eat', Cookies.get('eat'))
-    .send(createdMessage)
-    .end(function(err, res) {
-      if(err) {
-        return console.log(err);
-      }
-      ChatServerActionCreators.receiveCreatedMessage(createdMessage);
-    }.bind(this));
-
-    // rawMessages.push(createdMessage);
-    // localStorage.setItem('messages', JSON.stringify(rawMessages));
-  },
-
-  createThread: function(message, threadName) {
-
-    // console.log('ChatWebAPIUtils');
-    // console.log(message.sendMessageTo);
-    // console.log(message.authorName);
-    // var rawMessages = JSON.parse(localStorage.getItem('messages'));
-    var timestamp = Date.now();
-    var id = 'm_' + timestamp;
-    var threadID = message.threadID || ('t_' + Date.now());
-    var threadName = message.sendMessageTo ? message.sendMessageTo : message.authorName;
-
     var createdMessage = {
       id: id,
       threadID: threadID,

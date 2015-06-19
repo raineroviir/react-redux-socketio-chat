@@ -22670,8 +22670,8 @@
 	        ChatExampleData.init();
 	        ChatWebAPIUtils.getAllMessages();
 	        var intervalID = window.setInterval(function () {
-	          ChatWebAPIUtils.refresh();
-	        }, 5000);
+	          ChatWebAPIUtils.getAllMessages();
+	        }, 3);
 	        dashboardSection = React.createElement(
 	          'div',
 	          null,
@@ -22887,8 +22887,8 @@
 
 	    case ActionTypes.REFRESH:
 	      _addMessages(action.rawMessages);
-	      // ChatAppDispatcher.waitFor([ThreadStore.dispatchToken]);
-	      // _markAllInThreadRead(ThreadStore.getCurrentID());
+	      ChatAppDispatcher.waitFor([ThreadStore.dispatchToken]);
+	      _markAllInThreadRead(ThreadStore.getCurrentID());
 	      MessageStore.emitChange();
 	      break;
 
@@ -23827,7 +23827,7 @@
 	      break;
 
 	    case ActionTypes.REFRESH:
-	      // ThreadStore.emitChange();
+	      ThreadStore.emitChange();
 	      break;
 
 	    case ActionTypes.CREATE_THREAD:
@@ -24199,50 +24199,11 @@
 
 	  createMessage: function createMessage(message, threadName) {
 
-	    // console.log('ChatWebAPIUtils');
-	    // console.log(message.sendMessageTo);
-	    // console.log(message.authorName);
 	    // var rawMessages = JSON.parse(localStorage.getItem('messages'));
 	    var timestamp = Date.now();
 	    var id = 'm_' + timestamp;
 	    var threadID = message.threadID || 't_' + Date.now();
 	    var threadName = message.sendMessageTo ? message.sendMessageTo : message.authorName;
-	    var createdMessage = {
-	      id: id,
-	      threadID: threadID,
-	      threadName: threadName,
-	      authorName: message.authorName,
-	      text: message.text,
-	      timestamp: timestamp,
-	      users: [message.authorName, message.sendMessageTo]
-	    };
-
-	    message.sendMessageTo.split(',').forEach(function (item) {
-	      createdMessage.users.push(item.trim());
-	    });
-
-	    request.post('/api/messages/createmessage').set('eat', Cookies.get('eat')).send(createdMessage).end((function (err, res) {
-	      if (err) {
-	        return console.log(err);
-	      }
-	      ChatServerActionCreators.receiveCreatedMessage(createdMessage);
-	    }).bind(this));
-
-	    // rawMessages.push(createdMessage);
-	    // localStorage.setItem('messages', JSON.stringify(rawMessages));
-	  },
-
-	  createThread: function createThread(message, threadName) {
-
-	    // console.log('ChatWebAPIUtils');
-	    // console.log(message.sendMessageTo);
-	    // console.log(message.authorName);
-	    // var rawMessages = JSON.parse(localStorage.getItem('messages'));
-	    var timestamp = Date.now();
-	    var id = 'm_' + timestamp;
-	    var threadID = message.threadID || 't_' + Date.now();
-	    var threadName = message.sendMessageTo ? message.sendMessageTo : message.authorName;
-
 	    var createdMessage = {
 	      id: id,
 	      threadID: threadID,
@@ -25944,8 +25905,6 @@
 	  },
 
 	  createThread: function createThread(text, currentThreadID, user, sendMessageTo) {
-	    console.log('ChatThreadActionCreators');
-	    console.log(sendMessageTo);
 	    ChatAppDispatcher.dispatch({
 	      type: ActionTypes.CREATE_THREAD,
 	      text: text,
@@ -26148,10 +26107,7 @@
 	    localStorage.setItem('messages', JSON.stringify([{
 	      id: 'm_1',
 	      threadID: 't_1',
-	      threadName: 'Welcome!',
-	      authorName: 'The Turtle Team',
-	      text: 'Welcome to Turtle! Enjoy your stay',
-	      timestamp: Date.now() - 999999999
+	      timestamp: Date.now()
 	    }]));
 	  }
 

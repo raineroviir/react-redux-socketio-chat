@@ -120,7 +120,7 @@ ThreadStore.dispatchToken = ChatAppDispatcher.register(function(action) {
       break;
 
     case ActionTypes.REFRESH:
-      // ThreadStore.emitChange();
+      ThreadStore.emitChange();
       break;
 
     case ActionTypes.CREATE_THREAD:
