@@ -124,7 +124,7 @@ button:active {
   top:1px;
 }
 
-.sign-in-form li {
+.sign-in-form, .sign-in-form li {
   float: left;
 }
 

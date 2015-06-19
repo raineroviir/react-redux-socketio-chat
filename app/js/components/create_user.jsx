@@ -49,7 +49,7 @@ var CreateUser = React.createClass({
     return (
       <section  className="sign-in">
         <form name="signupform" onSubmit={this.handleSubmit}>
-          <ul>
+          <ul className="sign-in-form">
             <li><label htmlFor="email">Email:</label>{emailError}</li>
             <li><input type="text" name="user-email" id="email" value={this.state.newUser.email} onChange={this.handleChange} /></li>
             <li><label htmlFor="username">User Name:</label>{usernameError}</li>
