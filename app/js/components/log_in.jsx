@@ -35,18 +35,20 @@ var Login = React.createClass({
     if (this.state.user.password.length < 1 && this.state.changed)
       passwordError = <span>password cannot be blank</span>;
     if (usernameError || passwordError && !this.state.changed)
-      submitButton = <button type="submit" disabled>Log In to Exising User</button>;
+      submitButton = <button type="submit" disabled>Log In</button>;
     else
-      submitButton = <button type="submit" >Log In to Exising User</button>;
+      submitButton = <button type="submit" >Log In</button>;
 
     return (
       <section  className="sign-in">
         <form name="signinform" onSubmit={this.handleSubmit}>
-          {submitButton}
-          <label htmlFor="username">User Name:</label>{usernameError}
-          <input type="text" name="user-username" id="username" value={this.state.user.username} onChange={this.handleChange} />
-          <label htmlFor="password">Password:</label>{passwordError}
-          <input type="password" name="user-password" id="password" value={this.state.user.password} onChange={this.handleChange} />
+          <ul>
+            <li><label htmlFor="username">User Name:</label>{usernameError}</li>
+            <li><input type="text" name="user-username" id="username" value={this.state.user.username} onChange={this.handleChange} /></li>
+            <li><label htmlFor="password">Password:</label>{passwordError}</li>
+            <li><input type="password" name="user-password" id="password" value={this.state.user.password} onChange={this.handleChange} /></li>
+            <li>{submitButton}</li>
+          </ul>
         </form>
       </section>
     )

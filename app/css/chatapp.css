@@ -19,6 +19,7 @@ body {
   background-size: cover;
   background-attachment: fixed;
   height: 100%;
+  margin: 0 0 0 0;
 }
 
 h1 {
@@ -35,6 +36,9 @@ h2, h3 {
 form {
   float: left;
   display: block;
+}
+li {
+  list-style: none;
 }
 
 input {
@@ -158,7 +162,7 @@ button:active {
 }
 
 .create-or-login-button {
-padding-left: 2%;
+padding: 3% 0 3% 2%;
 }
 
 .logout-button {
@@ -170,8 +174,7 @@ padding-left: 2%;
 }
 
 .sign-in button {
-  margin-right: 2%;
-  margin-left: -3%;
+  margin-top: 6%;
 }
 
 .chatapp {
