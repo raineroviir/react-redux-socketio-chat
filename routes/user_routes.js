@@ -41,7 +41,6 @@ module.exports = function loadUserRoutes(router) {
 
   // Update user - CURRENTLY UNUSED
   router.patch('/users/:username', eatAuth, function(req, res) {
-    console.log('HERE"S THE REQ.BODY FOR UPDATE: ', req.body);
     var updatedUserInfo = req.body;
     delete updatedUserInfo._id;
     delete updatedUserInfo.eat;     // delete encoded token

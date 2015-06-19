@@ -8,7 +8,7 @@ var User     = require('../models/User.js');
 chai.use(chaihttp);
 
 // Use test db
-process.env.MONGOLAB_URI = 'mongodb://localhost/skribbl_test';
+process.env.MONGOLAB_URI = 'mongodb://localhost/turtle_test';
 
 // Start api server for testing
 require('../server.js');
