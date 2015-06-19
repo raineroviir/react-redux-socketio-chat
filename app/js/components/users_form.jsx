@@ -27,7 +27,6 @@ var UsersForm = React.createClass({
 
     if (!this.state.existingUser) {
       linkText = 'Create New User'
-      h1Text = 'Logging In!'
       userForm = <Login />
     } else {
       linkText = 'Log in to Exisiting User'
@@ -36,9 +35,10 @@ var UsersForm = React.createClass({
     }
 
     return (
-      <div>
-        <h1>{h1Text}</h1>
-        <a href onClick={this.toggleExisting}>{linkText}</a>
+      <div className="create-or-login-button">
+        <a href onClick={this.toggleExisting}>
+        <button>{linkText}</button>
+        </a>
         {userForm}
       </div>
     )

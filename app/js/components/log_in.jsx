@@ -40,14 +40,15 @@ var Login = React.createClass({
       submitButton = <button type="submit" >Log In to Exising User</button>;
 
     return (
-      <form name="signinform" onSubmit={this.handleSubmit}>
-        <label htmlFor="username">User Name:</label>{usernameError}<br/>
-        <input type="text" name="user-username" id="username" value={this.state.user.username} onChange={this.handleChange} />
-        <br/>
-        <label htmlFor="password">Password:</label>{passwordError}<br/>
-        <input type="password" name="user-password" id="password" value={this.state.user.password} onChange={this.handleChange} /><br/>
-        {submitButton}
-      </form>
+      <section  className="sign-in">
+        <form name="signinform" onSubmit={this.handleSubmit}>
+          {submitButton}
+          <label htmlFor="username">User Name:</label>{usernameError}
+          <input type="text" name="user-username" id="username" value={this.state.user.username} onChange={this.handleChange} />
+          <label htmlFor="password">Password:</label>{passwordError}
+          <input type="password" name="user-password" id="password" value={this.state.user.password} onChange={this.handleChange} />
+        </form>
+      </section>
     )
   }
 });
