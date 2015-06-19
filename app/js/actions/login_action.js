@@ -10,9 +10,7 @@ export default {
 
     if(savedEat !== eat) {
       console.log('eat token good, redirect to /dashboard');
-      var nextPath = '/dashboard';
 
-      RouterContainer.get().transitionTo(nextPath);
       localStorage.setItem('eat', eat);
     }
 
