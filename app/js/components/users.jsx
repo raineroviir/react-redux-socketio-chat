@@ -18,7 +18,7 @@ var Users = React.createClass({
   render: function() {
     var users;
     if (this.props.eat)
-      users = <a href onClick={this.handleLogout}>Log Out</a>;
+      users = <a href onClick={this.handleLogout}><button className="logout-button">Log Out</button></a>;
     else
       users = <UsersForm />;
     return (
