@@ -3,4 +3,5 @@
 **/db/**/*
 .env
 npm-debug.log
-build/
+db/
+
