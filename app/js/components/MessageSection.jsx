@@ -51,7 +51,7 @@ var MessageSection = React.createClass({
   },
 
   componentDidUpdate: function() {
-    this._scrollToBottom();
+    // this._scrollToBottom();
   },
 
   // _scrollToBottom: function() {
