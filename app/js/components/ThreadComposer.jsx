@@ -14,17 +14,17 @@ var ThreadComposer = React.createClass({
 
   render: function() {
     return (
-      <section>
+      <section className="new-thread-section">
         <form>
-        <div>
-          <label className="user">User</label>
-          <input onChange={this._onChangeUser} type="text" name="username" placeholder="type in the username" value={this.state.user}/>
-        </div>
-        <div>
-          <label className="message">Message</label>
-          <input onChange={this._onChangeText} type="text"  name="message" placeholder="type in your msg" value={this.state.text}/>
-        </div>
-        <button type="submit" onClick={this._onClick}>Send Message</button>
+          <div>
+            <label className="user">User</label>
+            <input onChange={this._onChangeUser} type="text" name="username" placeholder="type in the username" value={this.state.user}/>
+          </div>
+          <div>
+            <label className="message">Message</label>
+            <input className="new-thread-textbox" onChange={this._onChangeText} type="textbox"  name="message" placeholder="type in your msg" value={this.state.text}/>
+          </div>
+          <button type="submit" onClick={this._onClick}>Start New Thread</button>
         </form>
       </section>
     )

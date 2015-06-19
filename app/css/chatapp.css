@@ -124,6 +124,21 @@ button:active {
   top:1px;
 }
 
+.new-thread-section {
+    padding-top: 5%;
+}
+
+.new-thread-section button {
+  margin: 2% 0 0 17%
+}
+
+.new-thread-textbox {
+  float: left;
+  margin-left: 18%;
+  height: 8em;
+  width: 125%;
+}
+
 .main-nav {
   padding: 2% 0 5% 0;
   width: 100%;
@@ -239,7 +254,7 @@ padding-left: 2%;
   box-sizing: border-box;
   font-family: inherit;
   font-size: 14px;
-  height: 5em;
+  height: 12em;
   width: 100%;
   margin: 20px 0 0;
   padding: 10px;
