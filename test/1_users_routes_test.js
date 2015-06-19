@@ -10,7 +10,7 @@ var adminUser = {username: 'rainbow', email: 'rainbow@example.com', password: 'f
 chai.use(chaihttp);
 
 // Use test db
-process.env.MONGOLAB_URI = 'mongodb://localhost/skribbl_test';
+process.env.MONGOLAB_URI = 'mongodb://localhost/turtle_test';
 
 // Start api server for testing
 require('../server.js');

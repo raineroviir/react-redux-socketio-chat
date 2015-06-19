@@ -73,7 +73,6 @@ io.on('connection', function(socket){
 
 		socket.emit('login', {username: user.username, msg: 'login success', success: 'true'});
 	});
-	console.log(socket);
  	socket.emit('news', {msg: 'sup slug'});
 
   socket.on('chat message', function(msg){
