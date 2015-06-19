@@ -124,6 +124,10 @@ button:active {
   top:1px;
 }
 
+.sign-in-form li {
+  float: left;
+}
+
 .new-thread-section {
     padding-top: 5%;
 }
