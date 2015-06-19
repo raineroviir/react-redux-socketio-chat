@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/dwolfm/turtle",
   "jest": {
-    "scriptPreprocessor": "<rootDir/>/preprocessor.js",
+    "scriptPreprocessor": "./preprocessor.js",
     "unmockedModulePathPatterns": [
       "<rootDir/>/node_modules/react"
     ]

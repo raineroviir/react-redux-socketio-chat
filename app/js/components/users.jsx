@@ -17,6 +17,7 @@ var Users = React.createClass({
 
   render: function() {
     var users;
+    console.log(this.props.loggedin);
     if (this.props.eat)
       users = <a href onClick={this.handleLogout}><button className="logout-button">Log Out</button></a>;
     else

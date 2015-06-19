@@ -24,6 +24,13 @@ module.exports = {
       users: [user, sendMessageTo]
     });
     var message = ChatMessageUtils.getCreatedMessageData(text, currentThreadID, user, sendMessageTo);
-    ChatWebAPIUtils.createMessage(message, user);
+    ChatWebAPIUtils.createThread(message, user);
+  },
+
+  makeActive: function(threadID) {
+    ChatAppDispatcher.dispatch({
+      type: ActionTypes.MAKE_ACTIVE,
+      threadID: threadID
+    });
   }
 };

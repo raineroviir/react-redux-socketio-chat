@@ -39,9 +39,9 @@ var ThreadComposer = React.createClass({
     var text = this.state.text.trim() || '';
     var user = Cookies.get('username');
     var sendMessageTo = this.state.user.trim();
-    var threadID = null;
+    var threadID = Date.now();
     ChatThreadActionCreators.createThread(text, threadID, user, sendMessageTo);
-
+    // ChatThreadActionCreators.makeActive(threadID);
   // getFriends();
 
   // function getFriends() {
