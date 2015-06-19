@@ -22671,7 +22671,7 @@
 	        ChatWebAPIUtils.getAllMessages();
 	        var intervalID = window.setInterval(function () {
 	          ChatWebAPIUtils.getAllMessages();
-	        }, 3);
+	        }, 500);
 	        dashboardSection = React.createElement(
 	          'div',
 	          null,
