@@ -1,4 +1,4 @@
-import React from 'react/addons';
+var React = require('react/addons');
 
 export default class Navbar extends React.Component {
   render() {

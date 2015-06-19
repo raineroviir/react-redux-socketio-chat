@@ -1,8 +1,9 @@
 'use strict';
 
-var React = require('react');
-var Fluxxor = require('fluxxor')
-var FluxMixin = Fluxxor.FluxMixin(React);
+var React           = require('react'  );
+var Fluxxor         = require('fluxxor');
+
+var FluxMixin       = Fluxxor.FluxMixin(React);
 var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var Login = React.createClass({
@@ -23,7 +24,6 @@ var Login = React.createClass({
   handleSubmit: function(event) {
     event.preventDefault();
 
-    console.log(this.state.user);
     this.getFlux().actions.login(this.state.user);
   },
   render: function() {

@@ -1,11 +1,10 @@
-var React = require('react');
+var React                     = require('react'                               );
+var ChatMessageActionCreators = require('../actions/ChatMessageActionCreators');
+var Cookies                   = require('cookies-js'                          );
 
-import ChatMessageActionCreators from '../actions/ChatMessageActionCreators';
-var Cookies = require('cookies-js');
+var ReactPropTypes            = React.PropTypes;
+var ENTER_KEY_CODE            = 13;
 
-var ReactPropTypes = React.PropTypes;
-
-var ENTER_KEY_CODE = 13;
 var MessageComposer = React.createClass({
 
   propTypes: {

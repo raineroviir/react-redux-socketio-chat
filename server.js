@@ -4,6 +4,11 @@ var express  = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var app      = express();
+var http = require('http').createServer(app);
+var io = require('socket.io').listen(http);
+var eat_io_auth = require('./lib/eat_auth_io.js');
+
+var connectedUses = {};
 
 // set environment var
 process.env.PORT = process.env.PORT || 3000;
@@ -35,10 +40,45 @@ app.use('/api', authRouter);
 app.use('/api', contactRouter);
 app.use('/api', messageRouter);
 
+io.on('connection', function(socket){
+	console.log(socket.handshake.headers.cookie);
+	//var cookie = {};
+	//socket.handshake.headers.cookie.toString().split(' ').forEach(function(param) {
+		//cookie[param.split('=')[0]] = param.split('=')[1];
+	//});
+	//console.log(cookie);
+	//var eat = cookie.eat;
+
+	eat_io_auth( socket, function(err, user) {
+		if (err) {
+			console.log('socket fucked up ', socket.id);
+			return socket.emit('login', {success: false, msg: 'fuck'});
+		};
+		console.log(user);
+		connectedUses[user.username] = {socket_id: socket.id}
+		console.log(connectedUses);
+
+		socket.emit('login', {username: user.username, msg: 'login success', success: 'true'});
+	});
+	console.log(socket);
+ 	socket.emit('news', {msg: 'sup slug'});
+
+  socket.on('chat message', function(msg){
+		console.log(msg);
+		eat_io_auth(socket, function(err, user) {
+			if (err) return socket.emit('login to do that');
+			io.emit('chat message', user.username + ": " + msg);
+		});
+  });
+});
+
+io.on('disconnect', function(socket){
+
+});
 //load our build
 app.use(express.static(__dirname + '/build'));
 
 // start server
-app.listen(process.env.PORT, function() {
+http.listen(process.env.PORT, function() {
   console.log('server running on port: ' + process.env.PORT );
 });

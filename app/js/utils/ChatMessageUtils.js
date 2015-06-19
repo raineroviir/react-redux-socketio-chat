@@ -8,7 +8,8 @@ module.exports = {
       date: new Date(rawMessage.timestamp),
       text: rawMessage.text,
       isRead: rawMessage.threadID === currentThreadID,
-      username: username
+      username: username,
+      users: username
     };
   },
 
@@ -20,8 +21,15 @@ module.exports = {
       authorName: username || 'Bill Nye',
       date: new Date(timestamp),
       text: text,
-      isRead: true
+      isRead: true,
+      users: username
     };
+  },
+
+  getFriendData: function(friends) {
+    return {
+      friends: friends
+    }
   }
 
 };

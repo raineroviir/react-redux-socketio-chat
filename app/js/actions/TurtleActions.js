@@ -1,8 +1,9 @@
-import TurtleDispatcher from '../dispatcher/TurtleDispatcher';
-import TurtleConstants from '../constants/TurtleConstants';
-import TurtleUtils from '../utils/TurtleUtils';
-import ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
-var ActionTypes = TurtleConstants.ActionTypes;
+var TurtleDispatcher = require('../dispatcher/TurtleDispatcher');
+var TurtleConstants  = require('../constants/TurtleConstants'  );
+var TurtleUtils      = require('../utils/TurtleUtils'          );
+var ChatWebAPIUtils  = require('../utils/ChatWebAPIUtils'      );
+
+var ActionTypes      = TurtleConstants.ActionTypes;
 
 var TurtleActions = {
 

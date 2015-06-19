@@ -1,17 +1,17 @@
-import React from 'react/addons';
-import dashboard from './js/components/dashboard.jsx';
-import create_user from './js/components/create_user.jsx';
-import log_in from './js/components/log_in.jsx';
+var React       = require('react/addons'                   );
+var request     = require('superagent'                     );
+var Fluxxor     = require('fluxxor'                        );
+var dashboard   = require('./js/components/dashboard.jsx'  );
+var create_user = require('./js/components/create_user.jsx');
+var log_in      = require('./js/components/log_in.jsx'     );
+var Users       = require('./js/components/users.jsx'      );
+var constants   = require('./js/constants/login_constants' );
+var UserStore   = require('./js/stores/user_stores'        );
 import Router, { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
+
 require("./css/chatapp.css");
 
 window.React = React;
-
-var request = require('superagent');
-var constants = require('./js/constants/login_constants');
-var Fluxxor = require('fluxxor');
-var UserStore = require('./js/stores/user_stores');
-var Users = require('./js/components/users.jsx');
 
 var actions = {
   login: function(user) {
