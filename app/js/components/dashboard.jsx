@@ -12,7 +12,7 @@ export default class Dashboard extends React.Component {
     if (Cookies.get('eat')) {
       ChatExampleData.init();
       ChatWebAPIUtils.getAllMessages();
-      var intervalID = window.setInterval(function() { ChatWebAPIUtils.getAllMessages() }, 1000);
+      var intervalID = window.setInterval(function() { ChatWebAPIUtils.getAllMessages() }, 5000);
       dashboardSection = <div><MessageSection />
         <ThreadSection /></div>;
     } else {
