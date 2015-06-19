@@ -15,8 +15,6 @@ var _threads = {};
 var ThreadStore = assign({}, EventEmitter.prototype, {
 
   init: function(rawMessages) {
-    // console.log('ThreadStore: Init()');
-    // console.log(rawMessages);
     rawMessages.forEach(function(message) {
       var threadID = message.threadID;
       var thread = _threads[threadID];
@@ -26,6 +24,7 @@ var ThreadStore = assign({}, EventEmitter.prototype, {
       _threads[threadID] = {
         id: threadID,
         name: message.threadName,
+        users: [message.user, message.threadName],
         lastMessage: ChatMessageUtils.convertRawMessage(message, _currentID)
       };
     }, this);
@@ -87,9 +86,11 @@ var ThreadStore = assign({}, EventEmitter.prototype, {
 
   getAllForUser: function() {
     var orderedThreads = [];
-
+    var currentUser = Cookies.get('username');
     for (var id in _threads) {
       var thread = _threads[id]
+      console.log(thread);
+      orderedThreads.push(thread);
     }
   },
 

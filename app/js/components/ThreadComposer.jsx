@@ -20,10 +20,6 @@ var ThreadComposer = React.createClass({
             <label className="user">User</label>
             <input onChange={this._onChangeUser} type="text" name="username" placeholder="type in the username" value={this.state.user}/>
           </div>
-          <div>
-            <label className="message">Message</label>
-            <input className="new-thread-textbox" onChange={this._onChangeText} type="textbox"  name="message" placeholder="type in your msg" value={this.state.text}/>
-          </div>
           <button type="submit" onClick={this._onClick}>Start New Thread</button>
         </form>
       </section>
@@ -40,35 +36,35 @@ var ThreadComposer = React.createClass({
 
   _onClick: function(event) {
     event.preventDefault();
-    var text = this.state.text.trim();
-    var user = this.state.user.trim();
+    var text = this.state.text.trim() || '';
+    var user = Cookies.get('username');
+    var sendMessageTo = this.state.user.trim();
     var threadID = null;
-    if (text && user) {
-      ChatThreadActionCreators.createThread(text, threadID, user);
-    }
-    this.setState({text: '', user: ''});
-    ChatWebAPIUtils.getAllMessages();
+    ChatThreadActionCreators.createThread(text, threadID, user, sendMessageTo);
 
-  getFriends();
+  // getFriends();
 
-  function getFriends() {
-    console.log('1');
-    ChatWebAPIUtils.getAllFriends(foo);
+  // function getFriends() {
+  //   console.log('1');
+  //   ChatWebAPIUtils.getAllFriends(foo);
 
-    function foo(result) {
-      console.log('2');
-      console.log(result);
-      result.push('testing');
-      var text = '';
-      var user = 'placeholder';
-      var threadID = null;
-      result.forEach(function(friend) {
-        ChatThreadActionCreators.createThread(text, threadID, user)
-      });
-      Cookies.set('friendlist', JSON.stringify(result));
-      localStorage.setItem('friends', JSON.stringify(result));
-    }
-  }
+  //   function foo(result) {
+  //     console.log('2');
+  //     console.log(result);
+  //     result.push('testing');
+  //     var text = '';
+  //     var user = 'placeholder';
+  //     var threadID = null;
+  //     result.forEach(function(friend) {
+  //       ChatThreadActionCreators.createThread(text, threadID, user)
+  //     });
+  //     Cookies.set('friendlist', JSON.stringify(result));
+  //     localStorage.setItem('friends', JSON.stringify(result));
+  //   }
+  // }
+
+  this.setState({text: '', user: ''});
+  ChatWebAPIUtils.getAllMessages();
 
     // if (friendList) {
     // friendList.forEach(function(array) {

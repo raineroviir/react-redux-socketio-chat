@@ -7,15 +7,15 @@ var ActionTypes = ChatConstants.ActionTypes;
 
 module.exports = {
 
-  createMessage: function(text, currentThreadID, username) {
+  createMessage: function(text, currentThreadID, username, threadname) {
     ChatAppDispatcher.dispatch({
       type: ActionTypes.CREATE_MESSAGE,
       text: text,
       currentThreadID: currentThreadID,
-      username: username
+      username: username,
+      threadname: threadname
     });
-    console.log('ChatMessageAction.createMsg()');
-    var message = ChatMessageUtils.getCreatedMessageData(text, currentThreadID, username);
+    var message = ChatMessageUtils.getCreatedMessageData(text, currentThreadID, username, threadname);
     ChatWebAPIUtils.createMessage(message);
   }
 

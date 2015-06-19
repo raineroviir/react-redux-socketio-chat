@@ -7,6 +7,7 @@ var app      = express();
 var http = require('http').createServer(app);
 var io = require('socket.io').listen(http);
 var eat_io_auth = require('./lib/eat_auth_io.js');
+var cors = require('./cors');
 
 var connectedUses = {};
 
@@ -18,9 +19,16 @@ process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/turt
 // connect mongoose
 mongoose.connect(process.env.MONGOLAB_URI);
 
+// app.all('/', function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   next();
+//  });
+
 // init passport strat
 app.use(passport.initialize());
 require('./lib/passport_strategy.js')(passport);;
+app.use(cors());
 
 // routers
 var usersRouter = express.Router();
@@ -39,6 +47,7 @@ app.use('/api', usersRouter);
 app.use('/api', authRouter);
 app.use('/api', contactRouter);
 app.use('/api', messageRouter);
+
 
 io.on('connection', function(socket){
 	console.log(socket.handshake.headers.cookie);
