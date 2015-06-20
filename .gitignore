@@ -4,4 +4,4 @@
 .env
 npm-debug.log
 db/
-
+build/
