@@ -16,7 +16,6 @@ var UsersForm = React.createClass({
   toggleExisting: function(e) {
     e.preventDefault();
     var existing = this.state.existingUser;
-    console.log(this.state);
     this.setState({existingUser: !existing});
   },
   render: function() {

@@ -6,14 +6,13 @@ var ChatExampleData = require('./ChatExampleData'       );
 var ChatWebAPIUtils = require('../utils/ChatWebAPIUtils');
 var Cookies = require('cookies-js');
 
-
-ChatExampleData.init();
-ChatWebAPIUtils.getAllMessages();
-
 export default class Dashboard extends React.Component {
   render() {
     var dashboardSection;
     if (Cookies.get('eat')) {
+      ChatExampleData.init();
+      ChatWebAPIUtils.getAllMessages();
+      var intervalID = window.setInterval(function() { ChatWebAPIUtils.getAllMessages() }, 5000);
       dashboardSection = <div><MessageSection />
         <ThreadSection /></div>;
     } else {

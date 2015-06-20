@@ -27,7 +27,7 @@ var MessageSection = React.createClass({
   },
 
   componentDidMount: function() {
-    this._scrollToBottom();
+    // this._scrollToBottom();
     MessageStore.addChangeListener(this._onChange);
     ThreadStore.addChangeListener(this._onChange);
   },
@@ -51,13 +51,13 @@ var MessageSection = React.createClass({
   },
 
   componentDidUpdate: function() {
-    this._scrollToBottom();
+    // this._scrollToBottom();
   },
 
-  _scrollToBottom: function() {
-    var ul = this.refs.messageList.getDOMNode();
-    ul.scrollTop = ul.scrollHeight;
-  },
+  // _scrollToBottom: function() {
+  //   var ul = this.refs.messageList.getDOMNode();
+  //   ul.scrollTop = ul.scrollHeight;
+  // },
 
   _onChange: function() {
     this.setState(getStateFromStores());

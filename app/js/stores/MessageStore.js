@@ -104,8 +104,21 @@ MessageStore.dispatchToken = ChatAppDispatcher.register(function(action) {
       MessageStore.emitChange();
       break;
 
+    case ActionTypes.REFRESH:
+      _addMessages(action.rawMessages);
+      ChatAppDispatcher.waitFor([ThreadStore.dispatchToken]);
+      _markAllInThreadRead(ThreadStore.getCurrentID());
+      MessageStore.emitChange();
+      break;
+
     case ActionTypes.RECEIVE_RAW_MESSAGES:
       _addMessages(action.rawMessages);
+      ChatAppDispatcher.waitFor([ThreadStore.dispatchToken]);
+      _markAllInThreadRead(ThreadStore.getCurrentID());
+      MessageStore.emitChange();
+      break;
+
+    case ActionTypes.MAKE_ACTIVE:
       ChatAppDispatcher.waitFor([ThreadStore.dispatchToken]);
       _markAllInThreadRead(ThreadStore.getCurrentID());
       MessageStore.emitChange();

@@ -119,11 +119,20 @@ ThreadStore.dispatchToken = ChatAppDispatcher.register(function(action) {
       ThreadStore.emitChange();
       break;
 
+    case ActionTypes.REFRESH:
+      ThreadStore.emitChange();
+      break;
+
     case ActionTypes.CREATE_THREAD:
       ThreadStore.emitChange();
       break;
 
     case ActionTypes.RECEIVE_FRIENDS:
+      break;
+
+    case ActionTypes.MAKE_ACTIVE:
+      _currentID = action.threadID;
+      ThreadStore.emitChange();
       break;
 
     default:

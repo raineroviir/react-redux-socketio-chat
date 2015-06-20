@@ -42,6 +42,8 @@ var UserStore = Fluxxor.createStore({
         Cookies.set('username', this.username);
         Cookies.set('eat', this.eat);
         this.emit('change');
+        this.state.loggedin = true;
+        console.log(this.state.loggedin)
       }.bind(this));
   },
 
@@ -51,12 +53,14 @@ var UserStore = Fluxxor.createStore({
     this.eat = '';
     this.username = '';
     this.emit('change');
+    this.state.loggedin = false;
   },
 
   getState: function() {
     return {
       eat: this.eat,
-      username: this.username
+      username: this.username,
+      loggedin: ''
     };
   }
 });

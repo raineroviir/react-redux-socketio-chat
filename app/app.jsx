@@ -60,7 +60,7 @@ var App = React.createClass({
 // Declare our routes and their hierarchy
 var routes = (
   <Route handler={App}>
-    <Route path="/dashboard" handler={dashboard}/>
+    <Route path="/" handler={dashboard} onEnter={App.requireAuth}/>
   </Route>
 );
 
