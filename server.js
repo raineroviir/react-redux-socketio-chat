@@ -1,16 +1,29 @@
 'use strict';
 
-var express  = require('express');
-var mongoose = require('mongoose');
-var passport = require('passport');
-var app      = express();
-var http = require('http').createServer(app);
-var io = require('socket.io').listen(http);
-var eat_io_auth = require('./lib/eat_auth_io.js');
-var cors = require('./cors');
-var redirect = require("express-redirect");
+import express from 'express';
+import mongoose from 'mongoose';
+import passport from 'passport';
+const app = express();
+import http from 'http';
+http.createServer(app);
+import io from 'socket.io';
+io.listen(http);
+import redirect from 'express-redirect';
+import cors from './cors';
+import eat_io_auth from './lib/eat_auth_io';
+// var express  = require('express');
+// var mongoose = require('mongoose');
+// var passport = require('passport');
+// var app      = express();
 
-var connectedUses = {};
+// var http = require('http').createServer(app);
+// var io = require('socket.io').listen(http);
+// var eat_io_auth = require('./lib/eat_auth_io.js');
+// var cors = require('./cors');
+// var redirect = require("express-redirect");
+
+// var connectedUses = {};
+const connectedUses = {};
 
 redirect(app);
 
@@ -34,10 +47,15 @@ require('./lib/passport_strategy.js')(passport);;
 app.use(cors());
 
 // routers
-var usersRouter = express.Router();
-var authRouter = express.Router();
-var contactRouter = express.Router();
-var messageRouter = express.Router();
+const usersRouter = express.Router();
+const authRouter = express.Router();
+const contactRouter = express.Router();
+const messageRouter = express.Router();
+
+// var usersRouter = express.Router();
+// var authRouter = express.Router();
+// var contactRouter = express.Router();
+// var messageRouter = express.Router();
 
 // load routers
 require('./routes/user_routes.js')(usersRouter);

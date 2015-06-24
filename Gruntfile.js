@@ -115,7 +115,7 @@ module.exports = function(grunt) {
         }
       },
       build_client: {
-      	files: [clientFiles, 'Gruntfile.js'],
+      	files: [clientFiles, 'Gruntfile.js', 'server.js'],
       	tasks: ['client'],
       	options: {
           spawn: false

@@ -1,7 +1,8 @@
 import ChatAppDispatcher from '../dispatcher/ChatAppDispatcher';
-import ChatConstants from '../constants/ChatConstants';
+// import ChatConstants from '../constants/ChatConstants';
+import * as ActionTypes from '../constants/ActionTypes';
 import ChatMessageUtils from '../utils/ChatMessageUtils';
-var ActionTypes = ChatConstants.ActionTypes;
+// var ActionTypes = ChatConstants.ActionTypes;
 var Cookies = require('cookies-js');
 
 var assign = require('object-assign');

@@ -1,12 +1,13 @@
 var ChatAppDispatcher = require('../dispatcher/ChatAppDispatcher');
-var ChatConstants = require('../constants/ChatConstants');
+// var ChatConstants = require('../constants/ChatConstants');
+import * as ActionTypes from '../constants/ActionTypes';
 var ChatMessageUtils = require('../utils/ChatMessageUtils');
 var EventEmitter = require('events').EventEmitter;
 var ThreadStore = require('../stores/ThreadStore');
 var assign = require('object-assign');
 var Cookies = require('cookies-js');
 
-var ActionTypes = ChatConstants.ActionTypes;
+// var ActionTypes = ChatConstants.ActionTypes;
 var CHANGE_EVENT = 'change';
 
 var _messages = {};
@@ -131,3 +132,25 @@ MessageStore.dispatchToken = ChatAppDispatcher.register(function(action) {
 });
 
 module.exports = MessageStore;
+
+const initialState = [{
+  text: 'Use Redux',
+  marked: false,
+  id: 0
+}];
+
+export default function MessageStoreRedux(state = initialState, action) {
+  switch (action.type) {
+    case ActionTypes.CREATE_MESSAGE:
+    const message = ChatMessageUtils.getCreatedMessageData(
+      action.text,
+      action.currentThreadID,
+      action.username,
+      action.users,
+      action.threadname
+    );
+    _messages[message.id] = message;
+    MessageStore.emitChange();
+    break;
+  }
+}

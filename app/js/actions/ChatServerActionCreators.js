@@ -1,7 +1,8 @@
 var ChatAppDispatcher = require('../dispatcher/ChatAppDispatcher');
-var ChatConstants     = require('../constants/ChatConstants'     );
+// var ChatConstants     = require('../constants/ChatConstants'     );
 
-var ActionTypes = ChatConstants.ActionTypes;
+// var ActionTypes = ChatConstants.ActionTypes;
+import * as ActionTypes from '../constants/ActionTypes';
 
 module.exports = {
 
