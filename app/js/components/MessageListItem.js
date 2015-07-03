@@ -11,7 +11,6 @@ export default class MessageListItem extends Component {
     return (
       <li className="message-list-item">
       <h5 className="message-text">{message.text}</h5>
-        <div className="message-id">{message.id}</div>
       </li>
     );
   }

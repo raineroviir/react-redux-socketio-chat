@@ -4,11 +4,11 @@ import classnames from 'classnames';
 import FriendComposer from './FriendComposer';
 import FriendListItem from './FriendListItem';
 
-const THREAD_FILTER = {
-  [SHOW_ALL]: () => true,
-  [SHOW_UNMARKED]: message => message.threadID === 0,
-  [SHOW_MARKED]: () => true
-};
+// const THREAD_FILTER = {
+//   [SHOW_ALL]: () => true,
+//   [SHOW_UNMARKED]: message => message.threadID === 0,
+//   [SHOW_MARKED]: () => true
+// };
 
 export default class FriendContainer extends Component {
 
@@ -18,8 +18,9 @@ export default class FriendContainer extends Component {
     }
   }
 
-  handleShow(friend) {
-
+  handleChangeFriend(friendID) {
+    console.log(friendID);
+    this.props.onClick(friendID.id);
   }
 
   render() {
@@ -30,7 +31,7 @@ export default class FriendContainer extends Component {
         <div className="friend-section">
           <ul className="friend-list">
             {filteredFriends.map(friend =>
-              <FriendListItem friend={friend} key={friend.id} {...actions} onShow={::this.handleShow} />
+              <FriendListItem friend={friend} key={friend.id} {...actions} onShow={::this.handleChangeFriend} />
               )}
           </ul>
           <FriendComposer onSave={::this.handleSaveFriend} />

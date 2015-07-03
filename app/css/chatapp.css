@@ -48,9 +48,9 @@
   background-color: #fff;
 }
 
-.friend-list-item.active,
-.friend-list:hover .friend-list-item.active,
-.friend-list:hover .friend-list-item.active:hover {
+.friend-list-item.selected,
+.friend-list:hover .friend-list-item.selected,
+.friend-list:hover .friend-list-item.selected:hover {
   background-color: #efefff;
   cursor: default;
 }
