@@ -1,16 +1,12 @@
 import React from 'react';
-import App from './app/js/containers/App';
+import App from './client/js/containers/App';
 import Router, { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
-import request from 'superagent';
-import ChatExampleData from './app/ChatExampleData';
-import ChatWebAPIUtils from './app/js/utils/ChatWebAPIUtils'
-require("./app/css/chatapp.css");
+
+require("./client/css/chatapp.css");
 
 window.React = React; //enable debugger
 
-ChatExampleData.init(); // load example data into localstorage
 
-ChatWebAPIUtils.getAllMessages();
 
 React.render(
   <App />,

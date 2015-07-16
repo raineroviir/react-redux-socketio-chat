@@ -4,6 +4,7 @@ import MainContainer from '../components/MainContainer';
 import * as Actions from '../actions/Actions';
 import { bindActionCreators } from 'redux';
 import { Connector } from 'redux/react';
+// import superagent from 'superagent';
 
 export default class ChatApp {
 
@@ -17,6 +18,21 @@ export default class ChatApp {
 
   renderChild({ messages, friends, activeFriend, dispatch }) {
     const actions = bindActionCreators(Actions, dispatch);
+
+    // (function getStateFromServer() {
+    //   superagent
+    //   .get('api/messages')
+    //   .end(function(err, res) {
+    //     if (err) {
+    //       return console.log(err);
+    //     }
+    //     var rawMessages = res.body;
+    //     rawMessages.forEach(function(message) {
+    //       actions.receiveRawMessage(message);
+    //     });
+    //   });
+    // }());
+
     return (
       <div>
         <MainContainer messages={messages} activeFriend={activeFriend} friends={friends} actions={actions}

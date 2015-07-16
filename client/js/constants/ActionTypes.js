@@ -1,0 +1,4 @@
+export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const ADD_FRIEND = 'ADD_FRIEND';
+export const ACTIVATE_FRIEND = 'ACTIVATE_FRIEND';
+export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';

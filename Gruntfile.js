@@ -1,10 +1,11 @@
 'use strict';
+var path = require('path');
 
 module.exports = function(grunt) {
 
   var serverFiles = ['lib/**/*.js', 'tests/srv/**/*.js', 'models/**/*.js', 'routes/**/*.js', '*.js'];
 
- 	var clientFiles = ['app/**/*.js', 'app/**/*.jsx','app/app.jsx', 'app/index.html'];
+ 	var clientFiles = ['client/**/*', 'server/**/*', 'index.js', 'Gruntfile.js'];
 
   // load npm tasks
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -14,41 +15,31 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-webpack');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-jsxhint');
-
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   // configure tasks
   grunt.initConfig({
     webpack: {
-      client: {
-        entry: __dirname + '/app/app.jsx',
+      production: {
+        entry: [
+          './index'
+        ],
         output: {
-        path: 'build/',
-        file: 'bundle.js'
+          path: path.join(__dirname, 'dist'),
+          filename: '/static/bundle.js',
         },
         module: {
-          loaders: [
-            {
-            test: /\.jsx$/,
-            loader: 'jsx-loader'
-            },
-            {
-            test: /\.jsx?$/,
-            exclude: /(node_modules|bower_components)/,
-            loader: 'babel'
-            },
-            {
-            test: /\.css$/,
-            loader: "style-loader!css-loader"
-            },
-            {
-            test: /\.png/,
-            loader: 'url?limit=100000&minetype=image/png'
-            },
-            {
-            test: /\.jpg/,
-            loader: 'file'
-            }
-          ]
+          loaders: [{
+            test: /\.js?$/,
+            loaders: ['babel?stage=0'],
+            exclude: /node_modules/
+          }, {
+            test: /\.css?$/,
+            loaders: ['style', 'raw']
+          }]
+        },
+        resolve: {
+          extensions: ['', '.js', '.jsx']
         }
       }
     },
@@ -58,14 +49,14 @@ module.exports = function(grunt) {
         expand: true,
         flatten: false,
         src: '*.html',
-        dest: 'build/',
+        dest: 'dist/',
         filter: 'isFile'
       }
     },
 
     clean: {
       dev: {
-        src: 'build/'
+        src: 'dist/'
       }
     },
 
@@ -114,9 +105,9 @@ module.exports = function(grunt) {
           spawn: false,
         }
       },
-      build_client: {
-      	files: [clientFiles, 'Gruntfile.js', 'server.js'],
-      	tasks: ['client'],
+      build: {
+      	files: [clientFiles],
+      	tasks: ['build'],
       	options: {
           spawn: false
         }
@@ -125,7 +116,7 @@ module.exports = function(grunt) {
 
     nodemon: {
       dev: {
-        script: 'server.js'
+        script: './server/server.js'
       }
     }
   });
@@ -134,6 +125,5 @@ module.exports = function(grunt) {
   grunt.registerTask('lint', ['jshint:server:files']);
   grunt.registerTask('test', ['simplemocha:dev']);
   grunt.registerTask('default', ['lint', 'test']);
-  grunt.registerTask('client', ['build']);
-  grunt.registerTask('build', ['webpack:client', 'copy:html']);
+  grunt.registerTask('build', ['clean:dev', 'webpack:production', 'copy:html']);
 };

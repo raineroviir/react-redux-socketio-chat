@@ -10,7 +10,9 @@ import FriendListItem from './FriendListItem';
 //   [SHOW_MARKED]: () => true
 // };
 
+
 export default class FriendContainer extends Component {
+
 
   handleSaveFriend(name) {
     if(name.length !== 0) {
@@ -19,7 +21,7 @@ export default class FriendContainer extends Component {
   }
 
   handleChangeFriend(friendID) {
-    console.log(friendID);
+    // console.log(friendID);
     this.props.onClick(friendID.id);
   }
 

@@ -2,22 +2,17 @@ var webpack = require('webpack')
 var path = require('path')
 
 module.exports = {
-  // name: 'browser',
-  // target: 'web',
-  // cache: false,
-  // context: __dirname,
-  devtool: 'eval',
-  entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
-    './index'
+  context: __dirname,
+  entry: [ 'webpack/hot/dev-server',
+    'webpack-hot-middleware/client',
+    './index.js'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/static/'
   },
-
+  devtool: '#source-map',
   module: {
     loaders: [{
       test: /\.js?$/,
@@ -28,11 +23,11 @@ module.exports = {
       loaders: ['style', 'raw']
     }]
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ],
   resolve: {
     extensions: ['', '.js', '.jsx']
-  }
+  },
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };
