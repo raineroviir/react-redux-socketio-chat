@@ -9,17 +9,15 @@ const initialState = [{
 export default function messages(state = initialState, action) {
   switch(action.type) {
     case ADD_MESSAGE:
-      // console.log(action);
-      // console.log('new message created!');
+      console.log('new message created!');
       return [{
-        id: (action.id)? action.id : Date.now(),
+        id: action.id,
         friendID: action.friendID,
         text: action.text
       },...state];
 
     case RECEIVE_MESSAGE:
-      console.log(action);
-      console.log('message received from server into state');
+      console.log('message received from server or other client into state');
       return [{
         id: action.id,
         friendID: action.friendID,

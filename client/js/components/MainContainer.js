@@ -50,7 +50,7 @@ export default class MainContainer extends Component {
   }
 
   handleSave(newMessage) {
-    if(text.length !== 0) {
+    if(newMessage.text.length !== 0) {
       this.props.actions.addMessage(newMessage);
       //Emit the message to others in the chat room
       socket.emit('new message', newMessage);
@@ -83,19 +83,19 @@ export default class MainContainer extends Component {
 
   render() {
     const { messages, friends, actions, activeFriend } = this.props;
+    // const { filter } = this.state;
+    const filteredMessages = messages.filter(message => message.friendID === activeFriend);
+
     socket.on('new bc message', messageReceive);
     function messageReceive(msg) {
       actions.receiveRawMessage(msg);
     }
-
-    // const { filter } = this.state;
-    const filteredMessages = messages.filter(message => message.friendID === activeFriend);
     return (
       <main>
         <div className="message-section">
           <ul className="message-list">
             {filteredMessages.map(message =>
-              <MessageListItem message={message} key={message.id} {...actions} />
+              <MessageListItem message={message} key={message.id} actions={actions} />
             )}
           </ul>
           <MessageComposer activeFriend={activeFriend} onSave={::this.handleSave} />

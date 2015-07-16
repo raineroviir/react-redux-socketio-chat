@@ -76,7 +76,6 @@ io.on('connection', function(socket) {
 
   socket.on('new message', function(data) {
     console.log(data);
-
     socket.broadcast.emit('new bc message', data);
     // io.emit('new bc message', data);
     // socket.broadcast.emit('new message bc', {
