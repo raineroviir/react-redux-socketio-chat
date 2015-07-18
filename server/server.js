@@ -9,56 +9,35 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongoose = require('mongoose');
+var passport = require('passport');
+var eat_auth = require('../lib/eat_auth');
 
+var jwt = require('jsonwebtoken');
+var socketio_jwt = require('socketio-jwt');
+var jwt_secret = 'foo bar big secret';
 // var webpackConfig = require('../webpack.production.config.js');
 // var compiler = webpack(webpackConfig);
 
 //set env vars
-
+process.env.AUTH_SECRET = process.env.AUTH_SECRET || 'this is a temp AUTH_SECRET';
 process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/turtle_dev';
 
 mongoose.connect(process.env.MONGOLAB_URI);
 
-//load our build
-// app.use('/', express.static(path.join(__dirname, '..','static')));
-
 //load routers
+app.use(passport.initialize());
+require('../lib/passport_strategy')(passport);
 var messageRouter = express.Router();
-require('./routes/message_routes.js')(messageRouter);
-// app.use('/', express.static(path.join(__dirname, '..','static')));
+var usersRouter = express.Router();
+
 app.use('/', express.static(path.join(__dirname, '..', 'dist')));
 
-// start server
-// var myWebpackServer = new WebpackDevServer(webpack(config), {
-// 	publicPath: config.output.publicPath,
-// 	hot: true,
-// 	// lazy: true,
-// 	// filename: 'bundle.js',
-// 	historyApiFallback: true,
-// 	headers: { "X-Custom-Header": "yes" },
-// 	stats: { colors: true }
-// })
 
-// server..listen(3001, 'localhost', function(err) {
-// 	if (err) {
-// 		console.log(err);
-// 	}
-// 	server.listen(app.get(3001));
-// 	console.log('socketio running on localhost:3000');
-// 	console.log('webpack dev server at localhost:3001');
-// })
-// server.listen(app.get(3000));
 
-// myWebpackServer.listen(3030, 'localhost', function(err) {
-// 	if (err) {
-// 		console.log(err);
-// 	}
-// 	console.log('webpack dev server up at localhost: 3030')
-// });
-
-//load app with routers and static content
-
+require('./routes/message_routes')(messageRouter);
+require('./routes/user_routes')(usersRouter, passport);
 app.use('/api', messageRouter);
+app.use('/api', usersRouter);
 
 // app.use(require("webpack-dev-middleware")(compiler, {
 //     noInfo: true,
@@ -70,23 +49,20 @@ app.use('/api', messageRouter);
 //   log: console.log, heartbeat: 10 * 1000
 // }));
 
-io.on('connection', function(socket) {
-  socket.broadcast.emit('user connected!');
-  console.log('user connected to socket ' + socket.id);
+// io.use(socketio_jwt.authorize({
+//   secret: jwt_secret,
+//   handshake: true
+// }));
 
+io.on('connection', function(socket) {
+  console.log('user connected to socket ' + socket.id);
+  // console.log(socket.decoded_token.email, 'connected');
   socket.on('new message', function(data) {
-    console.log(data);
     socket.broadcast.emit('new bc message', data);
-    // io.emit('new bc message', data);
-    // socket.broadcast.emit('new message bc', {
-    //   message:data
-    // });
+    // socket.broadcast.removeAllListeners('new bc message');
+    console.log('server emit');
   });
 
-  socket.on('new user', function(data) {
-    // socket.username = username;
-    //add username
-  })
   socket.on('disconnect', function() {
     console.log(socket.id + ' disconnected ');
   });

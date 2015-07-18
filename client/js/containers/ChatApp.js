@@ -5,7 +5,7 @@ import * as Actions from '../actions/Actions';
 import { bindActionCreators } from 'redux';
 import { Connector } from 'redux/react';
 // import superagent from 'superagent';
-
+var socket = io();
 export default class ChatApp {
 
   render() {
@@ -19,6 +19,13 @@ export default class ChatApp {
   renderChild({ messages, friends, activeFriend, dispatch }) {
     const actions = bindActionCreators(Actions, dispatch);
 
+    // socket.on('new bc message', function(msg) {
+    //   actions.receiveRawMessage(msg);
+    //   console.log('event listened and received message');
+    // });
+    // function messageReceive(msg) {
+    //   actions.receiveRawMessage(msg);
+    // }
     // (function getStateFromServer() {
     //   superagent
     //   .get('api/messages')

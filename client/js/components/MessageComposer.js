@@ -1,10 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-
-
-import ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
-
-
+import * as ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
 var socket = io.connect();
+
 export default class MessageComposer extends Component {
 
   constructor(props, context) {
@@ -36,6 +33,13 @@ export default class MessageComposer extends Component {
         friendID: this.props.activeFriend,
         text: text
       }
+      //Emit the message to others in the chat room
+      socket.emit('new message', newMessage);
+
+      //Save the message to the server
+      ChatWebAPIUtils.createMessage(newMessage);
+
+      //Pass the message up to the MainContainer
       this.props.onSave(newMessage);
       this.setState({ text: '' });
     };

@@ -11,7 +11,7 @@ export default function messages(state = initialState, action) {
     case ADD_MESSAGE:
       console.log('new message created!');
       return [{
-        id: action.id,
+        id: (state.length === 0 ) ? 0 : state[0].id + 1,
         friendID: action.friendID,
         text: action.text
       },...state];
@@ -19,7 +19,7 @@ export default function messages(state = initialState, action) {
     case RECEIVE_MESSAGE:
       console.log('message received from server or other client into state');
       return [{
-        id: action.id,
+        id: (state.length === 0 ) ? 0 : state[0].id + 1,
         friendID: action.friendID,
         text: action.text
       },...state];

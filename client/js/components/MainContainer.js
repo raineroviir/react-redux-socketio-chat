@@ -2,13 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import MessageComposer from './MessageComposer';
 import MessageListItem from './MessageListItem';
 import { SHOW_ALL, SHOW_MARKED, SHOW_UNMARKED } from '../constants/Filters';
-
 import FriendContainer from '../components/FriendContainer';
-
-import ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
+import * as ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
 import superagent from 'superagent';
-
-var socket = io.connect();
+var socket = io();
 
 // const THREAD_FILTER = {
 //   [SHOW_ALL]: () => true,
@@ -17,6 +14,7 @@ var socket = io.connect();
 // };
 // this.socket = io();
 
+
 export default class MainContainer extends Component {
 
   static propTypes = {
@@ -24,14 +22,20 @@ export default class MainContainer extends Component {
     actions: PropTypes.object.isRequired
   }
 
-//  Set the initial state for which friend is active?
+//lifecycle method that is called once right after initial render
+  componentDidMount() {
+    const { actions } = this.props;
+    socket.on('new bc message', function(msg) {
+      actions.receiveRawMessage(msg);
+    });
+  }
 
   // constructor(props, context) {
   //   super(props, context);
-  //   this.state = { filter: SHOW_UNMARKED };
+  //   this.props = {
+  //     activeFriend: 0
+  //   };
   // }
-
-//  Save the message written in the message composer
 
   getStateFromServer() {
     const { actions, messages } = this.props;
@@ -52,15 +56,8 @@ export default class MainContainer extends Component {
   handleSave(newMessage) {
     if(newMessage.text.length !== 0) {
       this.props.actions.addMessage(newMessage);
-      //Emit the message to others in the chat room
-      socket.emit('new message', newMessage);
-
-      //Save the message to the server
-      ChatWebAPIUtils.createMessage(newMessage);
     }
   }
-
-
   // handleShow(friend) {
   //   this.setState({ activeFriendID: friend });
   // }
@@ -85,11 +82,7 @@ export default class MainContainer extends Component {
     const { messages, friends, actions, activeFriend } = this.props;
     // const { filter } = this.state;
     const filteredMessages = messages.filter(message => message.friendID === activeFriend);
-
-    socket.on('new bc message', messageReceive);
-    function messageReceive(msg) {
-      actions.receiveRawMessage(msg);
-    }
+    console.log(messages);
     return (
       <main>
         <div className="message-section">

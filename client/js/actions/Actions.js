@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes';
-import ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
+import * as ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
+var socket = io();
 
 export function addMessage(message) {
   return {
