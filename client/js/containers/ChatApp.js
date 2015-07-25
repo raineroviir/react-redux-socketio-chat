@@ -1,6 +1,6 @@
 import React from 'react';
 import MainContainer from '../components/MainContainer';
-
+import UserActions from '../components/UserActions';
 import * as Actions from '../actions/Actions';
 import { bindActionCreators } from 'redux';
 import { Connector } from 'redux/react';

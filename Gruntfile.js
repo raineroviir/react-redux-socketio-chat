@@ -98,13 +98,6 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      lint: {
-        files: serverFiles,
-        tasks: ['jshint:server:dev'],
-          options: {
-          spawn: false,
-        }
-      },
       build: {
       	files: [clientFiles],
       	tasks: ['build'],

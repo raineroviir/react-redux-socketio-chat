@@ -32,8 +32,6 @@ var usersRouter = express.Router();
 
 app.use('/', express.static(path.join(__dirname, '..', 'dist')));
 
-
-
 require('./routes/message_routes')(messageRouter);
 require('./routes/user_routes')(usersRouter, passport);
 app.use('/api', messageRouter);

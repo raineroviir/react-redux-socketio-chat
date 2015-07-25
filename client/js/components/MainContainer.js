@@ -5,6 +5,9 @@ import { SHOW_ALL, SHOW_MARKED, SHOW_UNMARKED } from '../constants/Filters';
 import FriendContainer from '../components/FriendContainer';
 import * as ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
 import superagent from 'superagent';
+import { connect } from 'redux/react'
+import * as Actions from '../actions/Actions';
+import { bindActionCreators } from 'redux';
 var socket = io();
 
 // const THREAD_FILTER = {
@@ -14,13 +17,16 @@ var socket = io();
 // };
 // this.socket = io();
 
+@connect(state => ({
+  messages: state.messages
+}))
 
 export default class MainContainer extends Component {
 
-  static propTypes = {
-    messages: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
-  }
+  // static propTypes = {
+  //   messages: PropTypes.array.isRequired,
+  //   actions: PropTypes.object.isRequired
+  // }
 
 //lifecycle method that is called once right after initial render
   componentDidMount() {
@@ -79,7 +85,9 @@ export default class MainContainer extends Component {
   }
 
   render() {
-    const { messages, friends, actions, activeFriend } = this.props;
+    const { dispatch } = this.props;
+    const actions = bindActionCreators(actions, dispatch);
+    // const { messages, friends, actions, activeFriend } = this.props;
     // const { filter } = this.state;
     const filteredMessages = messages.filter(message => message.friendID === activeFriend);
     console.log(messages);
