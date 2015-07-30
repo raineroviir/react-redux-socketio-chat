@@ -15,7 +15,7 @@ module.exports = function loadUserRoutes(router, passport) {
         return res.status(500).json({success: false, eat: null, msg: 'error logging in'});
       }
       console.log('hit login route');
-      res.json({success: true, eat: eat, username: req.user.username});
+      res.json({eat: eat});
 
     });
   });
@@ -42,37 +42,16 @@ module.exports = function loadUserRoutes(router, passport) {
           return res.status(500).json({success: false,  usernamePass: null, emailPass: null, passwordPass: null});
         }
 
-        res.json({success: true, usernamePass: true, emailPass: true, passwordPass: null});
+        user.generateToken(process.env.AUTH_SECRET, function(err, eat) {
+          if (err) {
+            console.log('Error signin user in. Error: ', err);
+            return res.status(500).json({msg: 'error generating token'});
+          }
+          console.log('hit token generation');
+          res.json({eat: eat});
+
+        });
       });
-    });
-  });
-
-  router.delete('/users/:username', eatAuth, function(req, res) {
-    router.use(adminAuth);
-    var username = req.params.username;
-
-    User.findOne({ username: req.body.username }, function (err, user){
-      user.suspended = true;
-      user.save();
-    });
-
-    res.json({msg: "user successfully suspended"});
-  });
-
-  router.get('/users', eatAuth, function(req, res){
-    User.find({},function(err, data){
-      if (err) {
-        console.log(err);
-        res.status(500).json({success: false, msg: 'server found no users'});
-      }
-      var userList = [];
-      for ( userIndex in data ){
-        var user = {};
-        user.username = data[userIndex].username;
-        user._id = data[userIndex]._id;
-        userList.push(user);
-      }
-      res.json(userList);
     });
   });
 };

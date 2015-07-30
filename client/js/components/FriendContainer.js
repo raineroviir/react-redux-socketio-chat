@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { FIRST_FILTER, SHOW_ALL, SHOW_MARKED, SHOW_UNMARKED } from '../constants/Filters';
 import classnames from 'classnames';
 import FriendComposer from './FriendComposer';
 import FriendListItem from './FriendListItem';

@@ -18,7 +18,7 @@ UserSchema.methods.generateHash = function generateHash(password, callback) {
 };
 
 UserSchema.methods.checkPassword = function checkPassword(password, callback) {
-  bcrypt.compare(password, this.basic.password, function validatePassword(err, res) {
+  bcrypt.compare(password, this.password, function validatePassword(err, res) {
     if (err) throw err;
     callback(res);  // if failure, res=false. if success, res=true
   });

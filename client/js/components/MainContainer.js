@@ -1,13 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import MessageComposer from './MessageComposer';
 import MessageListItem from './MessageListItem';
-import { SHOW_ALL, SHOW_MARKED, SHOW_UNMARKED } from '../constants/Filters';
 import FriendContainer from '../components/FriendContainer';
 import * as ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
 import superagent from 'superagent';
-import { connect } from 'redux/react'
-import * as Actions from '../actions/Actions';
-import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 var socket = io();
 
 // const THREAD_FILTER = {
@@ -16,10 +13,9 @@ var socket = io();
 //   // [SHOW_MARKED]: () => true
 // };
 // this.socket = io();
-
-@connect(state => ({
-  messages: state.messages
-}))
+// @connect(state => ({
+//   user: state.auth.user
+// }))
 
 export default class MainContainer extends Component {
 
@@ -60,8 +56,9 @@ export default class MainContainer extends Component {
   }
 
   handleSave(newMessage) {
+    const { actions } = this.props;
     if(newMessage.text.length !== 0) {
-      this.props.actions.addMessage(newMessage);
+      actions.addMessage(newMessage);
     }
   }
   // handleShow(friend) {
@@ -85,21 +82,20 @@ export default class MainContainer extends Component {
   }
 
   render() {
-    const { dispatch } = this.props;
-    const actions = bindActionCreators(actions, dispatch);
-    // const { messages, friends, actions, activeFriend } = this.props;
+    // const actions = bindActionCreators(actions, dispatch);
+    const { messages, friends, actions, activeFriend, user, dispatch } = this.props;
+    // console.log(user);
     // const { filter } = this.state;
     const filteredMessages = messages.filter(message => message.friendID === activeFriend);
-    console.log(messages);
     return (
       <main>
         <div className="message-section">
           <ul className="message-list">
             {filteredMessages.map(message =>
-              <MessageListItem message={message} key={message.id} actions={actions} />
+              <MessageListItem message={message} key={message.id} user={user} actions={actions} />
             )}
           </ul>
-          <MessageComposer activeFriend={activeFriend} onSave={::this.handleSave} />
+          <MessageComposer activeFriend={activeFriend} user={user} onSave={::this.handleSave} />
         </div>
         <div>
         <FriendContainer onClick={::this.changeActiveFriend} friends={friends} actions={actions} />

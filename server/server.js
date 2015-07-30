@@ -12,6 +12,9 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var eat_auth = require('../lib/eat_auth');
 
+var cors = require('cors');
+
+//not using JWT at the moment so these can be erased
 var jwt = require('jsonwebtoken');
 var socketio_jwt = require('socketio-jwt');
 var jwt_secret = 'foo bar big secret';
@@ -25,6 +28,7 @@ process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/turt
 mongoose.connect(process.env.MONGOLAB_URI);
 
 //load routers
+app.use(cors());
 app.use(passport.initialize());
 require('../lib/passport_strategy')(passport);
 var messageRouter = express.Router();

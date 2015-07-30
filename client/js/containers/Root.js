@@ -1,18 +1,37 @@
 import React, { PropTypes } from 'react';
-import { Redirect, Router, Route } from 'react-router';
-import { Provider } from 'redux/react';
-import * as stores from '../stores';
-import ChatApp from './ChatApp';
+import { Redirect, Router, Route, Link } from 'react-router';
+import { provide, Provider } from 'react-redux';
+import * as reducers from '../reducers';
 import Login from '../components/Login';
-import MainContainer from '../components/MainContainer';
-import { createDispatcher, createRedux, composeStores } from 'redux';
-import { loggerMiddleware, thunkMiddleware } from '../middleware';
+import { createStore, combineReducers, applyMiddleware, compose} from 'redux';
+import logger from '../middleware/logger';
+import ChatContainer from './ChatContainer';
+import Register from '../components/Register';
+import App from '../components/App';
+import Logout from '../components/Logout';
+import Cookies from 'cookies-js';
+import thunk from 'redux-thunk';
+import promiseMiddleware from '../middleware/promiseMiddleware';
 
-const dispatcher = createDispatcher(
-  composeStores(stores),
-  getState => [ thunkMiddleware(getState), loggerMiddleware ]
-)
-const redux = createRedux(dispatcher);
+const createStoreWithMiddleware = applyMiddleware( promiseMiddleware)(createStore);
+const reducer = combineReducers(reducers);
+const store = createStoreWithMiddleware(reducer);
+// const redux = function(client, data) {
+//   const middleware = thunkMiddleware(getState);
+//   let createEverything;
+//   createEverything = applyMiddleware(middleware)(createStore);
+//   return createEverything(reducer);
+// }
+
+// function createEverything = compose(createStore, getState => [ thunkMiddleware(getState), loggerMiddleware ],
+// );
+//
+// const store = createEverything(reducer);
+//   compose(stores,
+//   ),
+//   getState => [ thunkMiddleware(getState), loggerMiddleware ]
+//
+// const redux = createRedux(dispatcher);
 
 export default class Root extends React.Component {
 
@@ -21,21 +40,29 @@ export default class Root extends React.Component {
   // }
 
   render() {
-    const { history } = this.props
+    const { history, dispatch } = this.props
     return (
-      <Provider redux={redux}>
+      <Provider store={store}>
         {renderRoutes.bind(null, history)}
       </Provider>
     );
   }
 }
-// {() => <ChatApp />}
+
+function requireAuth(nextState, transition) {
+  if(!Cookies.get('eat')) {
+    transition.to('/login', null, { nextPathname: nextState.location.pathname });
+  }
+}
+
 function renderRoutes (history) {
   return (
     <Router history={history}>
-      <Route path="/" component={ChatApp}>
-        <Route path="/login" component={Login}/>
-        <Route path="/test" component={MainContainer}/>
+      <Route path="/" component={App}>
+        <Route path="/chat" component={ChatContainer} onEnter={requireAuth} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/logout" component={Logout} />
       </Route>
     </Router>
   )
