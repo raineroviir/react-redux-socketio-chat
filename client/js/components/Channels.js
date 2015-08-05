@@ -14,9 +14,11 @@ export default class FriendContainer extends Component {
 
 
   handleSaveFriend(name) {
-    if(name.length !== 0) {
-      this.props.actions.addFriend(name);
-    }
+
+    //****ADDING NEW CHATROOMS DISABLED FOR THE MOMENT****
+    // if(name.length !== 0) {
+    //   this.props.actions.addFriend(name);
+    // }
   }
 
   handleChangeFriend(friendID) {

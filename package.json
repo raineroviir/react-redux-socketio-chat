@@ -9,7 +9,7 @@
   "scripts": {
     "test": "jest",
     "start": "node './server/devserver.js'",
-    "production": "webpack --config webpack.production.config.js"
+    "dev": "webpack --config webpack-dev-server.config.js"
   },
   "repository": {
     "type": "git",

@@ -3,7 +3,7 @@ import { Redirect, Router, Route, Link } from 'react-router';
 import { provide, Provider } from 'react-redux';
 import * as reducers from '../reducers';
 import Login from '../components/Login';
-import { createStore, combineReducers, applyMiddleware, compose} from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import logger from '../middleware/logger';
 import ChatContainer from './ChatContainer';
 import Register from '../components/Register';
@@ -60,9 +60,13 @@ function renderRoutes (history) {
     <Router history={history}>
       <Route path="/" component={App}>
         <Route path="/chat" component={ChatContainer} onEnter={requireAuth} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/logout" component={Logout} />
+        <Route path="/login" component={Login}>
+        </Route>
+        <Route path="/register" component={Register}>
+        </Route>
+        <Route path="/logout" component={Logout}>
+          <Redirect from="/logout " to="/" />
+        </Route>
       </Route>
     </Router>
   )

@@ -60,12 +60,13 @@ io.on('connection', function(socket) {
   console.log('user connected to socket ' + socket.id);
   // console.log(socket.decoded_token.email, 'connected');
   socket.on('new message', function(data) {
+    console.log('server emit');
     socket.broadcast.emit('new bc message', data);
     // socket.broadcast.removeAllListeners('new bc message');
-    console.log('server emit');
   });
 
-  socket.on('disconnect', function() {
+  socket.on('disconnect', function(user) {
+    // socket.broadcast.emit('bc disconnect', user + ' disconnected');
     console.log(socket.id + ' disconnected ');
   });
 });

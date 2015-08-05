@@ -30,15 +30,16 @@ export default class Register extends Component {
 
   handleSubmit(event) {
 
-    const { location, dispatch } = this.props;
+    const { dispatch } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
     event.preventDefault();
 
-    var newUser = {
+    var user = {
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
+      confirmPassword: this.state.confirmPassword
     }
-    actions.register(newUser);
+    actions.register(user);
     // UserAPIUtils.registerUser(newUser);
     this.setState({ username: '', password: '', confirmPassword: ''});
 

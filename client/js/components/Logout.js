@@ -1,14 +1,21 @@
 import React from 'react';
 import * as Actions from '../actions/Actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-function logOut() {
-  Actions.logout()
-}
+@connect(state => ({
+  user: state.auth.user
+}))
 
 export default class Logout extends React.Component{
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    const actions = bindActionCreators(Actions, dispatch);
+    actions.logout();
+  }
+
   render () {
-    logOut()
     return (
       <div>
         Logged out!

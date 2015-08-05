@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import MainContainer from '../components/MainContainer';
+import MessageAndChannelContainer from '../components/MessageAndChannelContainer';
 import * as Actions from '../actions/Actions';
 
 @connect(state => ({
@@ -14,10 +14,9 @@ import * as Actions from '../actions/Actions';
 export default class ChatContainer {
   render() {
     const { messages, friends, activeFriend, dispatch, user} = this.props;
-    console.log(user);
     const actions = bindActionCreators(Actions, dispatch);
     return (
-      <MainContainer {...this.props} actions={actions} />
+      <MessageAndChannelContainer {...this.props} actions={actions} />
     );
   }
 }

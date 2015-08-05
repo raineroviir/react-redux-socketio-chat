@@ -12,7 +12,11 @@ export default class MessageListItem extends Component {
 
     return (
       <li className="message-list-item">
-      <h5 className="message-text">{message.text}</h5>
+        <div>
+          <h4>{message.user} <span>{message.time}</span></h4>
+
+        </div>
+        <h5 className="message-text">{message.text}</h5>
       </li>
     );
   }

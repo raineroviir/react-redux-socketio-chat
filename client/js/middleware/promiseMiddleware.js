@@ -2,7 +2,6 @@
 export default function promiseMiddleware() {
   return (next) => (action) => {
     const { promise, types, ...rest } = action;
-    console.log(action);
     if (!promise) {
       return next(action);
     }
@@ -19,14 +18,5 @@ export default function promiseMiddleware() {
         next({ ...rest, error, type: FAILURE })
       }
     );
-  };
-}
-
-// Usage
-function doSomethingAsync(userId) {
-  return {
-    types: [SOMETHING_REQUEST, SOMETHING_SUCCESS, SOMETHING_FAILURE],
-    promise: requestSomething(userId),
-    userId
   };
 }

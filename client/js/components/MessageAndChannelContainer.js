@@ -1,21 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import MessageComposer from './MessageComposer';
 import MessageListItem from './MessageListItem';
-import FriendContainer from '../components/FriendContainer';
+import Channels from '../components/Channels';
 import * as ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
 import superagent from 'superagent';
 import { connect } from 'react-redux';
 var socket = io();
-
-// const THREAD_FILTER = {
-//   [SHOW_ALL]: () => true,
-//   [SHOW_UNMARKED]: message => message.friendID === activeFriend
-//   // [SHOW_MARKED]: () => true
-// };
-// this.socket = io();
-// @connect(state => ({
-//   user: state.auth.user
-// }))
 
 export default class MainContainer extends Component {
 
@@ -31,13 +21,6 @@ export default class MainContainer extends Component {
       actions.receiveRawMessage(msg);
     });
   }
-
-  // constructor(props, context) {
-  //   super(props, context);
-  //   this.props = {
-  //     activeFriend: 0
-  //   };
-  // }
 
   getStateFromServer() {
     const { actions, messages } = this.props;
@@ -61,19 +44,7 @@ export default class MainContainer extends Component {
       actions.addMessage(newMessage);
     }
   }
-  // handleShow(friend) {
-  //   this.setState({ activeFriendID: friend });
-  // }
 
-  // getCurrentFriendID() {
-  //   return this.state.activeFriendID;
-  // }
-
-  // // run through local state
-  // changeActiveFriend(friendID) {
-  //   this.setState({activeFriendID: friendID})
-  //   alert('hit');
-  // }
 
   //run through activefriend state & action creator
   changeActiveFriend(friendID) {
@@ -98,10 +69,7 @@ export default class MainContainer extends Component {
           <MessageComposer activeFriend={activeFriend} user={user} onSave={::this.handleSave} />
         </div>
         <div>
-        <FriendContainer onClick={::this.changeActiveFriend} friends={friends} actions={actions} />
-        </div>
-        <div>
-          <button onClick={::this.getStateFromServer}>Get All</button>
+          <Channels onClick={::this.changeActiveFriend} friends={friends} actions={actions} />
         </div>
       </main>
     );

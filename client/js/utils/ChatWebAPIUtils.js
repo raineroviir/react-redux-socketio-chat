@@ -35,7 +35,7 @@ export function getAllMessages() {
 }
 
 export function createMessage (message) {
-  // simulate writing to a database
+
   var createdMessage = {
     id: message.id,
     threadID: message.threadID,
