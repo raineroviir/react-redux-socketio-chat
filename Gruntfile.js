@@ -17,6 +17,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsxhint');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
+
   // configure tasks
   grunt.initConfig({
     webpack: {
