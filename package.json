@@ -69,6 +69,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.0",
     "classnames": "^2.1.2",
+    "cors": "^2.7.1",
     "eat": "^0.1.1",
     "express": "^4.12.4",
     "express-redirect": "^1.1.1",
