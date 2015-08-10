@@ -37,15 +37,8 @@ export default class Login extends Component {
       password: this.state.password
     }
     actions.login(user);
-    // UserAPIUtils.loginUser(verifyUser);
     this.setState({ username: '', password: ''});
     UserAPIUtils.getAllMessages(actions);
-    // const { location } = this.props;
-    // if (location.state && location.state.nextPathname) {
-    //   this.replaceWith(location.state.nextPathname);
-    // } else {
-    //   this.replaceWith('/chat');
-    // }
   }
 
   render() {

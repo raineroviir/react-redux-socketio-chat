@@ -3,7 +3,6 @@ import * as Actions from '../actions/Actions';
 import Cookies from 'cookies-js';
 
 export function register(user) {
-  console.log('hit the UserAPIUtils <register>');
   user.email = user.username;
 
   return new Promise((resolve, reject) => {
@@ -23,7 +22,6 @@ export function register(user) {
 }
 
 export function login(user) {
-  console.log('hit the UserAPIUtils <login>');
 
   return new Promise((resolve, reject) => {
     superagent
@@ -48,7 +46,6 @@ export function logout() {
 }
 
 export function createMessage(message) {
-  console.log('hit the UserAPIUtils <saveMessage>');
 
   return new Promise((resolve, reject) => {
     superagent

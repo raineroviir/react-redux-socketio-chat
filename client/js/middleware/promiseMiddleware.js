@@ -10,11 +10,9 @@ export default function promiseMiddleware() {
     next({ ...rest, type: REQUEST });
     return promise.then(
       (result) => {
-        console.log(result);
         next({ ...rest, result, type: SUCCESS })
       },
       (error) => {
-        console.log(error);
         next({ ...rest, error, type: FAILURE })
       }
     );

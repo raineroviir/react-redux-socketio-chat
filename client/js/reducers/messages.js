@@ -21,7 +21,6 @@ export default function messages(state = initialState, action) {
       }];
 
     case RECEIVE_MESSAGE:
-      console.log('message received from server or other client into state');
       return [...state, {
         id: (state.length === 0 ) ? 0 : state[state.length - 1].id + 1,
         channelID: action.message.channelID,

@@ -16,28 +16,12 @@ import promiseMiddleware from '../middleware/promiseMiddleware';
 const createStoreWithMiddleware = applyMiddleware( promiseMiddleware)(createStore);
 const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
-// const redux = function(client, data) {
-//   const middleware = thunkMiddleware(getState);
-//   let createEverything;
-//   createEverything = applyMiddleware(middleware)(createStore);
-//   return createEverything(reducer);
-// }
-
-// function createEverything = compose(createStore, getState => [ thunkMiddleware(getState), loggerMiddleware ],
-// );
-//
-// const store = createEverything(reducer);
-//   compose(stores,
-//   ),
-//   getState => [ thunkMiddleware(getState), loggerMiddleware ]
-//
-// const redux = createRedux(dispatcher);
 
 export default class Root extends React.Component {
 
-  // static propTypes = {
-  //   history: PropTypes.object.isRequired
-  // }
+  static propTypes = {
+    history: PropTypes.object.isRequired
+  }
 
   render() {
     const { history, dispatch } = this.props

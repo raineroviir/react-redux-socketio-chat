@@ -80,32 +80,8 @@
 	var _clientJsComponentsLogin2 = _interopRequireDefault(_clientJsComponentsLogin);
 
 	var history = new _reactRouterLibHashHistory2['default']();
-	// <Route component={App}>
-	//     <Route path="/" component={MainContainer} />
-	//     <Route path="/login" component={Login} />
-	// </Route>
-
-	// React.render(
-	// <Router history ={history}>
-	//   <Route path="/" component={App}>
-	//     <Route path="/login" component={Login}/>
-	//   </Route>
-	// </Router>
-	//   , document.getElementById('react')
-	// );
 
 	_react2['default'].render(_react2['default'].createElement(_clientJsContainersRoot2['default'], { history: history }), document.getElementById('react'));
-
-	// Declare our routes and their hierarchy
-	// var routes = (
-	//   <Route handler={App}>
-	//     <Route path="/" handler={dashboard} />
-	//   </Route>
-	// );
-
-	// Router.run(routes, Router.HashLocation, (Root) => {
-	//   React.render(<Root />, document.body);
-	// });
 
 /***/ },
 /* 2 */
@@ -20814,22 +20790,6 @@
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_middlewarePromiseMiddleware2['default'])(_redux.createStore);
 	var reducer = (0, _redux.combineReducers)(reducers);
 	var store = createStoreWithMiddleware(reducer);
-	// const redux = function(client, data) {
-	//   const middleware = thunkMiddleware(getState);
-	//   let createEverything;
-	//   createEverything = applyMiddleware(middleware)(createStore);
-	//   return createEverything(reducer);
-	// }
-
-	// function createEverything = compose(createStore, getState => [ thunkMiddleware(getState), loggerMiddleware ],
-	// );
-	//
-	// const store = createEverything(reducer);
-	//   compose(stores,
-	//   ),
-	//   getState => [ thunkMiddleware(getState), loggerMiddleware ]
-	//
-	// const redux = createRedux(dispatcher);
 
 	var Root = (function (_React$Component) {
 	  function Root() {
@@ -20842,11 +20802,6 @@
 
 	  _createClass(Root, [{
 	    key: 'render',
-
-	    // static propTypes = {
-	    //   history: PropTypes.object.isRequired
-	    // }
-
 	    value: function render() {
 	      var _props = this.props;
 	      var history = _props.history;
@@ -20858,6 +20813,12 @@
 	        renderRoutes.bind(null, history)
 	      );
 	    }
+	  }], [{
+	    key: 'propTypes',
+	    value: {
+	      history: _react.PropTypes.object.isRequired
+	    },
+	    enumerable: true
 	  }]);
 
 	  return Root;
@@ -22481,6 +22442,7 @@
 	      var user = this.props.user;
 
 	      var text = event.target.value.trim();
+	      console.log(user);
 	      if (event.which === 13) {
 	        event.preventDefault();
 	        var newMessage = {
@@ -22546,7 +22508,6 @@
 	var _cookiesJs2 = _interopRequireDefault(_cookiesJs);
 
 	function register(user) {
-	  console.log('hit the UserAPIUtils <register>');
 	  user.email = user.username;
 
 	  return new Promise(function (resolve, reject) {
@@ -22563,7 +22524,6 @@
 	}
 
 	function login(user) {
-	  console.log('hit the UserAPIUtils <login>');
 
 	  return new Promise(function (resolve, reject) {
 	    _superagent2['default'].get('/api/log_in').auth(user.username, user.password).end(function (err, res) {
@@ -22585,7 +22545,6 @@
 	}
 
 	function createMessage(message) {
-	  console.log('hit the UserAPIUtils <saveMessage>');
 
 	  return new Promise(function (resolve, reject) {
 	    _superagent2['default'].post('/api/newmessage').send(message).end(function (err, res) {
@@ -27832,7 +27791,6 @@
 	      }]);
 
 	    case _constantsActionTypes.RECEIVE_MESSAGE:
-	      console.log('message received from server or other client into state');
 	      return [].concat(_toConsumableArray(state), [{
 	        id: state.length === 0 ? 0 : state[state.length - 1].id + 1,
 	        channelID: action.message.channelID,
@@ -28002,58 +27960,43 @@
 	        error: action.error
 	      });
 	    case _constantsActionTypes.AUTH_LOGIN:
-	      console.log(action);
 	      return _extends({}, state, {
 	        loggingIn: true
 	      });
 	    case _constantsActionTypes.AUTH_LOGIN_SUCCESS:
-	      console.log(action);
 	      return _extends({}, state, {
 	        loggingIn: false,
 	        user: action.result
 	      });
 	    case _constantsActionTypes.AUTH_LOGIN_FAIL:
-	      console.log(action);
 	      return _extends({}, state, {
 	        loggingIn: false,
 	        user: null,
 	        loginError: action.error
 	      });
 	    case _constantsActionTypes.AUTH_REGISTER:
-	      console.log('hit AUTH_REGISTER');
-	      console.log(action);
 	      return _extends({}, state, {
 	        registering: true
 	      });
 	    case _constantsActionTypes.AUTH_REGISTER_SUCCESS:
-	      console.log('hit AUTH_REGISTER_SUCCESS');
-	      console.log(action);
 	      return _extends({}, state, {
 	        registering: false,
 	        user: action.result
 	      });
 	    case _constantsActionTypes.AUTH_REGISTER_FAIL:
-	      console.log('hit AUTH_REGISTER_FAIL');
-	      console.log(action);
 	      return _extends({}, state, {
 	        user: action.error
 	      });
 	    case _constantsActionTypes.AUTH_LOGOUT:
-	      console.log('<AUTH_LOGOUT>');
-	      console.log(action);
 	      return _extends({}, state, {
 	        loggingOut: true
 	      });
 	    case _constantsActionTypes.AUTH_LOGOUT_SUCCESS:
-	      console.log('<AUTH_LOGOUT_SUCCESS>');
-	      console.log(action);
 	      return _extends({}, state, {
 	        loggingOut: false,
 	        user: null
 	      });
 	    case _constantsActionTypes.AUTH_LOGOUT_FAIL:
-	      console.log('<AUTH_LOGOUT_FAIL>');
-	      console.log(action);
 	      return _extends({}, state, {
 	        loggingOut: false,
 	        logoutError: action.error
@@ -28143,15 +28086,8 @@
 	        password: this.state.password
 	      };
 	      actions.login(user);
-	      // UserAPIUtils.loginUser(verifyUser);
 	      this.setState({ username: '', password: '' });
 	      UserAPIUtils.getAllMessages(actions);
-	      // const { location } = this.props;
-	      // if (location.state && location.state.nextPathname) {
-	      //   this.replaceWith(location.state.nextPathname);
-	      // } else {
-	      //   this.replaceWith('/chat');
-	      // }
 	    }
 	  }, {
 	    key: 'render',
@@ -28256,8 +28192,6 @@
 
 	var _reactRouter = __webpack_require__(201);
 
-	// import transitionTo from 'redux-react-router/lib/transitionTo';
-
 	var _reactRedux = __webpack_require__(177);
 
 	var _actionsActions = __webpack_require__(168);
@@ -28266,16 +28200,7 @@
 
 	var _redux = __webpack_require__(189);
 
-	//
-
 	var Register = (function (_Component) {
-
-	  // state = {
-	  //   username: '',
-	  //   password: '',
-	  //   confirmPassword: ''
-	  // }
-
 	  function Register(props, context) {
 	    _classCallCheck(this, _Register);
 
@@ -28305,15 +28230,8 @@
 	        confirmPassword: this.state.confirmPassword
 	      };
 	      actions.register(user);
-	      // UserAPIUtils.registerUser(newUser);
 	      UserAPIUtils.getAllMessages(actions);
 	      this.setState({ username: '', password: '', confirmPassword: '' });
-
-	      // const router = Router.create({
-	      //   location: Router.HistoryLocation
-	      // });
-	      //
-	      // router.transitionTo('/chat');
 	    }
 	  }, {
 	    key: 'handleChange',
@@ -28741,10 +28659,8 @@
 
 	      next(_extends({}, rest, { type: REQUEST }));
 	      return promise.then(function (result) {
-	        console.log(result);
 	        next(_extends({}, rest, { result: result, type: SUCCESS }));
 	      }, function (error) {
-	        console.log(error);
 	        next(_extends({}, rest, { error: error, type: FAILURE }));
 	      });
 	    };

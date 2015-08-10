@@ -41,20 +41,17 @@ export default function info(state = initialState, action = {}) {
         error: action.error
       };
     case AUTH_LOGIN:
-      console.log(action);
       return {
         ...state,
         loggingIn: true
       };
     case AUTH_LOGIN_SUCCESS:
-      console.log(action);
       return {
         ...state,
         loggingIn: false,
         user: action.result
       };
     case AUTH_LOGIN_FAIL:
-      console.log(action);
         return {
           ...state,
           loggingIn: false,
@@ -62,45 +59,33 @@ export default function info(state = initialState, action = {}) {
           loginError: action.error
       };
     case AUTH_REGISTER:
-      console.log('hit AUTH_REGISTER');
-      console.log(action);
       return {
         ...state,
         registering: true
       };
     case AUTH_REGISTER_SUCCESS:
-      console.log('hit AUTH_REGISTER_SUCCESS');
-      console.log(action);
       return {
         ...state,
         registering: false,
         user: action.result
       };
     case AUTH_REGISTER_FAIL:
-      console.log('hit AUTH_REGISTER_FAIL');
-      console.log(action);
       return {
         ...state,
         user: action.error
       };
     case AUTH_LOGOUT:
-      console.log('<AUTH_LOGOUT>');
-      console.log(action);
       return {
         ...state,
         loggingOut: true
       };
     case AUTH_LOGOUT_SUCCESS:
-      console.log('<AUTH_LOGOUT_SUCCESS>');
-      console.log(action);
       return {
         ...state,
         loggingOut: false,
         user: null
       };
     case AUTH_LOGOUT_FAIL:
-      console.log('<AUTH_LOGOUT_FAIL>');
-      console.log(action);
       return {
         ...state,
         loggingOut: false,
