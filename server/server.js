@@ -1,8 +1,8 @@
 'use strict';
 
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('../webpack.config');
+// var webpack = require('webpack');
+// var WebpackDevServer = require('webpack-dev-server');
+// var config = require('../webpack.config');
 var express = require('express');
 var path = require('path');
 var app = express();
@@ -14,16 +14,13 @@ var eat_auth = require('../lib/eat_auth');
 
 var cors = require('cors');
 
-//not using JWT at the moment so these can be erased
-var jwt = require('jsonwebtoken');
-var socketio_jwt = require('socketio-jwt');
-var jwt_secret = 'foo bar big secret';
 // var webpackConfig = require('../webpack.production.config.js');
 // var compiler = webpack(webpackConfig);
 
 //set env vars
 process.env.AUTH_SECRET = process.env.AUTH_SECRET || 'this is a temp AUTH_SECRET';
-process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/turtle_dev';
+process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat_dev';
+process.env.PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGOLAB_URI);
 
@@ -60,18 +57,19 @@ io.on('connection', function(socket) {
   console.log('user connected to socket ' + socket.id);
   // console.log(socket.decoded_token.email, 'connected');
   socket.on('new message', function(data) {
+    console.log('server emit');
     socket.broadcast.emit('new bc message', data);
     // socket.broadcast.removeAllListeners('new bc message');
-    console.log('server emit');
   });
 
-  socket.on('disconnect', function() {
+  socket.on('disconnect', function(user) {
+    // socket.broadcast.emit('bc disconnect', user + ' disconnected');
     console.log(socket.id + ' disconnected ');
   });
 });
 
-http.listen(3000, function() {
-    console.log('socket.io server is listening on 3000');
+http.listen(process.env.PORT, function() {
+    console.log('server listening on port: %s', process.env.PORT);
 });
 
 // io.on('connection', function (socket) {

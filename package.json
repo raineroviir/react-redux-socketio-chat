@@ -8,8 +8,9 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "node './server/devserver.js'",
-    "production": "webpack --config webpack.production.config.js"
+    "build": "grunt build",
+    "start": "node server/server",
+    "dev": "webpack --config webpack-dev-server.config.js"
   },
   "repository": {
     "type": "git",
@@ -69,6 +70,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.0",
     "classnames": "^2.1.2",
+    "cors": "^2.7.1",
     "eat": "^0.1.1",
     "express": "^4.12.4",
     "express-redirect": "^1.1.1",

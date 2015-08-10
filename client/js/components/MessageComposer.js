@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import * as ChatWebAPIUtils from '../utils/ChatWebAPIUtils';
+import * as UserAPIUtils from '../utils/UserAPIUtils';
 var socket = io.connect();
+import strftime from 'strftime';
 
 export default class MessageComposer extends Component {
 
@@ -25,19 +26,23 @@ export default class MessageComposer extends Component {
   }
 
   handleSubmit(event) {
+    const { user } = this.props;
     const text = event.target.value.trim();
+    console.log(user);
     if (event.which === 13) {
       event.preventDefault();
       var newMessage = {
         id: Date.now(),
-        friendID: this.props.activeFriend,
-        text: text
+        channelID: this.props.activeChannel.id,
+        text: text,
+        user: user.user.username || user.user,  //TODO: clean this code up
+        time: strftime('%H:%M %p', new Date())
       }
       //Emit the message to others in the chat room
       socket.emit('new message', newMessage);
 
       //Save the message to the server
-      ChatWebAPIUtils.createMessage(newMessage);
+      UserAPIUtils.createMessage(newMessage);
 
       //Pass the message up to the MainContainer
       this.props.onSave(newMessage);

@@ -1,6 +1,6 @@
 export const ADD_MESSAGE = 'ADD_MESSAGE';
-export const ADD_FRIEND = 'ADD_FRIEND';
-export const ACTIVATE_FRIEND = 'ACTIVATE_FRIEND';
+export const ADD_CHANNEL = 'ADD_CHANNEL';
+export const CHANGE_CHANNEL = 'CHANGE_CHANNEL';
 export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN = 'LOGIN';

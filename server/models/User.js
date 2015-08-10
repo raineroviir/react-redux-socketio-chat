@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var UserSchema = mongoose.Schema({
   email: String,
   password: String,
-  username: String
+  username: { type:String, unique: true }
 });
 
 UserSchema.methods.generateHash = function generateHash(password, callback) {
@@ -17,11 +17,13 @@ UserSchema.methods.generateHash = function generateHash(password, callback) {
   });
 };
 
-UserSchema.methods.checkPassword = function checkPassword(password, callback) {
-  bcrypt.compare(password, this.password, function validatePassword(err, res) {
-    if (err) throw err;
-    callback(res);  // if failure, res=false. if success, res=true
-  });
+UserSchema.methods.checkPassword = function(password, cb) {
+	bcrypt.compare(password, this.password, function(err, response) {
+		if (err) {
+			return cb(err);
+		}
+		cb(null, response);
+	});
 };
 
 UserSchema.methods.generateToken = function generateToken(secret, callback) {

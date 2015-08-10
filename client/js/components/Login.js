@@ -1,6 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import * as UserAPIUtils from '../utils/UserAPIUtils';
 import * as Actions from '../actions/Actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+@connect(state => ({
+  user: state.auth.user
+}))
+
 export default class Login extends Component {
 
   constructor(props, context) {
@@ -21,24 +28,17 @@ export default class Login extends Component {
   }
 
   handleSubmit(event) {
+    const { dispatch } = this.props;
+    const actions = bindActionCreators(Actions, dispatch);
     console.log('hello from handle submit')
     event.preventDefault();
-
-    var verifyUser = {
+    var user = {
       username: this.state.username,
       password: this.state.password
     }
-
-    Actions.login(verifyUser);
-    // UserAPIUtils.loginUser(verifyUser);
+    actions.login(user);
     this.setState({ username: '', password: ''});
-
-    // const { location } = this.props;
-    // if (location.state && location.state.nextPathname) {
-    //   this.replaceWith(location.state.nextPathname);
-    // } else {
-    //   this.replaceWith('/chat');
-    // }
+    UserAPIUtils.getAllMessages(actions);
   }
 
   render() {

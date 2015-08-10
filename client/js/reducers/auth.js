@@ -8,7 +8,9 @@ import {
   AUTH_LOGOUT,
   AUTH_LOGOUT_SUCCESS,
   AUTH_LOGOUT_FAIL,
-  AUTH_REGISTER_SUCCESS
+  AUTH_REGISTER,
+  AUTH_REGISTER_SUCCESS,
+  AUTH_REGISTER_FAIL
 } from '../constants/ActionTypes';
 
 const initialState = {
@@ -29,6 +31,7 @@ export default function info(state = initialState, action = {}) {
         loading: false,
         loaded: true,
         user: action.result
+
       };
     case AUTH_LOAD_FAIL:
       return {
@@ -43,10 +46,10 @@ export default function info(state = initialState, action = {}) {
         loggingIn: true
       };
     case AUTH_LOGIN_SUCCESS:
-      console.log(action);
       return {
-        loaded: 'login',
-        user: 'login101'
+        ...state,
+        loggingIn: false,
+        user: action.result
       };
     case AUTH_LOGIN_FAIL:
         return {
@@ -56,22 +59,17 @@ export default function info(state = initialState, action = {}) {
           loginError: action.error
       };
     case AUTH_REGISTER:
-      console.log('hit AUTH_REGISTER');
-      console.log(action);
       return {
         ...state,
         registering: true
       };
     case AUTH_REGISTER_SUCCESS:
-      console.log('hit AUTH_REGISTER_SUCCESS');
-      console.log(action);
       return {
         ...state,
+        registering: false,
         user: action.result
       };
     case AUTH_REGISTER_FAIL:
-      console.log('hit AUTH_REGISTER_FAIL');
-      console.log(action);
       return {
         ...state,
         user: action.error
@@ -84,7 +82,7 @@ export default function info(state = initialState, action = {}) {
     case AUTH_LOGOUT_SUCCESS:
       return {
         ...state,
-        // loggingOut: false,
+        loggingOut: false,
         user: null
       };
     case AUTH_LOGOUT_FAIL:

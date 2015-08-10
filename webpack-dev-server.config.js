@@ -1,11 +1,7 @@
-var webpack = require('webpack')
-var path = require('path')
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-  // name: 'browser',
-  // target: 'web',
-  // cache: false,
-  // context: __dirname,
   devtool: 'eval',
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
@@ -17,7 +13,13 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
-
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ],
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   module: {
     loaders: [{
       test: /\.js?$/,
@@ -27,12 +29,5 @@ module.exports = {
       test: /\.css?$/,
       loaders: ['style', 'raw']
     }]
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ],
-  resolve: {
-    extensions: ['', '.js', '.jsx']
   }
 };

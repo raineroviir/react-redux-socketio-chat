@@ -5,10 +5,24 @@
   overflow: hidden;
 }
 
-.message-list, .friend-list {
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.message-list {
   border: 1px solid #ccf;
-  font-size: 16px;
+  font-size: 1rem;
   height: 400px;
+  margin: 0;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.channel-list {
+  border: 1px solid #ccf;
+  font-size: 1.6rem;
+  height: 200px;
   margin: 0;
   overflow-y: auto;
   padding: 0;
@@ -16,81 +30,89 @@
 
 .message-section {
   float: right;
-  width: 65%;
+  width: 70%;
 }
 
-.friend-section {
-  float: left;
-  width: 32.5%;
+.top-bar {
 }
 
-.message-friend-heading,
-.friend-count {
+.top-bar-button {
+}
+
+.channel-section {
+  width: 25%;
+}
+
+.message-channel-heading,
+.channel-count {
   height: 40px;
   margin: 0;
 }
 
-.message-list-item, .friend-list-item {
+.message-list-item, .channel-list-item {
   list-style: none;
-  padding: 12px 14px 14px;
+  padding: 0.01rem 0.01rem 0.01rem;
 }
 
-.friend-list-item {
+.channel-list-item {
   border-bottom: 1px solid #ccc;
   cursor: pointer;
 }
 
-.friend-list:hover .friend-list-item:hover {
+.channel-list:hover .channel-list-item:hover {
   background-color: #f8f8ff;
 }
 
-.friend-list:hover .friend-list-item {
+.channel-list:hover .channel-list-item {
   background-color: #fff;
 }
 
-.friend-list-item.selected,
-.friend-list:hover .friend-list-item.selected,
-.friend-list:hover .friend-list-item.selected:hover {
+.channel-list-item.selected,
+.channel-list:hover .channel-list-item.selected,
+.channel-list:hover .channel-list-item.selected:hover {
   background-color: #efefff;
   cursor: default;
 }
 
-.message-author-name,
-.friend-name {
+.message-user {
   color: #66c;
-  float: left;
-  font-size: 13px;
+  font-size: 1rem;
+}
+
+.channel-name {
+  color: #66c;
+  font-size: 1.2rem;
   margin: 0;
 }
 
-.message-time, .friend-time {
+.message-time, .channel-time {
   color: #aad;
-  float: right;
-  font-size: 12px;
+  opacity: 0.8;
+  font-size: 0.9rem;
 }
 
-.message-text, .friend-last-message {
+.message-content, .channel-last-message {
   clear: both;
-  font-size: 14px;
-  padding-top: 10px;
+  font-size: 1rem;
+  padding-top: 0.1rem;
+  margin-top: -1px;
+  padding-bottom: 0.3rem;
 }
 
 .message-composer {
   box-sizing: border-box;
   font-family: inherit;
-  font-size: 14px;
-  height: 5em;
+  font-size: 1rem;
+  height: 2em;
   width: 100%;
-  margin: 20px 0 0;
-  padding: 10px;
+  margin: 0.5rem 0 0;
 }
 
-.friend-composer {
+.channel-composer {
   box-sizing: border-box;
   font-family: inherit;
-  font-size: 14px;
-  height: 5em;
+  font-size: 1rem;
+  height: 2em;
   width: 100%;
-  margin: 20px 0 0;
-  padding: 10px;
+  margin: 0.5rem 0 0;
 }

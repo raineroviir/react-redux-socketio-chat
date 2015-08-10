@@ -3,11 +3,11 @@ import { Redirect, Router, Route, Link } from 'react-router';
 import { provide, Provider } from 'react-redux';
 import * as reducers from '../reducers';
 import Login from '../components/Login';
-import { createStore, combineReducers, applyMiddleware, compose} from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import logger from '../middleware/logger';
-import ChatContainer from './ChatContainer';
+import Chat from '../components/Chat';
 import Register from '../components/Register';
-import App from '../components/App';
+import App from './App';
 import Logout from '../components/Logout';
 import Cookies from 'cookies-js';
 import thunk from 'redux-thunk';
@@ -16,28 +16,12 @@ import promiseMiddleware from '../middleware/promiseMiddleware';
 const createStoreWithMiddleware = applyMiddleware( promiseMiddleware)(createStore);
 const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
-// const redux = function(client, data) {
-//   const middleware = thunkMiddleware(getState);
-//   let createEverything;
-//   createEverything = applyMiddleware(middleware)(createStore);
-//   return createEverything(reducer);
-// }
-
-// function createEverything = compose(createStore, getState => [ thunkMiddleware(getState), loggerMiddleware ],
-// );
-//
-// const store = createEverything(reducer);
-//   compose(stores,
-//   ),
-//   getState => [ thunkMiddleware(getState), loggerMiddleware ]
-//
-// const redux = createRedux(dispatcher);
 
 export default class Root extends React.Component {
 
-  // static propTypes = {
-  //   history: PropTypes.object.isRequired
-  // }
+  static propTypes = {
+    history: PropTypes.object.isRequired
+  }
 
   render() {
     const { history, dispatch } = this.props
@@ -59,10 +43,14 @@ function renderRoutes (history) {
   return (
     <Router history={history}>
       <Route path="/" component={App}>
-        <Route path="/chat" component={ChatContainer} onEnter={requireAuth} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/logout" component={Logout} />
+        <Route path="/chat" component={Chat} onEnter={requireAuth} />
+        <Route path="/login" component={Login}>
+        </Route>
+        <Route path="/register" component={Register}>
+        </Route>
+        <Route path="/logout" component={Logout}>
+          <Redirect from="/logout " to="/" />
+        </Route>
       </Route>
     </Router>
   )

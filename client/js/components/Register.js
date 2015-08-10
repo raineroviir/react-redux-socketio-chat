@@ -1,23 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import * as UserAPIUtils from '../utils/UserAPIUtils';
 import { Router, Navigation } from 'react-router';
-// import transitionTo from 'redux-react-router/lib/transitionTo';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/Actions';
 import { bindActionCreators } from 'redux';
 
-//
 @connect(state => ({
   user: state.auth.user
 }))
 
 export default class Register extends Component {
-
-  // state = {
-  //   username: '',
-  //   password: '',
-  //   confirmPassword: ''
-  // }
 
   constructor(props, context) {
     super(props, context);
@@ -30,23 +22,18 @@ export default class Register extends Component {
 
   handleSubmit(event) {
 
-    const { location, dispatch } = this.props;
+    const { dispatch } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
     event.preventDefault();
 
-    var newUser = {
+    var user = {
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
+      confirmPassword: this.state.confirmPassword
     }
-    actions.register(newUser);
-    // UserAPIUtils.registerUser(newUser);
+    actions.register(user);
+    UserAPIUtils.getAllMessages(actions);
     this.setState({ username: '', password: '', confirmPassword: ''});
-
-    // const router = Router.create({
-    //   location: Router.HistoryLocation
-    // });
-    //
-    // router.transitionTo('/chat');
   }
 
   handleChange(event) {
