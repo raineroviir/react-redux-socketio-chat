@@ -3,7 +3,6 @@
 **/db/**/*
 .env
 npm-debug.log
-db/
 build/
 dist/
 db/
