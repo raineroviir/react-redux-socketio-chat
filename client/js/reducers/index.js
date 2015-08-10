@@ -1,5 +1,5 @@
 export messages from './messages';
-export friends from './friends';
-export activeFriend from './activeFriend';
+export channels from './channels';
+export activeChannel from './activeChannel';
 export users from './users';
 export auth from './auth';

@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 export default class Logout extends React.Component{
 
-  componentDidMount() {
+  componentWillMount() {
     const { dispatch } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
     actions.logout();

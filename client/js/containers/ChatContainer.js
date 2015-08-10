@@ -6,14 +6,14 @@ import * as Actions from '../actions/Actions';
 
 @connect(state => ({
   messages: state.messages,
-  friends: state.friends,
-  activeFriend: state.activeFriend,
+  channels: state.channels,
+  activeChannel: state.activeChannel,
   user: state.auth
 }))
 
 export default class ChatContainer {
   render() {
-    const { messages, friends, activeFriend, dispatch, user} = this.props;
+    const { messages, channels, activeChannel, dispatch, user} = this.props;
     const actions = bindActionCreators(Actions, dispatch);
     return (
       <MessageAndChannelContainer {...this.props} actions={actions} />

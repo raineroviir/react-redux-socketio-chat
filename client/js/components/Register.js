@@ -41,6 +41,7 @@ export default class Register extends Component {
     }
     actions.register(user);
     // UserAPIUtils.registerUser(newUser);
+    UserAPIUtils.getAllMessages(actions);
     this.setState({ username: '', password: '', confirmPassword: ''});
 
     // const router = Router.create({

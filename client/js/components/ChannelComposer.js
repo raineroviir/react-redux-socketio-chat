@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class FriendComposer extends Component {
+export default class ChannelComposer extends Component {
 
   constructor(props, context) {
     super(props, context);
@@ -12,9 +12,10 @@ export default class FriendComposer extends Component {
   render() {
     return (
       <textarea
-        className="friend-composer"
-        name="friend"
-        autoFocus='true'
+        className="channel-composer"
+        name="channel"
+        autoFocus="true"
+        placeholder="Add a new channel"
         value={this.state.name}
         onChange={::this.handleChange}
         onKeyDown={::this.handleSubmit}
@@ -23,10 +24,10 @@ export default class FriendComposer extends Component {
   }
 
   handleSubmit(event) {
-    const name = event.target.value.trim();
+    const channel = event.target.value.trim();
     if (event.which === 13) {
       event.preventDefault();
-      this.props.onSave(name);
+      this.props.onSave(channel);
       this.setState({ name: '' })
     };
   }

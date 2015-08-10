@@ -1,67 +1,34 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import FriendComposer from './FriendComposer';
-import FriendListItem from './FriendListItem';
+import ChannelComposer from './ChannelComposer';
+import ChannelListItem from './ChannelListItem';
 
-// const THREAD_FILTER = {
-//   [SHOW_ALL]: () => true,
-//   [SHOW_UNMARKED]: message => message.threadID === 0,
-//   [SHOW_MARKED]: () => true
-// };
+export default class ChannelContainer extends Component {
 
-
-export default class FriendContainer extends Component {
-
-
-  handleSaveFriend(name) {
-
-    //****ADDING NEW CHATROOMS DISABLED FOR THE MOMENT****
-    // if(name.length !== 0) {
-    //   this.props.actions.addFriend(name);
-    // }
+  handleSaveChannel(channel) {
+    if(channel.length !== 0) {
+      this.props.actions.addChannel(channel);
+    }
   }
 
-  handleChangeFriend(friendID) {
-    // console.log(friendID);
-    this.props.onClick(friendID.id);
+  handleChangeChannel(channel) {
+    this.props.onClick(channel);
   }
 
   render() {
-    const { friends, actions } = this.props;
-    const filteredFriends = friends;
+    const { channels, actions } = this.props;
+    const filteredChannels = channels;
     return (
       <section>
-        <div className="friend-section">
-          <ul className="friend-list">
-            {filteredFriends.map(friend =>
-              <FriendListItem friend={friend} key={friend.id} {...actions} onShow={::this.handleChangeFriend} />
+        <div className="channel-section">
+          <ul className="channel-list">
+            {filteredChannels.map(channel =>
+              <ChannelListItem channel={channel} key={channel.id} {...actions} onShow={::this.handleChangeChannel} />
               )}
           </ul>
-          <FriendComposer onSave={::this.handleSaveFriend} />
+          <ChannelComposer onSave={::this.handleSaveChannel} />
         </div>
       </section>
     );
   }
 }
-
-
-        // <ul>
-        //   {[SHOW_ALL, SHOW_UNMARKED, SHOW_MARKED].map(filter =>
-        //     <li key={filter}>
-        //       {this.renderFilterLink(filter)}
-        //     </li>
-        //   )}
-        // </ul>
-
-  // renderFilterLink(filter) {
-  //   const title = FILTER_TITLES[filter];
-  //   const { filter: selectedFilter, onShow } = this.props;
-
-  //   return (
-  //     <a className={classnames({ selected: filter === selectedFilter })}
-  //        style={{ cursor: 'hand' }}
-  //        onClick={() => onShow(filter)}>
-  //       {title}
-  //     </a>
-  //   );
-  // }

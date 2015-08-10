@@ -1,7 +1,7 @@
 import { ADD_FRIEND } from '../constants/ActionTypes';
 
 const initialState = [{
-  name: 'Lobby',
+  name: 'Ye',
   id: 0
 }];
 

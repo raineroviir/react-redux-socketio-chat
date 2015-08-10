@@ -6,11 +6,6 @@ import * as UserAPIUtils from '../utils/UserAPIUtils';
 export function addMessage(message) {
   return {
     type: types.ADD_MESSAGE,
-    // id: message.id,
-    // friendID: message.friendID,
-    // text: message.text,
-    // user: message.user,
-    // time: message.time
     message
   };
 }
@@ -18,26 +13,21 @@ export function addMessage(message) {
 export function receiveRawMessage(message) {
   return {
     type: types.RECEIVE_MESSAGE,
-    // id: message.id,
-    // friendID: message.friendID,
-    // text: message.text,
-    // user: message.user,
-    // time: message.time
     message
   }
 }
 
-export function addFriend(name) {
+export function addChannel(channel) {
   return {
-    type: types.ADD_FRIEND,
-    name
+    type: types.ADD_CHANNEL,
+    channel
   };
 }
 
-export function activateFriend(friendID) {
+export function changeChannel(channel) {
   return {
-    type: types.ACTIVATE_FRIEND,
-    friendID
+    type: types.CHANGE_CHANNEL,
+    channel
   }
 }
 

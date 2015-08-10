@@ -1,27 +1,42 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Footer from './Footer';
-import { Link } from 'react-router';
+import { Route, Link } from 'react-router';
 import { connect } from 'react-redux';
 import Cookies from 'cookies-js';
 import * as Actions from '../actions/Actions';
 import { bindActionCreators } from 'redux';
 
+//@ is an ES 7 decorator and connect passes the state into the App component
+
 @connect(state => ({
   user: state.auth.user
 }))
 
-export default class App extends React.Component {
+export default class App extends Component {
+
   render () {
     const eat = Cookies.get('eat');
     const { user, dispatch } = this.props;
+
     return (
       <div>
-        <ul>
-          <li><Link to="/chat">Chat</Link></li>
-          {!eat && <li><Link to="/login">Login</Link></li> }
-          {!eat && <li><Link to="/register">Register</Link></li> }
-          {eat && <li><Link to="/logout">Log Out</Link></li> }
-        </ul>
+        <section className="top-bar">
+
+          {eat && <button className="top-bar-button"><Link to="/chat">Chat</Link>
+          </button>}
+
+          {!eat && <button className="top-bar-button"><Link to="/login">Login</Link>
+          </button> }
+
+          {!eat && <button className="top-bar-button">
+          <Link to="/register">Register</Link>
+          </button> }
+
+          {eat && <button className="top-bar-button">
+          <Link to="/logout">Log Out</Link>
+          </button> }
+
+        </section>
         <div>
           {this.props.children}
         </div>

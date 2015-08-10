@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 var messageSchema = mongoose.Schema({
   id: String,
-  friendID: Number,
+  channelID: Number,
   text: String,
   user: String,
   time: String

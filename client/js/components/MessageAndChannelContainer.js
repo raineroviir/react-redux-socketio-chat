@@ -7,19 +7,27 @@ import superagent from 'superagent';
 import { connect } from 'react-redux';
 var socket = io();
 
-export default class MainContainer extends Component {
+export default class MessageAndChannelContainer extends Component {
 
-  // static propTypes = {
-  //   messages: PropTypes.array.isRequired,
-  //   actions: PropTypes.object.isRequired
-  // }
+  static propTypes = {
+    messages: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired
+  }
 
-//lifecycle method that is called once right after initial render
+//componentDidMount is a lifecycle method that is called once right after initial render
   componentDidMount() {
     const { actions } = this.props;
     socket.on('new bc message', function(msg) {
+      console.log("<<NEW BC MESSAGE SOCKET EVENT EMIT>>")
       actions.receiveRawMessage(msg);
     });
+  }
+
+//componentDidUpdate is a lifecycle method called when the component gets updated, not called on initial render
+  componentDidUpdate() {
+    const messageList = React.findDOMNode(this.refs.messageList);
+    messageList.scrollTop = messageList.scrollHeight;
+    // messageList.scrollIntoView();
   }
 
   getStateFromServer() {
@@ -45,31 +53,34 @@ export default class MainContainer extends Component {
     }
   }
 
-
-  //run through activefriend state & action creator
-  changeActiveFriend(friendID) {
+  changeActiveChannel(channel) {
+    console.log('changeActiveChannel in <MessageAndChannelContainer>');
     const { actions } = this.props;
-    actions.activateFriend(friendID)
+    actions.changeChannel(channel)
   }
 
   render() {
     // const actions = bindActionCreators(actions, dispatch);
-    const { messages, friends, actions, activeFriend, user, dispatch } = this.props;
+    const { messages, channels, actions, activeChannel, user, dispatch } = this.props;
     // console.log(user);
     // const { filter } = this.state;
-    const filteredMessages = messages.filter(message => message.friendID === activeFriend);
+    const filteredMessages = messages.filter(message => message.channelID === activeChannel.id);
+
     return (
       <main>
         <div className="message-section">
-          <ul className="message-list">
+          <strong>{activeChannel.name}</strong>
+          <ul className="message-list" ref="messageList">
+
             {filteredMessages.map(message =>
               <MessageListItem message={message} key={message.id} user={user} actions={actions} />
             )}
           </ul>
-          <MessageComposer activeFriend={activeFriend} user={user} onSave={::this.handleSave} />
+          <MessageComposer activeChannel={activeChannel} user={user} onSave={::this.handleSave} />
         </div>
         <div>
-          <Channels onClick={::this.changeActiveFriend} friends={friends} actions={actions} />
+          <strong>CHANNELS</strong>
+          <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
         </div>
       </main>
     );

@@ -32,10 +32,10 @@ export default class MessageComposer extends Component {
       event.preventDefault();
       var newMessage = {
         id: Date.now(),
-        friendID: this.props.activeFriend,
+        channelID: this.props.activeChannel.id,
         text: text,
         user: user.user.username || user.user,  //TODO: clean this code up
-        time: strftime('%H:%M %P', new Date())
+        time: strftime('%H:%M %p', new Date())
       }
       //Emit the message to others in the chat room
       socket.emit('new message', newMessage);
