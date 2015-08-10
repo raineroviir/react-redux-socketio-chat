@@ -5,9 +5,9 @@ import * as reducers from '../reducers';
 import Login from '../components/Login';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import logger from '../middleware/logger';
-import ChatContainer from './ChatContainer';
+import Chat from '../components/Chat';
 import Register from '../components/Register';
-import App from '../components/App';
+import App from './App';
 import Logout from '../components/Logout';
 import Cookies from 'cookies-js';
 import thunk from 'redux-thunk';
@@ -59,7 +59,7 @@ function renderRoutes (history) {
   return (
     <Router history={history}>
       <Route path="/" component={App}>
-        <Route path="/chat" component={ChatContainer} onEnter={requireAuth} />
+        <Route path="/chat" component={Chat} onEnter={requireAuth} />
         <Route path="/login" component={Login}>
         </Route>
         <Route path="/register" component={Register}>
