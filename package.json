@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "node './server/devserver.js'",
+    "build": "grunt build",
+    "start": "node server/server",
     "dev": "webpack --config webpack-dev-server.config.js"
   },
   "repository": {
