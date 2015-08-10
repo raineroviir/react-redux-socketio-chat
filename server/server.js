@@ -20,6 +20,7 @@ var cors = require('cors');
 //set env vars
 process.env.AUTH_SECRET = process.env.AUTH_SECRET || 'this is a temp AUTH_SECRET';
 process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat_dev';
+process.env.PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGOLAB_URI);
 
@@ -67,8 +68,8 @@ io.on('connection', function(socket) {
   });
 });
 
-http.listen(3000, function() {
-    console.log('socket.io server is listening on 3000');
+http.listen(process.env.PORT, function() {
+    console.log('server listening on port: %s', process.env.PORT);
 });
 
 // io.on('connection', function (socket) {
