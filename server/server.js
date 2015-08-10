@@ -14,10 +14,6 @@ var eat_auth = require('../lib/eat_auth');
 
 var cors = require('cors');
 
-//not using JWT at the moment so these can be erased
-var jwt = require('jsonwebtoken');
-var socketio_jwt = require('socketio-jwt');
-var jwt_secret = 'foo bar big secret';
 // var webpackConfig = require('../webpack.production.config.js');
 // var compiler = webpack(webpackConfig);
 
