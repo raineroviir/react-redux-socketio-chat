@@ -1,6 +1,8 @@
-# WORK IN PROGRESS
+# React-redux-socketio-chat
 
-## USES REACT, REDUX, SOCKET.IO, and some other bleeding edge tech.
+## This project is a work-in progress.  
 
+###
+To get started clone the project and then run
 ###
 `npm install` `npm build` && then `npm start`

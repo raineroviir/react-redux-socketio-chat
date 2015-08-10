@@ -32,7 +32,6 @@ export function changeChannel(channel) {
 }
 
 export function login(user) {
-  console.log(user);
   return {
     types: [types.AUTH_LOGIN,
       types.AUTH_LOGIN_SUCCESS,
@@ -43,7 +42,6 @@ export function login(user) {
 }
 
 export function register(user) {
-  console.log(user);
   return {
     types: [types.AUTH_REGISTER,
       types.AUTH_REGISTER_SUCCESS,
