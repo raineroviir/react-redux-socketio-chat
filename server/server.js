@@ -1,8 +1,8 @@
 'use strict';
 
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('../webpack.config');
+// var webpack = require('webpack');
+// var WebpackDevServer = require('webpack-dev-server');
+// var config = require('../webpack.config');
 var express = require('express');
 var path = require('path');
 var app = express();
