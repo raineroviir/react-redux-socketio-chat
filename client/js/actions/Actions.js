@@ -59,3 +59,17 @@ export function logout() {
     promise: UserAPIUtils.logout()
   }
 }
+
+export function typing(username) {
+  console.log('typing action');
+  return {
+    type: types.TYPING,
+    username
+  }
+}
+export function stopTyping(username) {
+  return {
+    type: types.STOP_TYPING,
+    username
+  }
+}

@@ -6,7 +6,7 @@ const initialState = [{
   channelID: 0,
   text: 'Welcome to the chat',
   user: 'Rainer',
-  time: strftime('%H:%M %P', new Date())
+  time: strftime('%H:%M %p', new Date())
 }];
 
 export default function messages(state = initialState, action) {

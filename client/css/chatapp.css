@@ -39,6 +39,11 @@ a {
 .top-bar-button {
 }
 
+.typing-list {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
 .channel-section {
   width: 25%;
 }

@@ -5,4 +5,4 @@
 ###
 To get started clone the project and then run
 ###
-`npm install` `npm build` && then `npm start`
+`npm install` `npm run build` && then `npm start`

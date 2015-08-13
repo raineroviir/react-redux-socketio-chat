@@ -4,6 +4,7 @@ import { Router, Navigation } from 'react-router';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/Actions';
 import { bindActionCreators } from 'redux';
+const socket = io.connect();
 
 @connect(state => ({
   user: state.auth.user
@@ -32,6 +33,7 @@ export default class Register extends Component {
       confirmPassword: this.state.confirmPassword
     }
     actions.register(user);
+    socket.emit('add user', user.username);
     UserAPIUtils.getAllMessages(actions);
     this.setState({ username: '', password: '', confirmPassword: ''});
   }

@@ -1,33 +1,26 @@
 {
-  "name": "turtle",
+  "name": "React-redux-socketio-chat",
   "version": "0.1.0",
-  "description": "a simple social media platform focused on privacy",
+  "description": "react frontend, socketio powered chat. redux as the flux implementation",
   "main": "server.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "jest",
     "build": "grunt build",
     "start": "node server/server",
     "dev": "webpack --config webpack-dev-server.config.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dwolfm/turtle.git"
+    "url": "https://github.com/raineroviir/react-redux-socketio-chat"
   },
-  "author": "dwolfm@gmail.com",
+  "author": "roviir@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dwolfm/turtle/issues"
+    "url": "https://github.com/raineroviir/react-redux-socketio-chat/issues"
   },
-  "homepage": "https://github.com/dwolfm/turtle",
-  "jest": {
-    "scriptPreprocessor": "./preprocessor.js",
-    "unmockedModulePathPatterns": [
-      "<rootDir/>/node_modules/react"
-    ]
-  },
+  "homepage": "https://github.com/raineroviir/react-redux-socketio-chat",
   "devDependencies": {
     "babel-core": "^5.5.8",
     "babel-loader": "^5.1.4",
@@ -86,6 +79,7 @@
     "react-router": "1.0.0-beta3",
     "react-winjs": "^1.0.0",
     "redux": "1.0.0-rc",
+    "redux-logger": "0.0.3",
     "redux-promise": "^0.5.0",
     "reqwest": "^1.1.5",
     "serve-static": "^1.10.0",

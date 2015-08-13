@@ -4,7 +4,6 @@ import { provide, Provider } from 'react-redux';
 import * as reducers from '../reducers';
 import Login from '../components/Login';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import logger from '../middleware/logger';
 import Chat from '../components/Chat';
 import Register from '../components/Register';
 import App from './App';
@@ -12,8 +11,9 @@ import Logout from '../components/Logout';
 import Cookies from 'cookies-js';
 import thunk from 'redux-thunk';
 import promiseMiddleware from '../middleware/promiseMiddleware';
+import logger from 'redux-logger';
 
-const createStoreWithMiddleware = applyMiddleware( promiseMiddleware)(createStore);
+const createStoreWithMiddleware = applyMiddleware(logger, promiseMiddleware)(createStore);
 const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
 

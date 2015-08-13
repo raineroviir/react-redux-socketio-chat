@@ -55,7 +55,6 @@ export function createMessage(message) {
       if (err) {
         reject(res.body || err)
       } else {
-        console.log(res.body);
         resolve(res.body)
       }
     })
