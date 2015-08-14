@@ -24,31 +24,34 @@ app.use(passport.initialize());
 require('../lib/passport_strategy')(passport);
 var messageRouter = express.Router();
 var usersRouter = express.Router();
+var channelRouter = express.Router();
 
 app.use('/', express.static(path.join(__dirname, '..', 'dist')));
 
 require('./routes/message_routes')(messageRouter);
+require('./routes/channel_routes')(channelRouter);
 require('./routes/user_routes')(usersRouter, passport);
 app.use('/api', messageRouter);
 app.use('/api', usersRouter);
+app.use('/api', channelRouter);
 
 // io.use(socketio_jwt.authorize({
 //   secret: jwt_secret,
 //   handshake: true
 // }));
 
-var usernames = {};
+// var usernames = {};
 io.on('connection', function(socket) {
   console.log('user connected to socket ' + socket.id);
   socket.on('add user', function(username) {
+    socket.broadcast.emit('add user bc', username)
     console.log('added user!');
     socket.username = username;
-    usernames[username] = username;
+    // usernames[username] = username;
   });
   socket.on('new message', function(data) {
     socket.broadcast.emit('new bc message', data);
   });
-
 
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function () {

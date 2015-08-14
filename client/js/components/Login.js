@@ -37,6 +37,7 @@ export default class Login extends Component {
       password: this.state.password
     }
     actions.login(user);
+    actions.addUserToChannel(user.username);
     this.setState({ username: '', password: ''});
     socket.emit('add user', user.username);
     UserAPIUtils.getAllMessages(actions);

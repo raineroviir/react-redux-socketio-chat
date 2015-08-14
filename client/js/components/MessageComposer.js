@@ -34,7 +34,7 @@ export default class MessageComposer extends Component {
         id: Date.now(),
         channelID: this.props.activeChannel.id,
         text: text,
-        user: user.user.username,
+        user: user,
         time: strftime('%H:%M %p', new Date())
       }
       //Emit the message to others in the chat room

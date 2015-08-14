@@ -1,5 +1,6 @@
 import { TYPING, STOP_TYPING} from '../constants/ActionTypes';
 
+//module deactivated&*&*&*&*
 const initialState = [{
   username: 'rainer',
   typing: true

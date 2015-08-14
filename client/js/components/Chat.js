@@ -7,32 +7,37 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../actions/Actions';
 import TypingListItem from './TypingListItem';
+import UserListItem from './UserListItem';
 const socket = io();
+import Footer from './Footer';
 
 export default class Chat extends Component {
 
   static propTypes = {
     messages: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    user: PropTypes.string.isRequired
   }
 
 //componentDidMount is a lifecycle method that is called once right after initial render
   componentDidMount() {
     const { actions } = this.props;
     //The 'new bc message' socket event lets other users connected to the socket listen to the message
-    socket.on('new bc message', function(msg) {
-      actions.receiveRawMessage(msg);
-    });
-    socket.on('typing bc', function(username) {
-      if(username) {
-        actions.typing(username);
+    socket.on('new bc message', msg =>
+      actions.receiveRawMessage(msg)
+    );
+    socket.on('typing bc', username =>
+      actions.typing(username)
+    );
+    socket.on('stop typing bc', username =>
+      actions.stopTyping(username)
+    );
+    socket.on('add user bc', username =>
+      {
+      console.log(username)
+      actions.addUserToChannel(username)
       }
-    });
-    socket.on('stop typing bc', function(username) {
-      if(username) {
-        actions.stopTyping(username);
-      }
-    });
+    );
   }
 
 //componentDidUpdate is a lifecycle method called when the component gets updated, not called on initial render
@@ -49,17 +54,22 @@ export default class Chat extends Component {
   }
 
   changeActiveChannel(channel) {
-    const { actions } = this.props;
-    actions.changeChannel(channel)
+    const { actions, user } = this.props;
+    actions.changeChannel(channel);
+    actions.addUserToChannel(user);
   }
 
   render() {
-    const { messages, channels, actions, activeChannel, user, dispatch, typers} = this.props;
+    const { messages, channels, actions, activeChannel, user, dispatch, typers, channelUserList} = this.props;
     const filteredMessages = messages.filter(message => message.channelID === activeChannel.id);
     // const filteredTypers = typing.filter(user => user.typing === true)
-
+    const filteredChannelUserList = channelUserList;
     return (
       <main>
+        <div className="channel-section">
+          <strong>Channels</strong>
+          <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
+        </div>
         <div className="message-section">
           <strong>{activeChannel.name}</strong>
           <ul className="message-list" ref="messageList">
@@ -88,9 +98,13 @@ export default class Chat extends Component {
           <span className="typing-list">Several people are typing
           </span>}
         </div>
-        <div>
-          <strong>CHANNELS</strong>
-          <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
+        <div className="user-section">
+          <strong>Channel Info</strong>
+          <ul className="user-list">
+            {filteredChannelUserList.map(user =>
+              <UserListItem user={user} key={user.id}/>
+            )}
+          </ul>
         </div>
       </main>
     );
@@ -101,8 +115,9 @@ export default class Chat extends Component {
   messages: state.messages,
   channels: state.channels,
   activeChannel: state.activeChannel,
-  user: state.auth,
-  typers: state.typers
+  user: state.auth.user,
+  typers: state.typers,
+  channelUserList: state.channelUserList
 }))
 export default class ChatContainer {
   render() {

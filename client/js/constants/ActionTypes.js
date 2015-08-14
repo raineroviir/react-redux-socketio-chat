@@ -20,3 +20,5 @@ export const AUTH_REGISTER_FAIL = 'AUTH_REGISTER_FAIL';
 
 export const TYPING = 'TYPING';
 export const STOP_TYPING = 'STOP_TYPING';
+
+export const ADD_USER_TO_CHANNEL = 'ADD_USER_TO_CHANNEL';
