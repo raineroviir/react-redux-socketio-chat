@@ -3,6 +3,7 @@ import * as UserAPIUtils from '../utils/UserAPIUtils';
 import * as Actions from '../actions/Actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+const socket = io.connect();
 
 @connect(state => ({
   user: state.auth.user
@@ -30,14 +31,15 @@ export default class Login extends Component {
   handleSubmit(event) {
     const { dispatch } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
-    console.log('hello from handle submit')
     event.preventDefault();
     var user = {
       username: this.state.username,
       password: this.state.password
     }
     actions.login(user);
+    actions.addUserToChannel(user.username);
     this.setState({ username: '', password: ''});
+    socket.emit('add user', user.username);
     UserAPIUtils.getAllMessages(actions);
   }
 

@@ -24,6 +24,13 @@ export function addChannel(channel) {
   };
 }
 
+export function addUserToChannel(user) {
+  return {
+    type: types.ADD_USER_TO_CHANNEL,
+    user
+  }
+}
+
 export function changeChannel(channel) {
   return {
     type: types.CHANGE_CHANNEL,
@@ -57,5 +64,19 @@ export function logout() {
       types.AUTH_LOGOUT_SUCCESS,
       types.AUTH_LOGOUT_FAIL],
     promise: UserAPIUtils.logout()
+  }
+}
+
+export function typing(username) {
+  console.log('typing action');
+  return {
+    type: types.TYPING,
+    username
+  }
+}
+export function stopTyping(username) {
+  return {
+    type: types.STOP_TYPING,
+    username
   }
 }

@@ -32,7 +32,7 @@ export function login(user) {
         console.log(err);
         reject(res.body || err);
       } else {
-        resolve(res.body)
+        resolve(res.body.username)
         Cookies.set('eat', res.body.eat);
       }
     })
@@ -55,7 +55,6 @@ export function createMessage(message) {
       if (err) {
         reject(res.body || err)
       } else {
-        console.log(res.body);
         resolve(res.body)
       }
     })

@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import * as UserAPIUtils from '../utils/UserAPIUtils';
-var socket = io.connect();
+const socket = io.connect();
 import strftime from 'strftime';
-
 export default class MessageComposer extends Component {
 
   constructor(props, context) {
     super(props, context);
     this.state = {
-      text: this.props.text || ''
+      text: this.props.text || '',
+      typing: false
     };
   }
 
@@ -28,14 +28,13 @@ export default class MessageComposer extends Component {
   handleSubmit(event) {
     const { user } = this.props;
     const text = event.target.value.trim();
-    console.log(user);
     if (event.which === 13) {
       event.preventDefault();
       var newMessage = {
         id: Date.now(),
         channelID: this.props.activeChannel.id,
         text: text,
-        user: user.user.username || user.user,  //TODO: clean this code up
+        user: user,
         time: strftime('%H:%M %p', new Date())
       }
       //Emit the message to others in the chat room
@@ -46,11 +45,21 @@ export default class MessageComposer extends Component {
 
       //Pass the message up to the MainContainer
       this.props.onSave(newMessage);
-      this.setState({ text: '' });
+      this.setState({ text: '', typing: false });
+      socket.emit('stop typing');
     };
   }
 
   handleChange(event) {
-    this.setState({ text: event.target.value});
+    this.setState({ text: event.target.value });
+    console.log(event.target.value.length);
+    if(event.target.value.length > 0 && !this.state.typing) {
+      socket.emit('typing');
+      this.setState({ typing: true});
+    }
+    if(event.target.value.length === 0 && this.state.typing) {
+      socket.emit('stop typing');
+      this.setState({ typing: false});
+    }
   }
 }

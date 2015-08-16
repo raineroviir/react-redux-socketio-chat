@@ -19,7 +19,7 @@ export default class App extends Component {
     const { user, dispatch } = this.props;
 
     return (
-      <div>
+      <div className="wrapper">
         <section className="top-bar">
 
           {eat && <button className="top-bar-button"><Link to="/chat">Chat</Link>
@@ -37,10 +37,9 @@ export default class App extends Component {
           </button> }
 
         </section>
-        <div>
+        <section>
           {this.props.children}
-        </div>
-        <Footer />
+        </section>
       </div>
     )
   }

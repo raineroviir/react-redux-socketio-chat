@@ -11,7 +11,7 @@ export default class ChannelContainer extends Component {
     }
   }
 
-  handleChangeChannel(channel) {
+  handleClick(channel) {
     this.props.onClick(channel);
   }
 
@@ -20,10 +20,10 @@ export default class ChannelContainer extends Component {
     const filteredChannels = channels;
     return (
       <section>
-        <div className="channel-section">
+        <div>
           <ul className="channel-list">
             {filteredChannels.map(channel =>
-              <ChannelListItem channel={channel} key={channel.id} {...actions} onShow={::this.handleChangeChannel} />
+              <ChannelListItem channel={channel} key={channel.id} {...actions} onShow={::this.handleClick} />
               )}
           </ul>
           <ChannelComposer onSave={::this.handleSaveChannel} />

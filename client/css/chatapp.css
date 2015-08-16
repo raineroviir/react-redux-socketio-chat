@@ -28,10 +28,13 @@ a {
   padding: 0;
 }
 
-.message-section {
-  float: right;
-  width: 70%;
+.user-list {
+  border: 1px solid #ccf;
+  font-size: 1.0rem;
+  height: 200px;
+  overflow-y: auto;
 }
+
 
 .top-bar {
 }
@@ -39,8 +42,26 @@ a {
 .top-bar-button {
 }
 
+.typing-list {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
 .channel-section {
-  width: 25%;
+  float: left;
+  width: 20%;
+}
+
+.message-section {
+  float: left;
+  width: 60%;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.user-section {
+  float: left;
+  width: 15%;
 }
 
 .message-channel-heading,
@@ -115,4 +136,13 @@ a {
   height: 2em;
   width: 100%;
   margin: 0.5rem 0 0;
+}
+
+.footer, .push {
+  height: 15.5rem;
+}
+
+.wrapper {
+  min-height: 100%;
+  margin: 0 auto -15.5rem;
 }
