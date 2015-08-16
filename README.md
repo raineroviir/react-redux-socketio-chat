@@ -3,6 +3,7 @@
 ## This project is a work-in progress.  
 
 ###
-To get started clone the project and then run
+Running this project on your own machine is a bit hard atm, I will try to put together instructions soon.
+
 ###
-`npm install` `npm run build` && then `npm start`
+To see the live version of the app go to www.slackclone.herokuapp.com
