@@ -17,6 +17,14 @@ export function receiveRawMessage(message) {
   }
 }
 
+export function receiveRawChannel(channel) {
+  console.log(channel)
+  return {
+    type: types.RECEIVE_CHANNEL,
+    channel
+  }
+}
+
 export function addChannel(channel) {
   return {
     type: types.ADD_CHANNEL,
@@ -27,6 +35,13 @@ export function addChannel(channel) {
 export function addUserToChannel(user) {
   return {
     type: types.ADD_USER_TO_CHANNEL,
+    user
+  }
+}
+
+export function removeUserFromChannel(user) {
+  return {
+    type: types.REMOVE_USER_FROM_CHANNEL,
     user
   }
 }
@@ -68,7 +83,6 @@ export function logout() {
 }
 
 export function typing(username) {
-  console.log('typing action');
   return {
     type: types.TYPING,
     username

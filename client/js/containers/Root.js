@@ -13,7 +13,16 @@ import thunk from 'redux-thunk';
 import promiseMiddleware from '../middleware/promiseMiddleware';
 import logger from 'redux-logger';
 
-const createStoreWithMiddleware = applyMiddleware(logger, promiseMiddleware)(createStore);
+import { devTools, persistState } from 'redux-devtools';
+import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
+import { reduxRouteComponent } from 'redux-react-router';
+
+const createStoreWithMiddleware = compose(
+  applyMiddleware(thunk, promiseMiddleware),
+  devTools(),
+  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
+  createStore
+);
 const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
 
@@ -26,9 +35,14 @@ export default class Root extends React.Component {
   render() {
     const { history, dispatch } = this.props
     return (
-      <Provider store={store}>
-        {renderRoutes.bind(null, history)}
-      </Provider>
+      <div>
+        <Provider store={store}>
+          {renderRoutes.bind(null, history)}
+        </Provider>
+        <DebugPanel top right bottom>
+          <DevTools store={store} monitor={LogMonitor} />
+        </DebugPanel>
+      </div>
     );
   }
 }

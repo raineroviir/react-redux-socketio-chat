@@ -32,15 +32,12 @@ export default class Login extends Component {
     const { dispatch } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
     event.preventDefault();
-    var user = {
+    var userpass = {
       username: this.state.username,
       password: this.state.password
     }
-    actions.login(user);
-    actions.addUserToChannel(user.username);
+    actions.login(userpass);
     this.setState({ username: '', password: ''});
-    socket.emit('add user', user.username);
-    UserAPIUtils.getAllMessages(actions);
   }
 
   render() {

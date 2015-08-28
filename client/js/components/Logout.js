@@ -6,16 +6,16 @@ import { connect } from 'react-redux';
 @connect(state => ({
   user: state.auth.user
 }))
-
 export default class Logout extends React.Component{
 
   componentWillMount() {
-    const { dispatch } = this.props;
+    const { dispatch, user } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
+    console.log(user);
+    actions.stopTyping(user);
+    actions.removeUserFromChannel(user)
     actions.logout();
-    actions.stopTyping();
   }
-
   render () {
     return (
       <div>
@@ -24,3 +24,22 @@ export default class Logout extends React.Component{
     )
   }
 }
+
+//
+// export default class LogoutContainer {
+//
+//   componentWillMount() {
+//     const { user } = this.props;
+//     console.log(user);
+//     console.log('^from CWM logoutcontainer^')
+//   }
+//   render() {
+//     const { dispatch, user } = this.props;
+//     console.log(user);
+//     console.log('^render from logoutcontainer^')
+//     const actions = bindActionCreators(Actions, dispatch);
+//     return(
+//       <Logout actions={actions} user={user}/>
+//     )
+//   }
+// }

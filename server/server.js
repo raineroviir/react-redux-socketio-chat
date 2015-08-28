@@ -65,7 +65,11 @@ io.on('connection', function(socket) {
     socket.broadcast.emit('stop typing bc', socket.username);
   });
 
-  socket.on('disconnect', function(user) {
+  // when a disconnection occurs, we do some things
+  socket.on('disconnect', function(username) {
+    socket.emit('client disconnect');
+    console.log(socket.username + ' left the chat');
+    console.log(username);
     console.log(socket.id + ' disconnected ');
   });
 });

@@ -33,9 +33,6 @@ export default class Register extends Component {
       confirmPassword: this.state.confirmPassword
     }
     actions.register(user);
-    actions.addUserToChannel(user.username);
-    socket.emit('add user', user.username);
-    UserAPIUtils.getAllMessages(actions);
     this.setState({ username: '', password: '', confirmPassword: ''});
   }
 

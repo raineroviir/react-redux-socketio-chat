@@ -36,7 +36,13 @@ export function login(user) {
         Cookies.set('eat', res.body.eat);
       }
     })
-  });
+  })
+  // .then(function(value) {
+  //   console.log(value)
+  //
+  // }).catch(function(reason) {
+  //   console.log(reason)
+  // })
 }
 
 export function logout() {
@@ -61,6 +67,22 @@ export function createMessage(message) {
   });
 }
 
+export function createChannel(channel) {
+
+  return new Promise((resolve, reject) => {
+    superagent
+    .post('/api/channels/')
+    .send(channel)
+    .end(function(err, res) {
+      if(err) {
+        reject(res.body || err)
+      } else {
+        resolve(res.body)
+      }
+    })
+  })
+}
+
 export function getAllMessages(actions) {
 
   return new Promise((resolve, reject) => {
@@ -69,7 +91,7 @@ export function getAllMessages(actions) {
     .end(function(err, res) {
       if (err) {
         console.log(err);
-        reject(res.body || err)
+        reject(res.body || err);
       } else {
         const rawMessages = res.body;
         resolve(rawMessages.forEach(function(message) {
@@ -77,5 +99,51 @@ export function getAllMessages(actions) {
         }))
       }
     });
+  })
+}
+
+export function getAllChannels(actions) {
+
+  return new Promise((resolve, reject) => {
+    superagent
+    .get('api/channels')
+    .end(function(err, res) {
+      if(err) {
+        console.log(err);
+        reject(res.body || err);
+      } else {
+        const rawChannels = res.body;
+        resolve(rawChannels.forEach(function(channel) {
+          actions.receiveRawChannel(channel)
+        }))
+      }
+    })
+  })
+}
+
+export function addUserToChannel(user) {
+
+  return new Promise((resolve, reject) => {
+    superagent
+    .post('api/add_user_to_channel')
+  })
+}
+
+export function getAllUsersInChannel(action) {
+
+  return new Promise((resolve, reject) => {
+    superagent
+    .get('api/channels')
+    .end((err, res) => {
+      if(err) {
+        console.log(err);
+        reject(res.body || err)
+      } else {
+        const rawUserList = res.body.users;
+        resolve(rawUserList.forEach(function(user) {
+          action.addUserToChannel(user)
+        }))
+        }
+    })
   })
 }
