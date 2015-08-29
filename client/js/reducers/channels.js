@@ -1,6 +1,7 @@
 import { ADD_CHANNEL, RECEIVE_CHANNEL } from '../constants/ActionTypes';
 
 const initialState = [];
+//you may have to add the following to initial state if you're doing this on your own machine: { name: 'Lobby', id: 0 }
 
 export default function channels(state = initialState, action) {
   switch(action.type) {

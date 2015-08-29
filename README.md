@@ -2,8 +2,21 @@
 
 ## This project is a work-in progress.  
 
-###
-Running this project on your own machine is a bit hard atm, I will try to put together instructions soon.
+#
+`npm install
+seed
+grunt build
+grunt nodemon
+`
+
 
 ###
 To see the live version of the app go to http://slackclone.herokuapp.com
+
+
+##
+`Todos:
+Upgrade the UI/UX
+Make adding channels possible
+Move to gulp
+`

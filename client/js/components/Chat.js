@@ -106,7 +106,7 @@ export default class Chat extends Component {
           <strong>Channels</strong>
           <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
           <div className="user-section">
-            <strong>Channel Info</strong>
+            <strong>Users Online</strong>
             <ul className="user-list">
               {filteredChannelUserList.map(user =>
                 <UserListItem user={user} key={user.id}/>
