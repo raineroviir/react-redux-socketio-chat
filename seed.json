@@ -1,0 +1,5 @@
+{
+	"undefined": "localhost/chat_dev",
+	"dev": "localhost/chat_dev",
+	"prod": "localhost/chat_dev"
+}

@@ -1,7 +1,10 @@
 export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
+
 export const ADD_CHANNEL = 'ADD_CHANNEL';
 export const CHANGE_CHANNEL = 'CHANGE_CHANNEL';
-export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
+export const RECEIVE_CHANNEL = 'RECEIVE_CHANNEL';
+
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN = 'LOGIN';
 
@@ -22,3 +25,4 @@ export const TYPING = 'TYPING';
 export const STOP_TYPING = 'STOP_TYPING';
 
 export const ADD_USER_TO_CHANNEL = 'ADD_USER_TO_CHANNEL';
+export const REMOVE_USER_FROM_CHANNEL = 'REMOVE_USER_FROM_CHANNEL';

@@ -65,9 +65,18 @@ io.on('connection', function(socket) {
     socket.broadcast.emit('stop typing bc', socket.username);
   });
 
-  socket.on('disconnect', function(user) {
+  // when a disconnection occurs, we do some things
+  socket.on('disconnect', function() {
+    console.log('io.emit occured');
+    io.emit('client disconnect io', socket.username)
+    console.log(socket.username + ' left the chat');
     console.log(socket.id + ' disconnected ');
   });
+
+  socket.on('logout', function() {
+    console.log('logout occured');
+    socket.broadcast.emit('user logged out', socket.username)
+  })
 });
 
 http.listen(process.env.PORT, function() {

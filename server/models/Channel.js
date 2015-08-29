@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 
 var channelSchema = mongoose.Schema({
-  name: String,
+  name: { type:String, unique: true },
   users: Array
 });
 

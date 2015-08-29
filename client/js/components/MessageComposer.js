@@ -52,7 +52,6 @@ export default class MessageComposer extends Component {
 
   handleChange(event) {
     this.setState({ text: event.target.value });
-    console.log(event.target.value.length);
     if(event.target.value.length > 0 && !this.state.typing) {
       socket.emit('typing');
       this.setState({ typing: true});

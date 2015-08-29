@@ -1,13 +1,6 @@
-import { ADD_USER_TO_CHANNEL } from '../constants/ActionTypes';
+import { ADD_USER_TO_CHANNEL, REMOVE_USER_FROM_CHANNEL } from '../constants/ActionTypes';
 
-const initialState = [{
-  username: 'rainer101',
-  id: 0
-},
-{
-  username: 'artful',
-  id: 1
-}];
+const initialState = [];
 
 export default function channelUserList(state = initialState, action) {
   switch(action.type) {
@@ -22,6 +15,10 @@ export default function channelUserList(state = initialState, action) {
         id: (state.length === 0) ? 0 : state[state.length - 1].id + 1
       }];
       }
+    case REMOVE_USER_FROM_CHANNEL:
+      return state.filter(user =>
+      user.username !== action.user
+      );
     default:
       return state;
   }
