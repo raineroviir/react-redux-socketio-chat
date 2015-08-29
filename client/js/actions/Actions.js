@@ -18,7 +18,6 @@ export function receiveRawMessage(message) {
 }
 
 export function receiveRawChannel(channel) {
-  console.log(channel)
   return {
     type: types.RECEIVE_CHANNEL,
     channel

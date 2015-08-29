@@ -1,6 +1,6 @@
 import { ADD_USER_TO_CHANNEL, REMOVE_USER_FROM_CHANNEL } from '../constants/ActionTypes';
 
-const initialState = [{}];
+const initialState = [];
 
 export default function channelUserList(state = initialState, action) {
   switch(action.type) {

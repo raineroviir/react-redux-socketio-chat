@@ -40,28 +40,38 @@ export default class Chat extends Component {
 
     //this socket event listens to other users joining the channel and appends them to the channel users array
     socket.on('add user bc', username =>
-      {
-      console.log(username)
       actions.addUserToChannel(username)
-      }
     );
 
     //on client disconnect..
-    socket.on('client disconnect', user => {
-      console.log(user)
+    socket.on('client disconnect io', user => {
       actions.removeUserFromChannel(user)
       actions.stopTyping(user)
+      console.log(user);
+      const payload = {
+        username: user,
+        channel: 'Lobby'
       }
-    );
+      UserAPIUtils.removeUserFromChannel(payload)
+    });
+
+    socket.on('user logged out', user => {
+      actions.removeUserFromChannel(user);
+      actions.stopTyping(user);
+    });
   }
 
 
 //componentWillMount is a lifecycle method called right before initial render
   componentWillMount() {
     const { actions, user} = this.props;
-    console.log(user);
     actions.addUserToChannel(user);
     socket.emit('add user', user);
+    const payload = {
+      username: user,
+      channel: 'Lobby'
+    }
+    UserAPIUtils.addUserToChannel(payload);
     UserAPIUtils.getAllChannels(actions);
     UserAPIUtils.getAllUsersInChannel(actions);
     UserAPIUtils.getAllMessages(actions);
@@ -87,7 +97,6 @@ export default class Chat extends Component {
 
   render() {
     const { messages, channels, actions, activeChannel, user, dispatch, typers, channelUserList} = this.props;
-    console.log(user);
     const filteredMessages = messages.filter(message => message.channelID === activeChannel.id);
     // const filteredTypers = typing.filter(user => user.typing === true)
     const filteredChannelUserList = channelUserList;

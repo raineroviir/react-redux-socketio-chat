@@ -66,12 +66,17 @@ io.on('connection', function(socket) {
   });
 
   // when a disconnection occurs, we do some things
-  socket.on('disconnect', function(username) {
-    socket.emit('client disconnect');
+  socket.on('disconnect', function() {
+    console.log('io.emit occured');
+    io.emit('client disconnect io', socket.username)
     console.log(socket.username + ' left the chat');
-    console.log(username);
     console.log(socket.id + ' disconnected ');
   });
+
+  socket.on('logout', function() {
+    console.log('logout occured');
+    socket.broadcast.emit('user logged out', socket.username)
+  })
 });
 
 http.listen(process.env.PORT, function() {

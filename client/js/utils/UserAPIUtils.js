@@ -125,7 +125,34 @@ export function addUserToChannel(user) {
 
   return new Promise((resolve, reject) => {
     superagent
-    .post('api/add_user_to_channel')
+    .patch('api/channels/add_user_to_channel')
+    .send(user)
+    .end((err, res) => {
+      if(err) {
+        console.log(err);
+        reject(res.body || err);
+      } else {
+        resolve(res.body);
+      }
+    })
+  })
+}
+
+export function removeUserFromChannel(user) {
+
+  return new Promise((resolve, reject) => {
+    superagent
+    .patch('api/channels/remove_user_from_channel')
+    .send(user)
+    .end((err, res) => {
+      if(err) {
+        console.log(err);
+        reject(res.body || err)
+      } else {
+        console.log('successfully removed user');
+        resolve(res.body)
+      }
+    })
   })
 }
 
@@ -133,16 +160,18 @@ export function getAllUsersInChannel(action) {
 
   return new Promise((resolve, reject) => {
     superagent
-    .get('api/channels')
+    .get('api/channels/Lobby') //hard coded lobby in for now
     .end((err, res) => {
       if(err) {
         console.log(err);
         reject(res.body || err)
       } else {
-        const rawUserList = res.body.users;
-        resolve(rawUserList.forEach(function(user) {
-          action.addUserToChannel(user)
-        }))
+        const rawUserList = res.body[0].users;
+        if(rawUserList) {
+          resolve(rawUserList.forEach(function(user) {
+            action.addUserToChannel(user)
+          }))
+          }
         }
     })
   })

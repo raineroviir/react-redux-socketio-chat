@@ -43,9 +43,10 @@ module.exports = function(router) {
   });
 
   //add users to the channel user list
-  router.put('/channels/add_user_to_channel', function(req, res) {
+  router.patch('/channels/add_user_to_channel', function(req, res) {
     var channel = req.body.channel;
     var username = req.body.username
+    console.log(req.body);
     Channel.update({name: channel}, { $addToSet: {users: username} },
       function(err, data) {
         if(err) {
@@ -54,6 +55,21 @@ module.exports = function(router) {
         }
       });
 
-    res.json({msg: 'added user'})
+    res.json({msg: 'added user'});
+  })
+
+  router.patch('/channels/remove_user_from_channel', function(req, res) {
+    var username = req.body.username;
+    var channel = req.body.channel;
+    console.log(req.body);
+    Channel.update({name: channel}, { $pull: {users: username} },
+      function(err, data) {
+      if(err) {
+        console.log(err);
+        return res.status(500).json({msg: 'internal server error'});
+      }
+
+      res.json({msg: 'removed user'});
+    })
   })
 }
