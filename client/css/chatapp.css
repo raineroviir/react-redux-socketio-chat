@@ -139,12 +139,6 @@ a {
 }
 
 .wrapper {
-  min-height: 100%;
-  margin: 0 auto -15.5rem;
-}
-
-
-.wrapper {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;

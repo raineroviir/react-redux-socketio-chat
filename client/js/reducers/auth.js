@@ -41,23 +41,17 @@ export default function info(state = initialState, action = {}) {
         error: action.error
       };
     case AUTH_LOGIN:
-    console.log(state);
-    console.log(action);
       return {
         ...state,
         loggingIn: true
       };
     case AUTH_LOGIN_SUCCESS:
-    console.log(state);
-    console.log(action);
       return {
         ...state,
         loggingIn: false,
         user: action.result
       };
     case AUTH_LOGIN_FAIL:
-      console.log(state);
-      console.log(action);
         return {
           ...state,
           loggingIn: false,

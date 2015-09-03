@@ -40,7 +40,7 @@ export default class Root extends React.Component {
         <Provider store={store}>
           {renderRoutes.bind(null, history)}
         </Provider>
-        <DebugPanel top right bottom>
+        <DebugPanel bottom>
           <DevTools store={store} monitor={LogMonitor} />
         </DebugPanel>
       </div>

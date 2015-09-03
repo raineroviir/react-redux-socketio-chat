@@ -49,14 +49,11 @@ export default class SignIn extends Component {
         username: this.state.username,
         password: this.state.password
       }
-      console.log(user);
-      console.log(actions.login(userpass));
+      actions.login(userpass);
       if(actions.login(userpass)) {
-        alert('resolved');
+        //resolved :)
       }
-      // actions.login(userpass);
       this.setState({ username: '', password: ''});
-      console.log(user);
     }
   }
 
