@@ -14,32 +14,71 @@ import { bindActionCreators } from 'redux';
 
 export default class App extends Component {
 
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      username: ''
+    };
+  }
+
+  componentDidMount() {
+    React.findDOMNode(this.refs.usernameInput).focus();
+  }
+
+  handleChange(event) {
+    if (event.target.name === 'username') {
+      this.setState({ username: event.target.value });
+    }
+  }
+
+  handleSubmit(event) {
+    const { dispatch } = this.props;
+    const actions = bindActionCreators(Actions, dispatch);
+    const username = this.state.username;
+    actions.welcomePage(username);
+    this.setState({ username: '' });
+  }
   render () {
     const eat = Cookies.get('eat');
-    const { user, dispatch } = this.props;
+    const { user } = this.props;
 
+    let welcomePageStyle = {height: '20rem'}
     return (
       <div className="wrapper">
-        <section className="top-bar">
+        <header className='header'>
+          <div className='title'>React-Redux-Socket.io-Chat</div>
+        </header>
 
-          {eat && <button className="top-bar-button"><Link to="/chat">Chat</Link>
-          </button>}
+        <form className='main' style={welcomePageStyle}>
 
-          {!eat && <button className="top-bar-button"><Link to="/login">Login</Link>
-          </button> }
+        <div className='sign-up-textfield'>
+          <input ref="usernameInput" type="text" name="username"
+          value={this.state.username} placeholder="Enter username" onChange={::this.handleChange}/>
+        </div>
 
-          {!eat && <button className="top-bar-button">
-          <Link to="/register">Register</Link>
-          </button> }
+        <Link className='sign-up' to="/signup">
+          <button className='sign-up-button' type="submit" onClick={::this.handleSubmit}>
+            Sign Up
+          </button>
+        </Link>
 
-          {eat && <button className="top-bar-button">
-          <Link to="/logout">Log Out</Link>
-          </button> }
+        </form>
 
+        <section className='sign-in'>
+          <div>Already Signed Up?</div>
+          <Link to="/signin">
+            <button className='sign-in-button'>Sign in</button>
+          </Link>
         </section>
+
+        <aside className="aside aside-1"></aside>
+        <aside className="aside aside-2"></aside>
+
         <section>
           {this.props.children}
         </section>
+        <footer className='footer'>
+        </footer>
       </div>
     )
   }
@@ -56,3 +95,18 @@ export default class AppContainer {
   }
 
 }
+
+          //
+          // {eat && <button className="top-bar-button"><Link to="/chat">Chat</Link>
+          // </button>}
+          //
+          // {!eat && <button className="top-bar-button"><Link to="/login">Login</Link>
+          // </button> }
+          //
+          // {!eat && <button className="top-bar-button">
+          // <Link to="/register">Register</Link>
+          // </button> }
+          //
+          // {eat && <button className="top-bar-button">
+          // <Link to="/logout">Log Out</Link>
+          // </button> }

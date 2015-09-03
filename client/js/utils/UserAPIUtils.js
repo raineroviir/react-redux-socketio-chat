@@ -25,7 +25,7 @@ export function login(user) {
 
   return new Promise((resolve, reject) => {
     superagent
-    .get('/api/log_in')
+    .get('/api/sign_in')
     .auth(user.username, user.password)
     .end(function(err, res) {
       if (err) {

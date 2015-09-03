@@ -138,11 +138,119 @@ a {
   margin: 0.5rem 0 0;
 }
 
-.footer, .push {
-  height: 15.5rem;
-}
-
 .wrapper {
   min-height: 100%;
   margin: 0 auto -15.5rem;
+}
+
+
+.wrapper {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  text-align: center;
+  font-size: 2rem;
+  /*justify-content:*/
+}
+
+
+.sign-up-textfield {
+  margin: auto;
+}
+.wrapper > * {
+  padding: 1rem;
+  flex: 1 100%;
+}
+
+.header {
+  /*background: #EA4335*/
+}
+
+.brand-name {
+  text-align: center;
+}
+
+.footer {
+  font-size: small;
+}
+
+.main {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  background: RGBa(73, 69, 67, 0.75);
+  /*margin: auto;*/
+  height: auto;
+}
+
+.sign-in {
+  justify-content: center;
+  display: flex;
+}
+
+.sign-in-button {
+  margin: auto;
+}
+
+.sign-up {
+  background: #23a608;
+  color: white;
+  margin: auto;
+  width: 12rem;
+  height: 3.5rem;
+}
+
+.sign-up-button {
+  background: #23a608;
+  color: white;
+  margin: auto;
+  width: 12rem;
+  height: 3.5rem;
+}
+
+.aside-1 {
+  /*background: pink;*/
+}
+
+.aside-2 {
+  /*background: grey;*/
+}
+
+@media all and (min-width: 600px) {
+  .aside {
+    flex: 1 auto;
+  }
+}
+
+@media all and (min-width: 800px) {
+  .main {
+    flex: 3 0px;
+  }
+
+  .aside-1 {
+    order: 1;
+  }
+
+  .main {
+    order: 2;
+  }
+
+  .sign-in {
+    order: 4;
+  }
+
+  .aside-2 {
+    order: 3;
+  }
+
+  .footer {
+    order: 5;
+  }
+}
+body {
+  padding: 2em;
 }

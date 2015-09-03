@@ -87,9 +87,17 @@ export function typing(username) {
     username
   }
 }
+
 export function stopTyping(username) {
   return {
     type: types.STOP_TYPING,
+    username
+  }
+}
+
+export function welcomePage(username) {
+  return {
+    type: types.SAVE_USERNAME,
     username
   }
 }
