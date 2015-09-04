@@ -49,18 +49,23 @@ export default class SignIn extends Component {
         username: this.state.username,
         password: this.state.password
       }
-      actions.login(userpass);
 
       const payload = {
         username: this.state.username,
         channel: 'Lobby'
       }
-      if(actions.login(userpass)) {
-        UserAPIUtils.addUserToChannel(payload);
-        UserAPIUtils.getAllChannels(actions);
-        UserAPIUtils.getAllUsersInChannel(actions);
-        UserAPIUtils.getAllMessages(actions);
+
+      //exactly the same way we do it in the SignUp component, we hydrate the state with data fetched from the DB
+      const fetchData = () => {
+        UserAPIUtils.addUserToChannel(payload)
+        UserAPIUtils.getAllChannels(actions)
+        UserAPIUtils.getAllUsersInChannel(actions)
+        UserAPIUtils.getAllMessages(actions)
       }
+
+      actions.signIn(userpass)
+      .then(fetchData())
+
       this.setState({ username: '', password: ''});
     }
   }

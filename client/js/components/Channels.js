@@ -100,7 +100,7 @@ export default class ChannelContainer extends Component {
               <ChannelListItem channel={channel} key={channel.id} {...actions} onShow={::this.handleChangeChannel} />
               )}
           </ul>
-          <a onClick={::this.openModal} style={{'cursor': 'pointer'}}>
+          <a onClick={::this.openModal} style={{'cursor': 'pointer', 'color': '#85BBE9'}}>
             Create a channel
           </a>
         </div>

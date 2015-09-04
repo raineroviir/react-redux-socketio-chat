@@ -2,7 +2,7 @@ import superagent from 'superagent';
 import * as Actions from '../actions/Actions';
 import Cookies from 'cookies-js';
 
-export function register(user) {
+export function signUp(user) {
   user.email = user.username;
 
   return new Promise((resolve, reject) => {
@@ -21,7 +21,7 @@ export function register(user) {
   });
 }
 
-export function login(user) {
+export function signIn(user) {
 
   return new Promise((resolve, reject) => {
     superagent
@@ -45,7 +45,7 @@ export function login(user) {
   // })
 }
 
-export function logout() {
+export function signOut() {
   return new Promise((resolve) => {
     resolve(Cookies.set('eat', ''));
   });

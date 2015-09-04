@@ -73,8 +73,8 @@ io.on('connection', function(socket) {
     console.log(socket.id + ' disconnected ');
   });
 
-  socket.on('logout', function() {
-    console.log('logout occured');
+  socket.on('signOut', function() {
+    console.log('signOut occured');
     socket.broadcast.emit('user logged out', socket.username)
   })
 });

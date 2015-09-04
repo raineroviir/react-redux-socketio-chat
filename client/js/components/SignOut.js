@@ -24,7 +24,7 @@ export default class SignOut extends React.Component{
       actions.removeUserFromChannel(user)
       UserAPIUtils.removeUserFromChannel(payload)
     }
-    actions.logout();
+    actions.signOut();
   }
   render () {
     return (

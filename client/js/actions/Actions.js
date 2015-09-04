@@ -52,32 +52,32 @@ export function changeChannel(channel) {
   }
 }
 
-export function login(user) {
+export function signIn(user) {
   return {
-    types: [types.AUTH_LOGIN,
-      types.AUTH_LOGIN_SUCCESS,
-      types.AUTH_LOGIN_FAIL],
-    promise: UserAPIUtils.login(user),
+    types: [types.AUTH_SIGNIN,
+      types.AUTH_SIGNIN_SUCCESS,
+      types.AUTH_SIGNIN_FAIL],
+    promise: UserAPIUtils.signIn(user),
     user
   };
 }
 
-export function register(user) {
+export function signUp(user) {
   return {
-    types: [types.AUTH_REGISTER,
-      types.AUTH_REGISTER_SUCCESS,
-      types.AUTH_REGISTER_FAIL],
-    promise: UserAPIUtils.register(user),
+    types: [types.AUTH_SIGNUP,
+      types.AUTH_SIGNUP_SUCCESS,
+      types.AUTH_SIGNUP_FAIL],
+    promise: UserAPIUtils.signUp(user),
     user
   }
 }
 
-export function logout() {
+export function signOut() {
   return {
-    types: [types.AUTH_LOGOUT,
-      types.AUTH_LOGOUT_SUCCESS,
-      types.AUTH_LOGOUT_FAIL],
-    promise: UserAPIUtils.logout()
+    types: [types.AUTH_SIGNOUT,
+      types.AUTH_SIGNOUT_SUCCESS,
+      types.AUTH_SIGNOUT_FAIL],
+    promise: UserAPIUtils.signOut()
   }
 }
 

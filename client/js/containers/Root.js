@@ -36,7 +36,7 @@ export default class Root extends React.Component {
   render() {
     const { history, dispatch } = this.props
     return (
-      <div>
+      <div className='root'>
         <Provider store={store}>
           {renderRoutes.bind(null, history)}
         </Provider>

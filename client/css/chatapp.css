@@ -1,7 +1,6 @@
 
 a {
   text-decoration: none;
-  color: black;
 }
 
 html,
@@ -11,34 +10,25 @@ body {
   margin: 0;
 }
 
+.react,
+.root {
+  height: 100%;
+}
+
 .container {
   margin: 0;
   padding: 0;
   height: 100%;
-  /*display: -ms-flexbox;*/
+  width: 100%;
   display: -webkit-box;
-  /*display: -moz-box;*/
-  /*display: -ms-box;*/
-  /*display: box;*/
-  /*-ms-flex-direction: row;*/
-  /*-webkit-box-orient: horizontal;*/
-  /*-moz-box-orient: horizontal;*/
-  /*-ms-box-orient: horizontal;*/
-  /*box-orient: horizontal;*/
-  /*align-items: stretch;*/
-  /*align-content: stretch;
-  display: -webkit-box;
-display: -moz-box;
-display: -ms-flexbox;
-display: -webkit-flex;
-display: flex;*/
 }
 
 .nav {
   margin: 0;
-  background: hotpink;
-  width: 207px;
--ms-flex: 0 10px;
+  color: white;
+  background: #2e6da4;
+  width: 21rem;
+-ms-flex: 0 1rem;
 -webkit-box-flex:  0;
 -moz-box-flex:  0;
 -ms-box-flex:  0;
@@ -77,16 +67,8 @@ justify-content: center;
  -ms-box-flex: 1;
  box-flex: 1;
  align-items: stretch;
- /*display: flex;*/
- /*background: RGBa(73, 69, 67, 0.75);*/
- /*height: auto;
- display: -webkit-box;
- display: -moz-box;
- display: -ms-flexbox;
- display: -webkit-flex;
- -webkit-flex-flow: row wrap;
- flex-grow: 5;*/
 }
+
 .container {
   padding: 0;
   height: 100%;
@@ -104,9 +86,8 @@ justify-content: center;
 }
 
 .message-list {
-  /*font-size: 1rem;*/
   word-wrap: break-word;
-  height: 50rem;
+  height: 50em;
   margin: 0;
   overflow-y: auto;
   padding: 0;
@@ -122,7 +103,7 @@ justify-content: center;
 }
 
 .user-list {
-  height: 50rem;
+  height: 50em;
   overflow-y: auto;
   width: 100%;
   list-style: none;
@@ -130,96 +111,64 @@ justify-content: center;
 
 .drop-down-menu {
   align-self: baseline;
-  padding-left: 1.6rem;
-  padding-top: 1.6rem;
-  padding-right: 0.8rem;
+  padding:0;
+  margin: 0;
 }
 .channel-section {
-  font-size: 1.5rem;
   align-self: baseline;
-  padding-left: 1.6rem;
-  padding-top: 1.6rem;
-  padding-right: 0.8rem;
+  padding-left: 0.8em;
+  padding-top: 1.6em;
+  padding-right: 0.8em;
 }
 
 .user-section {
-  font-size:1.5rem;
   align-self: baseline;
-  padding-left: 1.6rem;
-  padding-top: 1.6rem;
-  padding-right: 0.8rem;
+  padding-left: 0.8em;
+  padding-top: 1.6em;
+  padding-right: 0.8em;
 }
 .typing-list {
-  /*font-size: 0.8rem;*/
-  opacity: 0.6;
+  font-size: 0.5em;
 }
 
 .channel-list-item {
   cursor: pointer;
 }
 
-/*.message-list-item, .channel-list-item {
-  list-style: none;
-  word-wrap: break-word;
-  padding: 0.01rem 0.01rem 0.01rem;
-}
-
-
-
-.channel-list:hover .channel-list-item:hover {
-  background-color: #f8f8ff;
-}
-
-.channel-list:hover .channel-list-item {
-  background-color: #fff;
-}
-
-.channel-list-item.selected,
-.channel-list:hover .channel-list-item.selected,
-.channel-list:hover .channel-list-item.selected:hover {
-  background-color: #efefff;
-  cursor: default;
-}*/
-
 .message-user {
   color: #66c;
-  /*font-size: 1rem;*/
 }
 
 .message-time, .channel-time {
   color: #aad;
   opacity: 0.8;
-  /*font-size: 0.9rem;*/
 }
 
 .message-content, .channel-last-message {
   clear: both;
-  /*font-size: 1rem;*/
-  padding-top: 0.1rem;
+  padding-top: 0.1em;
   margin-top: -1px;
-  padding-bottom: 0.3rem;
+  padding-bottom: 0.3em;
 }
 
 .message-composer {
+    bottom: 0px;
+    position: fixed;
+    z-index: 52;
+    height: 4rem;
+    left: 21.1rem;
+    right: 1rem;
+    background: #fff;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+}
+.oser {
   box-sizing: border-box;
   font-family: inherit;
-  /*font-size: 1rem;*/
   height: 2em;
   width: 100%;
-  margin: 0.5rem 0 0;
-}
-
-.wrapper {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  flex-flow: row wrap;
-  text-align: center;
-  font-size: 2rem;
-  justify-content: space-between;
+  margin: 0.5em 0 0;
 }
 
 .header, .main, .aside-1, .aside-2, .footer {
@@ -234,7 +183,7 @@ justify-content: center;
 }
 
 .header {
-  /*background: #EA4335*/
+  background: #EA4335
 }
 
 .brand-name {
@@ -260,16 +209,32 @@ justify-content: center;
   background: #23a608;
   color: white;
   margin: auto;
-  width: 12rem;
-  height: 3.5rem;
+  width: 12em;
+  height: 3.5em;
 }
 
 .sign-up-button {
   background: #23a608;
   color: white;
   margin: auto;
-  width: 12rem;
-  height: 3.5rem;
+  width: 12em;
+  height: 3.5em;
+}
+
+span[class*="glyphicon-one-fine"] {
+    padding-top: 0.46em;
+    padding-right: 0.4em;
+}
+
+.glyphicon-one-fine-green-dot:before {
+    content:"\25cf";
+    font-size: 0.7em;
+    color: #34A853;
+}
+
+.glyphicon-one-fine-empty-dot:before {
+    content:"\25cb";
+    font-size: 0.7em;
 }
 
 .aside-1 {

@@ -98,12 +98,12 @@ export default class Chat extends Component {
       channel: 'Lobby'
     }
     if(user) {
-      socket.emit('logout');
+      socket.emit('signOut');
       actions.stopTyping(user);
       actions.removeUserFromChannel(user)
       UserAPIUtils.removeUserFromChannel(payload)
     }
-    actions.logout();
+    actions.signOut();
   }
   changeActiveChannel(channel) {
     const { actions, user } = this.props;
@@ -117,9 +117,9 @@ export default class Chat extends Component {
     const filteredChannelUserList = channelUserList;
 
     const dropDownMenu = (
-      <div className='drop-down-menu'>
-        <DropdownButton bsStyle='primary' title={user || 'USERNAME_HERE'}>
-          <MenuItem eventKey='4' onSelect={::this.handleSignOut}>Sign out</MenuItem>
+      <div style={{'width': '21rem', 'position': 'fixed', 'top': '0'}} className='drop-down-menu'>
+        <DropdownButton style={{'border':'none', 'width': '21rem'}} id='user-menu'  bsSize='large' bsStyle='primary' title={user || 'USERNAME_HERE'}>
+          <MenuItem style={{'width': '21rem'}} eventKey='4' onSelect={::this.handleSignOut}>Sign out</MenuItem>
         </DropdownButton>
       </div>
     );

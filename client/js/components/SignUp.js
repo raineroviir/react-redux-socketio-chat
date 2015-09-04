@@ -65,18 +65,10 @@ export default class SignUp extends Component {
         UserAPIUtils.getAllUsersInChannel(actions)
         UserAPIUtils.getAllMessages(actions)
       }
-      
-      actions.register(user)
+
+      actions.signUp(user)
       .then(fetchData())
 
-
-      // const success = actions.register(user);
-      // if(success) {
-      //   UserAPIUtils.addUserToChannel(payload);
-      //   UserAPIUtils.getAllChannels(actions);
-      //   UserAPIUtils.getAllUsersInChannel(actions);
-      //   UserAPIUtils.getAllMessages(actions);
-      // }
       this.setState({ username: '', password: '', confirmPassword: ''});
     }
   }
