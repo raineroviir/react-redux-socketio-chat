@@ -7,7 +7,7 @@ export function register(user) {
 
   return new Promise((resolve, reject) => {
     superagent
-    .post('/api/create_user')
+    .post('/api/sign_up')
     .send(user)
     .end(function(err, res) {
       if (err) {

@@ -10,7 +10,10 @@ import TypingListItem from './TypingListItem';
 import UserListItem from './UserListItem';
 const socket = io();
 import Footer from './Footer';
-import * as UserAPIUtils from '../utils/UserAPIUtils'
+import * as UserAPIUtils from '../utils/UserAPIUtils';
+import classNames from 'classnames';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
+
 export default class Chat extends Component {
 
   static propTypes = {
@@ -71,10 +74,6 @@ export default class Chat extends Component {
       username: user,
       channel: 'Lobby'
     }
-    UserAPIUtils.addUserToChannel(payload);
-    UserAPIUtils.getAllChannels(actions);
-    UserAPIUtils.getAllUsersInChannel(actions);
-    UserAPIUtils.getAllMessages(actions);
   }
 
 //componentDidUpdate is a lifecycle method called when the component gets updated, not called on initial render
@@ -90,6 +89,22 @@ export default class Chat extends Component {
     }
   }
 
+  handleSignOut() {
+    const { dispatch, user } = this.props;
+    const actions = bindActionCreators(Actions, dispatch);
+    console.log(user);
+    const payload = {
+      username: user,
+      channel: 'Lobby'
+    }
+    if(user) {
+      socket.emit('logout');
+      actions.stopTyping(user);
+      actions.removeUserFromChannel(user)
+      UserAPIUtils.removeUserFromChannel(payload)
+    }
+    actions.logout();
+  }
   changeActiveChannel(channel) {
     const { actions, user } = this.props;
     actions.changeChannel(channel);
@@ -100,24 +115,36 @@ export default class Chat extends Component {
     const filteredMessages = messages.filter(message => message.channelID === activeChannel.id);
     // const filteredTypers = typing.filter(user => user.typing === true)
     const filteredChannelUserList = channelUserList;
+
+    const dropDownMenu = (
+      <div className='drop-down-menu'>
+        <DropdownButton bsStyle='primary' title={user || 'USERNAME_HERE'}>
+          <MenuItem eventKey='4' onSelect={::this.handleSignOut}>Sign out</MenuItem>
+        </DropdownButton>
+      </div>
+    );
+
     return (
-      <main>
-        <div className="channel-section">
-          <strong>Channels</strong>
-          <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
-          <div className="user-section">
+      <div className='container'>
+        <div className='nav'>
+          {dropDownMenu}
+          <section className='channel-section'>
+            <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
+          </section>
+          <section className='user-section'>
             <strong>Users Online</strong>
             <ul className="user-list">
               {filteredChannelUserList.map(user =>
                 <UserListItem user={user} key={user.id}/>
               )}
             </ul>
-          </div>
+          </section>
         </div>
-        <div className="message-section">
-          <strong>{activeChannel.name}</strong>
+        <div className={classNames('main')}>
+          <header className='header'>
+            {activeChannel.name}
+          </header>
           <ul className="message-list" ref="messageList">
-
             {filteredMessages.map(message =>
               <MessageListItem message={message} key={message.id} user={user} actions={actions} />
             )}
@@ -142,7 +169,7 @@ export default class Chat extends Component {
           <span className="typing-list">Several people are typing
           </span>}
         </div>
-      </main>
+      </div>
     );
   }
 }

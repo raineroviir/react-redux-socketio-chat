@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
+//warning: this module is deprecated for the time being, replaced by the Modal.
 export default class ChannelComposer extends Component {
 
   constructor(props, context) {

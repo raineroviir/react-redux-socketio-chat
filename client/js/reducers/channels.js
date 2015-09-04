@@ -20,7 +20,7 @@ export default function channels(state = initialState, action) {
       } else {
         return [...state, {
           name: action.channel.name,
-          id: action.channel.id
+          id: action.channel.id || ((state.length === 0) ? 0 : state[state.length - 1].id + 1)
         }];
       }
       default:

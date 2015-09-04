@@ -32,7 +32,7 @@ export default class SignUp extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { dispatch } = this.props;
+    const { dispatch, user } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
 
     if(!this.state.username.length) {
@@ -53,7 +53,30 @@ export default class SignUp extends Component {
         password: this.state.password,
         confirmPassword: this.state.confirmPassword
       }
-      actions.register(user);
+
+      const payload = {
+        username: this.state.username,
+        channel: 'Lobby'
+      }
+
+      const fetchData = () => {
+        UserAPIUtils.addUserToChannel(payload)
+        UserAPIUtils.getAllChannels(actions)
+        UserAPIUtils.getAllUsersInChannel(actions)
+        UserAPIUtils.getAllMessages(actions)
+      }
+      
+      actions.register(user)
+      .then(fetchData())
+
+
+      // const success = actions.register(user);
+      // if(success) {
+      //   UserAPIUtils.addUserToChannel(payload);
+      //   UserAPIUtils.getAllChannels(actions);
+      //   UserAPIUtils.getAllUsersInChannel(actions);
+      //   UserAPIUtils.getAllMessages(actions);
+      // }
       this.setState({ username: '', password: '', confirmPassword: ''});
     }
   }

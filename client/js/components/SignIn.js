@@ -50,8 +50,16 @@ export default class SignIn extends Component {
         password: this.state.password
       }
       actions.login(userpass);
+
+      const payload = {
+        username: this.state.username,
+        channel: 'Lobby'
+      }
       if(actions.login(userpass)) {
-        //resolved :)
+        UserAPIUtils.addUserToChannel(payload);
+        UserAPIUtils.getAllChannels(actions);
+        UserAPIUtils.getAllUsersInChannel(actions);
+        UserAPIUtils.getAllMessages(actions);
       }
       this.setState({ username: '', password: ''});
     }

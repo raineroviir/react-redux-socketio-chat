@@ -31,7 +31,7 @@ module.exports = function loadUserRoutes(router, passport) {
     });
 
   // Create new user
-  router.post('/create_user', function(req, res) {
+  router.post('/sign_up', function(req, res) {
     // return if confirm password isn't the same as password
 
     if(req.body.password !== req.body.confirmPassword) {
