@@ -88,11 +88,13 @@ export default class ChannelContainer extends Component {
 
     return (
       <section>
-        <strong style={{'marginRight': '10rem'}}>Channels</strong>
+        <div className='channel-header'>
+          <strong style={{'marginRight': '10rem'}}>Channels</strong>
+          <button onClick={::this.openModal} style={glyphStyle}>
+            <Glyphicon glyph='plus' />
+          </button>
+        </div>
 
-        <button onClick={::this.openModal} style={glyphStyle}>
-          <Glyphicon glyph='plus' />
-        </button>
           {newChannelModal}
         <div>
           <ul className="channel-list">

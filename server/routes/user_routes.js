@@ -26,9 +26,27 @@ module.exports = function loadUserRoutes(router, passport) {
           console.log(err);
           return res.status(500).json({msg: 'error generating token'});
         }
+        console.log(req.session);
+        req.session.user = req.user.username;
+        // .res(req.user.username);
         res.json({eat: eat, username: req.user.username});
       });
     });
+
+
+  //get auth credentials
+
+  router.get('/refresh_token', function(req, res) {
+    // if (err) {
+    //   console.log(err)
+    //   return res.status(500).json({msg: 'error refreshing token'})
+    // }
+    //
+    // if(req.session.user) {
+    console.log(req.session.user);
+      res.json({user: req.session.user});
+    // }
+  })
 
   // Create new user
   router.post('/sign_up', function(req, res) {
@@ -63,8 +81,10 @@ module.exports = function loadUserRoutes(router, passport) {
             return res.status(500).json({msg: 'error generating token'});
           }
           console.log('hit token generation');
+          console.log(req.session)
+          req.session.user = req.body.username;
           res.json({eat: eat, username: newUser.username});
-
+          // .res(newUser.username)
         });
       });
     });

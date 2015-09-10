@@ -15,17 +15,38 @@ import logger from 'redux-logger';
 import WelcomePage from '../components/WelcomePage';
 
 import { devTools, persistState } from 'redux-devtools';
+// import persistState from 'redux-localstorage';
+// import adapter from 'redux-localstorage/lib/adapters/localStorage';
+// import filter from 'redux-localstorage-filter';
+
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 import { reduxRouteComponent } from 'redux-react-router';
 
 const createStoreWithMiddleware = compose(
-  applyMiddleware(thunk, promiseMiddleware),
+  applyMiddleware(thunk, promiseMiddleware, logger),
   devTools(),
-  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
-  createStore
-);
-const reducer = combineReducers(reducers);
-const store = createStoreWithMiddleware(reducer);
+  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+)(createStore);
+
+const rootReducer = combineReducers(reducers);
+const store = createStoreWithMiddleware(rootReducer);
+
+// const storage = compose(
+//   filter('key')
+// )(adapter(window.localStorage));
+
+// const createStoreWithMiddleware = compose(
+//   applyMiddleware(logger),
+//   // persistState(storage, 'my-storage-key')
+// )(createStore);
+
+// const createPersistentStoreWithDevTools = compose(
+//   persistState(storage, 'my-storage-key'),
+//   devTools(),
+//   persistDevToolsState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+// )(createStore);
+
+
 
 export default class Root extends React.Component {
 
@@ -40,13 +61,17 @@ export default class Root extends React.Component {
         <Provider store={store}>
           {renderRoutes.bind(null, history)}
         </Provider>
-        <DebugPanel top right bottom>
+
+        <DebugPanel top right bottom >
           <DevTools store={store} monitor={LogMonitor} />
         </DebugPanel>
+
       </div>
     );
   }
 }
+
+
 
 function requireAuth(nextState, transition) {
   if(!Cookies.get('eat')) {

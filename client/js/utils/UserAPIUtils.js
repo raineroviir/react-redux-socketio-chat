@@ -2,6 +2,21 @@ import superagent from 'superagent';
 import * as Actions from '../actions/Actions';
 import Cookies from 'cookies-js';
 
+export function loadAuth() {
+  return new Promise((resolve, reject) => {
+    superagent
+    .get('/api/refresh_token')
+    .end(function(err, res) {
+      if (err) {
+        reject(res.body || err)
+      } else {
+        console.log(res.body);
+        resolve(res.body.user);
+      }
+    })
+  })
+}
+
 export function signUp(user) {
   user.email = user.username;
 
@@ -32,7 +47,10 @@ export function signIn(user) {
         console.log(err);
         reject(res.body || err);
       } else {
-        resolve(res.body.username)
+        const user = {
+          name: res.body.username
+        }
+        resolve(user)
         Cookies.set('eat', res.body.eat);
       }
     })
@@ -44,6 +62,21 @@ export function signIn(user) {
   //   console.log(reason)
   // })
 }
+
+// export function signIn(user) {
+//   return new Promise(function(resolve, reject) {
+//     superagent
+//     .get('api/sign_in')
+//     .auth(user.username, user.password)
+//     .end(function(err, res) {
+//       if(err) {
+//         return err
+//       } else {
+//         return res
+//       }
+//     })
+//   });
+// }
 
 export function signOut() {
   return new Promise((resolve) => {
@@ -83,7 +116,7 @@ export function createChannel(channel) {
   })
 }
 
-export function getAllMessages(actions) {
+export function loadInitialMessages() {
 
   return new Promise((resolve, reject) => {
     superagent
@@ -94,9 +127,7 @@ export function getAllMessages(actions) {
         reject(res.body || err);
       } else {
         const rawMessages = res.body;
-        resolve(rawMessages.forEach(function(message) {
-          actions.receiveRawMessage(message)
-        }))
+        resolve(rawMessages)
       }
     });
   })

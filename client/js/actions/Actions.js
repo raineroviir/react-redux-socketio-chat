@@ -52,13 +52,19 @@ export function changeChannel(channel) {
   }
 }
 
+export function load() {
+  return {
+    types: [types.AUTH_LOAD, types.AUTH_LOAD_SUCCESS, types.AUTH_LOAD_FAIL],
+    promise: UserAPIUtils.loadAuth()
+  }
+}
+
 export function signIn(user) {
   return {
     types: [types.AUTH_SIGNIN,
       types.AUTH_SIGNIN_SUCCESS,
       types.AUTH_SIGNIN_FAIL],
-    promise: UserAPIUtils.signIn(user),
-    user
+    promise: UserAPIUtils.signIn(user)
   };
 }
 
@@ -99,5 +105,12 @@ export function welcomePage(username) {
   return {
     type: types.SAVE_USERNAME,
     username
+  }
+}
+
+export function loadInitialMessages() {
+  return {
+    types: [types.LOAD_MESSAGES, types.LOAD_MESSAGES_SUCCESS, types.LOAD_MESSAGES_FAIL],
+    promise: UserAPIUtils.loadInitialMessages()
   }
 }

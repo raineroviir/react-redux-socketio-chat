@@ -11,6 +11,10 @@ const socket = io.connect();
 
 export default class SignIn extends Component {
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -56,16 +60,31 @@ export default class SignIn extends Component {
       }
 
       //exactly the same way we do it in the SignUp component, we hydrate the state with data fetched from the DB
-      const fetchData = () => {
-        UserAPIUtils.addUserToChannel(payload)
-        UserAPIUtils.getAllChannels(actions)
-        UserAPIUtils.getAllUsersInChannel(actions)
-        UserAPIUtils.getAllMessages(actions)
-      }
+      // const fetchData = () => {
+      //   UserAPIUtils.addUserToChannel(payload)
+      //   UserAPIUtils.getAllChannels(actions)
+      //   UserAPIUtils.getAllUsersInChannel(actions)
+      //   UserAPIUtils.getAllMessages(actions)
+      // }
 
+      // const loadMessages = actions.loadInitialMessages()
+      // const signIn = actions.signIn(userpass)
+      // const transitionToChat = this.context.router.transitionTo('/chat')
+      // actions.signIn(userpass)
+      // .then(fetchData())
+      // console.log(actions.signIn(userpass))
+      // actions.loadInitialMessages()
+      // console.log(actions.loadInitialMessages())
       actions.signIn(userpass)
-      .then(fetchData())
-
+      .then(actions.loadInitialMessages())
+      // const rawMessages = actions.loadInitialMessages()
+      // rawMessages.forEach(function(message) {
+      //   actions.receiveRawMessage(message)
+      // });
+      // .then(transitionToChat)
+      // .then(loadMessages)
+      // .then(fetchData())
+      // .then(this.context.router.transitionTo('/chat'))
       this.setState({ username: '', password: ''});
     }
   }
