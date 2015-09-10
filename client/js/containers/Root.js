@@ -62,15 +62,15 @@ export default class Root extends React.Component {
           {renderRoutes.bind(null, history)}
         </Provider>
 
-        <DebugPanel top right bottom >
-          <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>
+
 
       </div>
     );
   }
 }
-
+// <DebugPanel top right bottom >
+//   <DevTools store={store} monitor={LogMonitor} />
+// </DebugPanel>
 
 
 function requireAuth(nextState, transition) {
