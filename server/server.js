@@ -8,8 +8,9 @@ var io = require('socket.io')(http);
 var mongoose = require('mongoose');
 var passport = require('passport');
 var eat_auth = require('../lib/eat_auth');
-
+var session = require('express-session');
 var cors = require('cors');
+var uuid = require('uuid');
 
 //set env vars
 process.env.AUTH_SECRET = process.env.AUTH_SECRET || 'this is a temp AUTH_SECRET';
@@ -20,7 +21,17 @@ mongoose.connect(process.env.MONGOLAB_URI);
 
 //load routers
 app.use(cors());
+app.use(session({
+  // genid: function(req) {
+  //   return uuid.v4()
+  // },
+  secret: 'keyboard kat',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 600000 }
+}));
 app.use(passport.initialize());
+app.use(passport.session());
 require('../lib/passport_strategy')(passport);
 var messageRouter = express.Router();
 var usersRouter = express.Router();
@@ -73,8 +84,8 @@ io.on('connection', function(socket) {
     console.log(socket.id + ' disconnected ');
   });
 
-  socket.on('logout', function() {
-    console.log('logout occured');
+  socket.on('signOut', function() {
+    console.log('signOut occured');
     socket.broadcast.emit('user logged out', socket.username)
   })
 });

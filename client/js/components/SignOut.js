@@ -8,7 +8,7 @@ const socket = io();
 @connect(state => ({
   user: state.auth.user
 }))
-export default class Logout extends React.Component{
+export default class SignOut extends React.Component{
 
   componentWillMount() {
     const { dispatch, user } = this.props;
@@ -24,12 +24,12 @@ export default class Logout extends React.Component{
       actions.removeUserFromChannel(user)
       UserAPIUtils.removeUserFromChannel(payload)
     }
-    actions.logout();
+    actions.signOut();
   }
   render () {
     return (
       <div>
-        Logged out!
+        Signed out!
       </div>
     )
   }

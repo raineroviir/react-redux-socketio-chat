@@ -2,15 +2,15 @@ import {
   AUTH_LOAD,
   AUTH_LOAD_SUCCESS,
   AUTH_LOAD_FAIL,
-  AUTH_LOGIN,
-  AUTH_LOGIN_SUCCESS,
-  AUTH_LOGIN_FAIL,
-  AUTH_LOGOUT,
-  AUTH_LOGOUT_SUCCESS,
-  AUTH_LOGOUT_FAIL,
-  AUTH_REGISTER,
-  AUTH_REGISTER_SUCCESS,
-  AUTH_REGISTER_FAIL
+  AUTH_SIGNIN,
+  AUTH_SIGNIN_SUCCESS,
+  AUTH_SIGNIN_FAIL,
+  AUTH_SIGNOUT,
+  AUTH_SIGNOUT_SUCCESS,
+  AUTH_SIGNOUT_FAIL,
+  AUTH_SIGNUP,
+  AUTH_SIGNUP_SUCCESS,
+  AUTH_SIGNUP_FAIL
 } from '../constants/ActionTypes';
 
 const initialState = {
@@ -40,62 +40,62 @@ export default function info(state = initialState, action = {}) {
         loaded: false,
         error: action.error
       };
-    case AUTH_LOGIN:
+    case AUTH_SIGNIN:
       return {
         ...state,
-        loggingIn: true
+        signingIn: true
       };
-    case AUTH_LOGIN_SUCCESS:
+    case AUTH_SIGNIN_SUCCESS:
       return {
         ...state,
-        loggingIn: false,
+        signingIn: false,
         user: action.result
       };
-    case AUTH_LOGIN_FAIL:
+    case AUTH_SIGNIN_FAIL:
         return {
           ...state,
-          loggingIn: false,
+          signingIn: false,
           user: null,
-          loginError: action.error
+          signInError: action.error
       };
-    case AUTH_REGISTER:
+    case AUTH_SIGNUP:
       return {
         ...state,
-        registering: true
+        signingUp: true
       };
-    case AUTH_REGISTER_SUCCESS:
+    case AUTH_SIGNUP_SUCCESS:
       return {
         ...state,
-        registering: false,
+        signingUp: false,
         user: action.result
       };
-    case AUTH_REGISTER_FAIL:
+    case AUTH_SIGNUP_FAIL:
       return {
         ...state,
         user: action.error
       };
-    case AUTH_LOGOUT:
+    case AUTH_SIGNOUT:
       return {
         ...state,
-        loggingOut: true
+        signingOut: true
       };
-    case AUTH_LOGOUT_SUCCESS:
+    case AUTH_SIGNOUT_SUCCESS:
       return {
         ...state,
-        loggingOut: false,
+        signingOut: false,
         user: null
       };
-    case AUTH_LOGOUT_FAIL:
+    case AUTH_SIGNOUT_FAIL:
       return {
         ...state,
-        loggingOut: false,
-        logoutError: action.error
+        signingOut: false,
+        signOutError: action.error
       };
     default:
       return state;
   }
 }
-
-export function isLoaded(globalState) {
-  return globalState.auth && globalState.auth.loaded;
-}
+//
+// export function isLoaded(globalState) {
+//   return globalState.auth && globalState.auth.loaded;
+// }

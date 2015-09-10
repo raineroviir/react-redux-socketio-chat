@@ -4,10 +4,18 @@ export default class UserListItem extends Component {
 
   render() {
     const  { user } = this.props;
+    const openDot = (
+        <span className="glyphicon glyphicon-one-fine-empty-dot"></span>
+    );
+
+    const greenDot = (
+        <span className="glyphicon   glyphicon-one-fine-green-dot"></span>
+    );
+
     return (
-        <div className="user-list-item">
+        <li className="user-list-item" style={{'display':'-webkit-box'}}>
           {user.username}
-        </div>
+        </li>
     );
   }
 }

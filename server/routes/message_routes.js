@@ -24,6 +24,7 @@ module.exports = function(router) {
         console.log(err);
         return res.status(500).json({msg: 'internal server error'});
       }
+      console.log(req.session.user);
       res.json(data);
     });
   });

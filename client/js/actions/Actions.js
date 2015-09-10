@@ -52,32 +52,38 @@ export function changeChannel(channel) {
   }
 }
 
-export function login(user) {
+export function load() {
   return {
-    types: [types.AUTH_LOGIN,
-      types.AUTH_LOGIN_SUCCESS,
-      types.AUTH_LOGIN_FAIL],
-    promise: UserAPIUtils.login(user),
-    user
+    types: [types.AUTH_LOAD, types.AUTH_LOAD_SUCCESS, types.AUTH_LOAD_FAIL],
+    promise: UserAPIUtils.loadAuth()
+  }
+}
+
+export function signIn(user) {
+  return {
+    types: [types.AUTH_SIGNIN,
+      types.AUTH_SIGNIN_SUCCESS,
+      types.AUTH_SIGNIN_FAIL],
+    promise: UserAPIUtils.signIn(user)
   };
 }
 
-export function register(user) {
+export function signUp(user) {
   return {
-    types: [types.AUTH_REGISTER,
-      types.AUTH_REGISTER_SUCCESS,
-      types.AUTH_REGISTER_FAIL],
-    promise: UserAPIUtils.register(user),
+    types: [types.AUTH_SIGNUP,
+      types.AUTH_SIGNUP_SUCCESS,
+      types.AUTH_SIGNUP_FAIL],
+    promise: UserAPIUtils.signUp(user),
     user
   }
 }
 
-export function logout() {
+export function signOut() {
   return {
-    types: [types.AUTH_LOGOUT,
-      types.AUTH_LOGOUT_SUCCESS,
-      types.AUTH_LOGOUT_FAIL],
-    promise: UserAPIUtils.logout()
+    types: [types.AUTH_SIGNOUT,
+      types.AUTH_SIGNOUT_SUCCESS,
+      types.AUTH_SIGNOUT_FAIL],
+    promise: UserAPIUtils.signOut()
   }
 }
 
@@ -87,9 +93,24 @@ export function typing(username) {
     username
   }
 }
+
 export function stopTyping(username) {
   return {
     type: types.STOP_TYPING,
     username
+  }
+}
+
+export function welcomePage(username) {
+  return {
+    type: types.SAVE_USERNAME,
+    username
+  }
+}
+
+export function loadInitialMessages() {
+  return {
+    types: [types.LOAD_MESSAGES, types.LOAD_MESSAGES_SUCCESS, types.LOAD_MESSAGES_FAIL],
+    promise: UserAPIUtils.loadInitialMessages()
   }
 }

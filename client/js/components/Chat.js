@@ -10,7 +10,10 @@ import TypingListItem from './TypingListItem';
 import UserListItem from './UserListItem';
 const socket = io();
 import Footer from './Footer';
-import * as UserAPIUtils from '../utils/UserAPIUtils'
+import * as UserAPIUtils from '../utils/UserAPIUtils';
+import classNames from 'classnames';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
+
 export default class Chat extends Component {
 
   static propTypes = {
@@ -19,10 +22,14 @@ export default class Chat extends Component {
     user: PropTypes.string.isRequired
   }
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+
 //componentDidMount is a lifecycle method that is called once right after initial render
   componentDidMount() {
-    const { actions } = this.props;
-
+    const { actions, user } = this.props;
+    // console.log(user)
     //The 'new bc message' socket event lets other users connected to the socket listen to the message
     socket.on('new bc message', msg =>
       actions.receiveRawMessage(msg)
@@ -40,41 +47,47 @@ export default class Chat extends Component {
 
     //this socket event listens to other users joining the channel and appends them to the channel users array
     socket.on('add user bc', username =>
+    {
+      console.log(username)
       actions.addUserToChannel(username)
+    }
+
     );
 
     //on client disconnect..
-    socket.on('client disconnect io', user => {
-      actions.removeUserFromChannel(user)
-      actions.stopTyping(user)
-      console.log(user);
+    socket.on('client disconnect io', username => {
+      actions.removeUserFromChannel(username)
+      actions.stopTyping(username)
+      console.log(username);
       const payload = {
-        username: user,
+        username: username,
         channel: 'Lobby'
       }
       UserAPIUtils.removeUserFromChannel(payload)
     });
 
-    socket.on('user logged out', user => {
-      actions.removeUserFromChannel(user);
-      actions.stopTyping(user);
+    socket.on('user logged out', username => {
+      actions.removeUserFromChannel(username);
+      actions.stopTyping(username);
     });
   }
 
 
 //componentWillMount is a lifecycle method called right before initial render
   componentWillMount() {
-    const { actions, user} = this.props;
-    actions.addUserToChannel(user);
-    socket.emit('add user', user);
-    const payload = {
-      username: user,
-      channel: 'Lobby'
+    const { actions, user } = this.props;
+    const fetchData = () => {
+      actions.addUserToChannel(user)
+      socket.emit('add user', user)
     }
-    UserAPIUtils.addUserToChannel(payload);
-    UserAPIUtils.getAllChannels(actions);
-    UserAPIUtils.getAllUsersInChannel(actions);
-    UserAPIUtils.getAllMessages(actions);
+
+    if(!user) {
+      actions.load()
+    }
+    // const payload = {
+    //   username: user,
+    //   channel: 'Lobby'
+    // }
   }
 
 //componentDidUpdate is a lifecycle method called when the component gets updated, not called on initial render
@@ -90,6 +103,25 @@ export default class Chat extends Component {
     }
   }
 
+  handleSignOut() {
+    const { dispatch, user } = this.props;
+    // const actions = bindActionCreators(Actions, dispatch);
+    // console.log(user);
+    const payload = {
+      username: user,
+      channel: 'Lobby'
+    }
+    if(user) {
+      socket.emit('signOut');
+      dispatch(Actions.stopTyping(user))
+      dispatch(Actions.removeUserFromChannel(user))
+      UserAPIUtils.removeUserFromChannel(payload)
+    }
+
+    const transitionToWelcome = this.context.router.transitionTo('/welcome')
+    dispatch(Actions.signOut())
+    .then(transitionToWelcome)
+  }
   changeActiveChannel(channel) {
     const { actions, user } = this.props;
     actions.changeChannel(channel);
@@ -97,27 +129,40 @@ export default class Chat extends Component {
 
   render() {
     const { messages, channels, actions, activeChannel, user, dispatch, typers, channelUserList} = this.props;
+        // console.log(user);
     const filteredMessages = messages.filter(message => message.channelID === activeChannel.id);
     // const filteredTypers = typing.filter(user => user.typing === true)
     const filteredChannelUserList = channelUserList;
+
+    const dropDownMenu = (
+      <div style={{'width': '21rem', 'top': '0'}} className='drop-down-menu'>
+        <DropdownButton style={{'border':'none', 'width': '21rem'}} id='user-menu'  bsSize='large' bsStyle='primary' title={user || 'USERNAME_HERE'}>
+          <MenuItem style={{'width': '21rem'}} eventKey='4' onSelect={::this.handleSignOut}>Sign out</MenuItem>
+        </DropdownButton>
+      </div>
+    );
+
     return (
-      <main>
-        <div className="channel-section">
-          <strong>Channels</strong>
-          <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
-          <div className="user-section">
+      <div className='container'>
+        <div className='nav'>
+          {dropDownMenu}
+          <section className='channel-section'>
+            <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
+          </section>
+          <section className='user-section'>
             <strong>Users Online</strong>
             <ul className="user-list">
               {filteredChannelUserList.map(user =>
                 <UserListItem user={user} key={user.id}/>
               )}
             </ul>
-          </div>
+          </section>
         </div>
-        <div className="message-section">
-          <strong>{activeChannel.name}</strong>
+        <div className={classNames('main')}>
+          <header className='header'>
+            {activeChannel.name}
+          </header>
           <ul className="message-list" ref="messageList">
-
             {filteredMessages.map(message =>
               <MessageListItem message={message} key={message.id} user={user} actions={actions} />
             )}
@@ -142,13 +187,13 @@ export default class Chat extends Component {
           <span className="typing-list">Several people are typing
           </span>}
         </div>
-      </main>
+      </div>
     );
   }
 }
 
 @connect(state => ({
-  messages: state.messages,
+  messages: state.messages.data,
   channels: state.channels,
   activeChannel: state.activeChannel,
   user: state.auth.user,
