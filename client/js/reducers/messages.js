@@ -2,17 +2,19 @@ import { ADD_MESSAGE, RECEIVE_MESSAGE, FIRST_FILTER, LOAD_MESSAGES, LOAD_MESSAGE
 import strftime from 'strftime';
 
 const initialState = {
+  // hydrated: false,
   loaded: false,
-  data: [{
-    id: 0,
-    channelID: 0,
-    text: 'Welcome to the chat',
-    user: 'Rainer',
-    time: strftime('%H:%M %p', new Date())
-  }]
+  data: []
 };
 
 export default function messages(state = initialState, action) {
+
+  // if(!state.hydrated) {
+  //   state = { ...initialState, ...state, hydrated: true };
+  // }
+  // console.log(state);
+  // console.log(initialState);
+
   switch(action.type) {
     case ADD_MESSAGE:
       return {...state,
@@ -45,9 +47,7 @@ export default function messages(state = initialState, action) {
       return {...state,
         loading: false,
         loaded: true,
-        data: [...state.data,
-          action.result
-        ]
+        data: action.result
       }
 
     case LOAD_MESSAGES_FAIL:

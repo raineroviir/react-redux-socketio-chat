@@ -31,6 +31,29 @@ export function addChannel(channel) {
   };
 }
 
+export function userIsOnline(user) {
+  console.log(user);
+  return {
+    types: [types.ADD_USER_TO_CHANNEL, types.ADD_USER_TO_CHANNEL_SUCCESS, types.ADD_USER_TO_CHANNEL_FAIL],
+    promise: UserAPIUtils.userIsOnline(user),
+    user
+  }
+}
+
+export function userIsOffline(user) {
+  return {
+    type: types.REMOVE_USER_FROM_CHANNEL,
+    user
+  }
+}
+
+export function socketIOAddUser(user) {
+  return {
+    type: types.SOCKET_IO_ADD,
+    user
+  }
+}
+
 export function addUserToChannel(user) {
   return {
     type: types.ADD_USER_TO_CHANNEL,
@@ -38,12 +61,12 @@ export function addUserToChannel(user) {
   }
 }
 
-export function removeUserFromChannel(user) {
-  return {
-    type: types.REMOVE_USER_FROM_CHANNEL,
-    user
-  }
-}
+// export function removeUserFromChannel(user) {
+//   return {
+//     type: types.REMOVE_USER_FROM_CHANNEL,
+//     user
+//   }
+// }
 
 export function changeChannel(channel) {
   return {
@@ -112,5 +135,19 @@ export function loadInitialMessages() {
   return {
     types: [types.LOAD_MESSAGES, types.LOAD_MESSAGES_SUCCESS, types.LOAD_MESSAGES_FAIL],
     promise: UserAPIUtils.loadInitialMessages()
+  }
+}
+
+export function loadInitialChannels() {
+  return {
+    types: [types.LOAD_CHANNELS, types.LOAD_CHANNELS_SUCCESS, types.LOAD_CHANNELS_FAIL],
+    promise: UserAPIUtils.loadInitialChannels()
+  }
+}
+
+export function loadUsersOnline() {
+  return {
+    types: [types.LOAD_USERSONLINE, types.LOAD_USERSONLINE_SUCCESS, types.LOAD_USERSONLINE_FAIL],
+    promise: UserAPIUtils.loadUsersOnline()
   }
 }

@@ -18,7 +18,9 @@ process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat
 process.env.PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGOLAB_URI);
-
+process.on('uncaughtException', function (err) {
+    console.log(err);
+});
 //load routers
 app.use(cors());
 app.use(session({
@@ -56,12 +58,17 @@ io.on('connection', function(socket) {
   console.log('user connected to socket ' + socket.id);
   socket.on('add user', function(username) {
     socket.broadcast.emit('add user bc', username)
-    console.log('added user!');
+    console.log(username);
     socket.username = username;
     // usernames[username] = username;
   });
-  socket.on('new message', function(data) {
-    socket.broadcast.emit('new bc message', data);
+  socket.on('new message', function(msg) {
+    socket.broadcast.emit('new bc message', msg);
+  });
+
+  socket.on('new channel', function(channel) {
+    console.log(channel);
+    socket.broadcast.emit('new channel', channel)
   });
 
   // when the client emits 'typing', we broadcast it to others

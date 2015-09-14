@@ -1,3 +1,5 @@
+//deprecated
+
 import React from 'react';
 import * as Actions from '../actions/Actions';
 import { bindActionCreators } from 'redux';

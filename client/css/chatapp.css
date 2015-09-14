@@ -182,7 +182,9 @@ justify-content: flex-start;
 }
 
 .header {
-  background: #EA4335
+  /*background: #EA4335*/
+  background: #000000;
+  color: #FFFFFF;
 }
 
 .brand-name {
@@ -237,11 +239,11 @@ span[class*="glyphicon-one-fine"] {
 }
 
 .aside-1 {
-  background: lightgreen;
+  /*background: lightgreen;*/
 }
 
 .aside-2 {
-  background: lightpink;
+  /*background: lightpink;*/
 }
 
 @media all and (min-width: 600px) {
