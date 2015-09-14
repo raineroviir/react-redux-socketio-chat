@@ -23568,11 +23568,6 @@
 	          _reactRedux.Provider,
 	          { store: store },
 	          renderRoutes.bind(null, history)
-	        ),
-	        _react2['default'].createElement(
-	          _reduxDevtoolsLibReact.DebugPanel,
-	          { top: true, right: true, bottom: true },
-	          _react2['default'].createElement(_reduxDevtoolsLibReact.DevTools, { store: store, monitor: _reduxDevtoolsLibReact.LogMonitor })
 	        )
 	      );
 	    }
@@ -23588,6 +23583,11 @@
 	})(_react2['default'].Component);
 
 	exports['default'] = Root;
+
+	//
+	// <DebugPanel top right bottom >
+	//   <DevTools store={store} monitor={LogMonitor} />
+	// </DebugPanel>
 
 	function requireAuth(nextState, transition) {
 	  if (!_cookiesJs2['default'].get('eat')) {
