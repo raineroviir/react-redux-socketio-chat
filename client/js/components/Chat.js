@@ -48,46 +48,48 @@ export default class Chat extends Component {
     //this socket event listens to other users joining the channel and appends them to the channel users array
     socket.on('add user bc', username =>
     {
-      console.log(username)
-      actions.addUserToChannel(username)
+      actions.socketIOAddUser(username)
     }
 
     );
 
     //on client disconnect..
     socket.on('client disconnect io', username => {
-      actions.removeUserFromChannel(username)
+      actions.userIsOffline(username)
       actions.stopTyping(username)
       console.log(username);
       const payload = {
-        username: username,
-        channel: 'Lobby'
+        username: username
       }
-      UserAPIUtils.removeUserFromChannel(payload)
+      UserAPIUtils.userIsOffline(payload)
     });
 
     socket.on('user logged out', username => {
-      actions.removeUserFromChannel(username);
+      actions.userIsOffline(username);
       actions.stopTyping(username);
     });
+
+    socket.on('new channel', channel =>
+      actions.receiveRawChannel(channel)
+    )
   }
 
 
 //componentWillMount is a lifecycle method called right before initial render
   componentWillMount() {
-    const { actions, user } = this.props;
-    const fetchData = () => {
-      actions.addUserToChannel(user)
+    const { dispatch, actions, user } = this.props;
+    // const fetchData = () => {
+    //   actions.addUserToChannel(user)
       socket.emit('add user', user)
-    }
-
-    if(!user) {
-      actions.load()
-    }
+    //
+    // if(!user) {
+    //   actions.load()
+    // }
     // const payload = {
     //   username: user,
     //   channel: 'Lobby'
     // }
+
   }
 
 //componentDidUpdate is a lifecycle method called when the component gets updated, not called on initial render
@@ -107,15 +109,11 @@ export default class Chat extends Component {
     const { dispatch, user } = this.props;
     // const actions = bindActionCreators(Actions, dispatch);
     // console.log(user);
-    const payload = {
-      username: user,
-      channel: 'Lobby'
-    }
     if(user) {
       socket.emit('signOut');
       dispatch(Actions.stopTyping(user))
-      dispatch(Actions.removeUserFromChannel(user))
-      UserAPIUtils.removeUserFromChannel(payload)
+      dispatch(Actions.userIsOffline(user))
+      UserAPIUtils.userIsOffline(user)
     }
 
     const transitionToWelcome = this.context.router.transitionTo('/welcome')
@@ -128,12 +126,11 @@ export default class Chat extends Component {
   }
 
   render() {
-    const { messages, channels, actions, activeChannel, user, dispatch, typers, channelUserList} = this.props;
-        // console.log(user);
-    const filteredMessages = messages.filter(message => message.channelID === activeChannel.id);
+    const { messages, channels, actions, activeChannel, user, dispatch, typers, userList} = this.props;
+    const filteredMessages = messages.filter(message => message.channelID === activeChannel.name);
     // const filteredTypers = typing.filter(user => user.typing === true)
-    const filteredChannelUserList = channelUserList;
-
+    // const  = channelUserList;
+    const onlineUsers = userList;
     const dropDownMenu = (
       <div style={{'width': '21rem', 'top': '0'}} className='drop-down-menu'>
         <DropdownButton style={{'border':'none', 'width': '21rem'}} id='user-menu'  bsSize='large' bsStyle='primary' title={user || 'USERNAME_HERE'}>
@@ -152,8 +149,8 @@ export default class Chat extends Component {
           <section className='user-section'>
             <strong>Users Online</strong>
             <ul className="user-list">
-              {filteredChannelUserList.map(user =>
-                <UserListItem user={user} key={user.id}/>
+              {onlineUsers && onlineUsers.map(user =>
+                <UserListItem user={user.username} key={user.id}/>
               )}
             </ul>
           </section>
@@ -194,11 +191,11 @@ export default class Chat extends Component {
 
 @connect(state => ({
   messages: state.messages.data,
-  channels: state.channels,
+  channels: state.channels.data,
   activeChannel: state.activeChannel,
-  user: state.auth.user,
+  user: (state.auth.user.name || state.auth.user),
   typers: state.typers,
-  channelUserList: state.channelUserList
+  userList: state.userList.data
 }))
 export default class ChatContainer {
   render() {

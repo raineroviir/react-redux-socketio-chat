@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import ChannelListItem from './ChannelListItem';
 import { Modal, Glyphicon } from 'react-bootstrap';
+const socket = io();
+import * as UserAPIUtils from '../utils/UserAPIUtils';
+// import * as Actions from '../actions/Actions';
 
 export default class ChannelContainer extends Component {
 
@@ -13,11 +16,10 @@ export default class ChannelContainer extends Component {
     };
   }
 
-  handleSaveChannel(channel) {
-    if(channel.length !== 0) {
-      this.props.actions.addChannel(channel);
-    }
-  }
+  // handleSaveChannel(channel) {
+  //   this.props.actions.addChannel(channel);
+  //
+  // }
 
   handleChangeChannel(channel) {
     this.props.onClick(channel);
@@ -44,11 +46,21 @@ export default class ChannelContainer extends Component {
           React.findDOMNode(this.refs.channelName).focus()
       }
     if(this.state.channelName.length) {
-      const channel = this.state.channelName.trim();
-      this.handleSaveChannel(channel);
+      const newChannel = {
+        name: this.state.channelName.trim(),
+        id: Date.now()
+      }
+
+      UserAPIUtils.createChannel(newChannel);
+      this.props.actions.addChannel(newChannel);
+      socket.emit('new channel', newChannel);
       this.setState({channelName: ''});
       this.closeModal();
     }
+  }
+
+  componentDidMount() {
+
   }
 
   render() {

@@ -13,8 +13,8 @@ export default class UserListItem extends Component {
     );
 
     return (
-        <li className="user-list-item" style={{'display':'-webkit-box'}}>
-          {user.username}
+        <li className="user-list-item">
+          <h5>{user}</h5>
         </li>
     );
   }

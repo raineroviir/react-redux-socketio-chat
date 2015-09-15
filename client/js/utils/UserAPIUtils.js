@@ -10,12 +10,34 @@ export function loadAuth() {
       if (err) {
         reject(res.body || err)
       } else {
-        console.log(res.body);
         resolve(res.body.user);
       }
     })
   })
 }
+
+
+export function checkPassword(user) {
+
+  return new Promise((resolve, reject) => {
+    superagent
+    .get('/api/sign_in')
+    .auth(user.username, user.password)
+    .end(function(err, res) {
+      if (err) {
+        return reject(res.body || err);
+      } else {
+        const user = {
+          name: res.body.username
+        }
+        resolve(user)
+        Cookies.set('eat', res.body.eat);
+      }
+    })
+  })
+
+}
+
 
 export function signUp(user) {
   user.email = user.username;
@@ -27,7 +49,7 @@ export function signUp(user) {
     .end(function(err, res) {
       if (err) {
         console.log(err);
-        reject(res.body || err);
+        return Promise.reject(res.body || err);
       } else {
         resolve(res.body.username);
         Cookies.set('eat', res.body.eat);
@@ -44,8 +66,7 @@ export function signIn(user) {
     .auth(user.username, user.password)
     .end(function(err, res) {
       if (err) {
-        console.log(err);
-        reject(res.body || err);
+        return Promise.reject(res.body || err);
       } else {
         const user = {
           name: res.body.username
@@ -101,10 +122,10 @@ export function createMessage(message) {
 }
 
 export function createChannel(channel) {
-
+  console.log(channel);
   return new Promise((resolve, reject) => {
     superagent
-    .post('/api/channels/')
+    .post('/api/channels/new_channel')
     .send(channel)
     .end(function(err, res) {
       if(err) {
@@ -120,7 +141,7 @@ export function loadInitialMessages() {
 
   return new Promise((resolve, reject) => {
     superagent
-    .get('api/messages')
+    .get('/api/messages')
     .end(function(err, res) {
       if (err) {
         console.log(err);
@@ -133,30 +154,28 @@ export function loadInitialMessages() {
   })
 }
 
-export function getAllChannels(actions) {
+export function loadInitialChannels() {
 
   return new Promise((resolve, reject) => {
     superagent
-    .get('api/channels')
+    .get('/api/channels')
     .end(function(err, res) {
       if(err) {
         console.log(err);
         reject(res.body || err);
       } else {
         const rawChannels = res.body;
-        resolve(rawChannels.forEach(function(channel) {
-          actions.receiveRawChannel(channel)
-        }))
+        resolve(rawChannels)
       }
     })
   })
 }
 
-export function addUserToChannel(user) {
-
+export function userIsOnline(user) {
+  console.log(user);
   return new Promise((resolve, reject) => {
     superagent
-    .patch('api/channels/add_user_to_channel')
+    .post('/api/userlist/user_is_online')
     .send(user)
     .end((err, res) => {
       if(err) {
@@ -169,12 +188,12 @@ export function addUserToChannel(user) {
   })
 }
 
-export function removeUserFromChannel(user) {
+export function userIsOffline(user) {
 
   return new Promise((resolve, reject) => {
     superagent
-    .patch('api/channels/remove_user_from_channel')
-    .send(user)
+    .del('/api/userlist/user_is_offline/' + user)
+    // .send(user)
     .end((err, res) => {
       if(err) {
         console.log(err);
@@ -187,23 +206,19 @@ export function removeUserFromChannel(user) {
   })
 }
 
-export function getAllUsersInChannel(action) {
+export function loadUsersOnline() {
 
   return new Promise((resolve, reject) => {
     superagent
-    .get('api/channels/Lobby') //hard coded lobby in for now
+    .get('/api/userlist')
     .end((err, res) => {
       if(err) {
         console.log(err);
         reject(res.body || err)
       } else {
-        const rawUserList = res.body[0].users;
-        if(rawUserList) {
-          resolve(rawUserList.forEach(function(user) {
-            action.addUserToChannel(user)
-          }))
-          }
-        }
+        const rawUserList = res.body;
+        resolve(rawUserList);
+      }
     })
   })
 }

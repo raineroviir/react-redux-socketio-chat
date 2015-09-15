@@ -12,7 +12,7 @@ import { bindActionCreators } from 'redux';
   user: state.auth.user
 }))
 
-export default class App extends Component {
+export default class WelcomePage extends Component {
 
   constructor(props, context) {
     super(props, context);
@@ -42,25 +42,30 @@ export default class App extends Component {
     const eat = Cookies.get('eat');
     const { user } = this.props;
 
-    let welcomePageStyle = {height: '20rem'}
+    let welcomePageStyle = {height: '20rem', display: 'flex'}
     return (
-      <div className="wrapper">
-        <header className='header'>
+      <div className="welcome-page-wrapper">
+        <header style={{display: 'flex', justifyContent: 'center'}} className='header'>
           <div className='title'>React-Redux-Socket.io-Chat</div>
         </header>
 
         <form className='main' style={welcomePageStyle}>
 
+        <aside className="aside aside-1"></aside>
+
         <div className='sign-up-textfield'>
-          <input ref="usernameInput" type="text" name="username"
+          <input style={{height: '4.5rem', fontSize: '1.25em'}} ref="usernameInput" type="text" name="username"
           value={this.state.username} placeholder="Enter username" onChange={::this.handleChange}/>
         </div>
 
         <Link className='sign-up' to="/signup">
           <button className='sign-up-button' type="submit" onClick={::this.handleSubmit}>
-            Sign Up
+            <p style={{margin: '0', padding: '0', fontSize:'1.5em'}} >Sign Up</p>
           </button>
         </Link>
+
+
+        <aside  className="aside aside-2"></aside>
 
         </form>
 
@@ -71,8 +76,6 @@ export default class App extends Component {
           </Link>
         </section>
 
-        <aside className="aside aside-1"></aside>
-        <aside className="aside aside-2"></aside>
 
         <section>
           {this.props.children}
@@ -84,13 +87,13 @@ export default class App extends Component {
   }
 }
 
-export default class AppContainer {
+export default class WelcomePageContainer {
   render() {
     const { user, dispatch } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
-    return (<App user={user} {...actions} >
+    return (<WelcomePage user={user} {...actions} >
       {this.props.children}
-      </App>
+      </WelcomePage>
     )
   }
 

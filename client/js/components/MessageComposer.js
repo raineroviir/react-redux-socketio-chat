@@ -32,7 +32,7 @@ export default class MessageComposer extends Component {
       event.preventDefault();
       var newMessage = {
         id: Date.now(),
-        channelID: this.props.activeChannel.id,
+        channelID: this.props.activeChannel.name,
         text: text,
         user: user,
         time: strftime('%H:%M %p', new Date())

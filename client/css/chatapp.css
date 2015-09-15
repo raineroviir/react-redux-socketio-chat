@@ -127,7 +127,11 @@ justify-content: flex-start;
   padding-right: 0.8em;
 }
 .typing-list {
-  font-size: 0.5em;
+  font-size: 0.8em;
+  position: fixed;
+  bottom: 0.5em;
+  left: 21.5rem;
+  color: #8B8B8B;
 }
 
 .channel-list-item {
@@ -151,7 +155,7 @@ justify-content: flex-start;
 }
 
 .message-composer {
-    bottom: 0px;
+    bottom: 2em;
     position: fixed;
     z-index: 52;
     height: 4rem;
@@ -182,7 +186,9 @@ justify-content: flex-start;
 }
 
 .header {
-  background: #EA4335
+  /*background: #EA4335*/
+  background: #000000;
+  color: #FFFFFF;
 }
 
 .brand-name {
@@ -237,11 +243,11 @@ span[class*="glyphicon-one-fine"] {
 }
 
 .aside-1 {
-  background: lightgreen;
+  /*background: lightgreen;*/
 }
 
 .aside-2 {
-  background: lightpink;
+  /*background: lightpink;*/
 }
 
 @media all and (min-width: 600px) {

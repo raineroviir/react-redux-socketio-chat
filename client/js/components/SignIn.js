@@ -56,7 +56,7 @@ export default class SignIn extends Component {
 
       const payload = {
         username: this.state.username,
-        channel: 'Lobby'
+        id: Date.now()
       }
 
       //exactly the same way we do it in the SignUp component, we hydrate the state with data fetched from the DB
@@ -75,8 +75,28 @@ export default class SignIn extends Component {
       // console.log(actions.signIn(userpass))
       // actions.loadInitialMessages()
       // console.log(actions.loadInitialMessages())
-      actions.signIn(userpass)
-      .then(actions.loadInitialMessages())
+      dispatch(Actions.signIn(userpass)).then(() => {
+        dispatch(Actions.loadInitialMessages())
+        })
+        .then(() => {
+          dispatch(Actions.loadInitialChannels())
+        })
+        .then(() => {
+          dispatch(Actions.loadUsersOnline())
+        })
+        .then(() => {
+          this.context.router.transitionTo('/chat')
+        })
+        .then(() => {
+          dispatch(Actions.userIsOnline(payload))
+        })
+
+
+
+
+
+      // actions.signIn(userpass)
+      // .then(actions.loadInitialMessages())
       // const rawMessages = actions.loadInitialMessages()
       // rawMessages.forEach(function(message) {
       //   actions.receiveRawMessage(message)
@@ -90,15 +110,15 @@ export default class SignIn extends Component {
   }
 
   render() {
-    let labelStyle = {color: 'white'};
+    let labelStyle = {color: 'black'};
     let buttonStyle = {background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'}
     let signInStyle = {justifyContent: 'center', display: 'flex'}
     return (
       <div className='wrapper'>
-        <header className='header'>
+        <header style={{display: 'flex', justifyContent: 'center'}} className='header'>
           Sign In to Chat
         </header>
-        <main className='main'>
+        <main style={{display: 'flex', justifyContent: 'center'}} className='main'>
           <form onSubmit={::this.handleSubmit}>
             <section>
               <label style={labelStyle}>Username</label>
@@ -113,7 +133,7 @@ export default class SignIn extends Component {
                 </div>
             </section>
             <section style={signInStyle}>
-              <button style={buttonStyle} name="submitButton" type="submit" >Sign in</button>
+              <button style={buttonStyle} name="submitButton" type="submit" ><p style={{color: 'white', margin: '0', padding: '0', fontSize:'1.5em'}} >Sign In</p></button>
             </section>
           </form>
         </main>

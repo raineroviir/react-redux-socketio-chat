@@ -1,3 +1,5 @@
+//deprecated
+
 import React from 'react';
 import * as Actions from '../actions/Actions';
 import { bindActionCreators } from 'redux';
@@ -13,7 +15,6 @@ export default class SignOut extends React.Component{
   componentWillMount() {
     const { dispatch, user } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
-    console.log(user);
     const payload = {
       username: user,
       channel: 'Lobby'

@@ -13,6 +13,10 @@ const socket = io.connect();
 
 export default class SignUp extends Component {
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -48,7 +52,7 @@ export default class SignUp extends Component {
     }
 
     if(this.state.username.length && this.state.password.length && this.state.confirmPassword.length) {
-      let user = {
+      let userpass = {
         username: this.state.username,
         password: this.state.password,
         confirmPassword: this.state.confirmPassword
@@ -66,8 +70,21 @@ export default class SignUp extends Component {
         UserAPIUtils.getAllMessages(actions)
       }
 
-      actions.signUp(user)
-      .then(fetchData())
+      dispatch(Actions.signUp(userpass)).then(() => {
+        dispatch(Actions.loadInitialMessages())
+        })
+        .then(() => {
+          dispatch(Actions.loadInitialChannels())
+        })
+        .then(() => {
+          dispatch(Actions.loadUsersOnline())
+        })
+        .then(() => {
+          this.context.router.transitionTo('/chat')
+        })
+        .then(() => {
+          dispatch(Actions.userIsOnline(payload))
+        })
 
       this.setState({ username: '', password: '', confirmPassword: ''});
     }
@@ -86,17 +103,17 @@ export default class SignUp extends Component {
   }
 
   render() {
-    let labelStyle = {color: 'white'};
+    let labelStyle = {color: 'black'};
     let buttonStyle = {background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'}
     let signUpStyle = {justifyContent: 'center', display: 'flex'}
     return (
       <div className='wrapper'>
 
-        <header className='header'>
+        <header style={{display: 'flex', justifyContent: 'center'}} className='header'>
         Sign Up
         </header>
 
-        <main className='main'>
+        <main style={{display: 'flex', justifyContent: 'center'}} className='main'>
           <form onSubmit={::this.handleSubmit} onChange={::this.handleChange}>
             <section>
               <label style={labelStyle}>Username</label>
@@ -117,7 +134,7 @@ export default class SignUp extends Component {
               </div>
             </section>
             <section style={signUpStyle}>
-              <button style={buttonStyle} onClick={::this.handleSubmit} type="submit">Sign Up</button>
+              <button style={buttonStyle} onClick={::this.handleSubmit} type="submit"><p style={{color: 'white', margin: '0', padding: '0', fontSize:'1.5em'}} >Sign Up</p></button>
             </section>
           </form>
         </main>

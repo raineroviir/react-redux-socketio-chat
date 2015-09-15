@@ -3,6 +3,7 @@
 var bodyparser = require('body-parser');
 var eatAuth = require('../../lib/eat_auth.js')(process.env.AUTH_SECRET);
 var User = require('../models/User.js');
+var UserList = require('../models/UserList');
 var _ = require("lodash");
 module.exports = function loadUserRoutes(router, passport) {
   router.use(bodyparser.json());
@@ -19,6 +20,8 @@ module.exports = function loadUserRoutes(router, passport) {
   //
   //   });
   // });
+// Channel.update({name: channel}, { $pull: {users: username} },
+    // Channel.update({name: channel}, { $addToSet: {users: username} },
 
   router.get('/sign_in', passport.authenticate('basic', {session: false}), function(req, res) {
       req.user.generateToken(process.env.AUTH_SECRET, function (err, eat) {
@@ -29,7 +32,8 @@ module.exports = function loadUserRoutes(router, passport) {
         console.log(req.session);
         req.session.user = req.user.username;
         // .res(req.user.username);
-        res.json({eat: eat, username: req.user.username});
+
+          res.json({eat: eat, username: req.user.username});
       });
     });
 
@@ -81,9 +85,11 @@ module.exports = function loadUserRoutes(router, passport) {
             return res.status(500).json({msg: 'error generating token'});
           }
           console.log('hit token generation');
+
           console.log(req.session)
           req.session.user = req.body.username;
           res.json({eat: eat, username: newUser.username});
+
           // .res(newUser.username)
         });
       });

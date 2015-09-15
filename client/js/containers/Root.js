@@ -6,13 +6,12 @@ import SignIn from '../components/SignIn';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import Chat from '../components/Chat';
 import SignUp from '../components/SignUp';
-import App from './App';
+import WelcomePage from './WelcomePage';
 import SignOut from '../components/SignOut';
 import Cookies from 'cookies-js';
 import thunk from 'redux-thunk';
 import promiseMiddleware from '../middleware/promiseMiddleware';
 import logger from 'redux-logger';
-import WelcomePage from '../components/WelcomePage';
 
 import { devTools, persistState } from 'redux-devtools';
 // import persistState from 'redux-localstorage';
@@ -23,7 +22,7 @@ import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 import { reduxRouteComponent } from 'redux-react-router';
 
 const createStoreWithMiddleware = compose(
-  applyMiddleware(thunk, promiseMiddleware, logger),
+  applyMiddleware(thunk, promiseMiddleware),
   devTools(),
   persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
 )(createStore);
@@ -62,16 +61,15 @@ export default class Root extends React.Component {
           {renderRoutes.bind(null, history)}
         </Provider>
 
-        <DebugPanel top right bottom >
-          <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>
 
       </div>
     );
   }
 }
 
-
+// <DebugPanel top right bottom >
+//   <DevTools store={store} monitor={LogMonitor} />
+// </DebugPanel>
 
 function requireAuth(nextState, transition) {
   if(!Cookies.get('eat')) {
@@ -83,7 +81,7 @@ function renderRoutes (history) {
   return (
     <Router history={history}>
       <Redirect from="/" to="/welcome" />
-      <Route path="/welcome" component={App} />
+      <Route path="/welcome" component={WelcomePage} />
       <Route path="/chat" component={Chat} onEnter={requireAuth} />
       <Route path="/signin" component={SignIn}>
       </Route>
