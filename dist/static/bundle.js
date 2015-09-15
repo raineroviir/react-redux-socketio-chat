@@ -23216,7 +23216,7 @@
 /* 187 */
 /***/ function(module, exports) {
 
-	module.exports = "\na {\n  text-decoration: none;\n}\n\nhtml,\nbody {\n  height: 100%;\n  padding: 0;\n  margin: 0;\n}\n\n.react,\n.root {\n  height: 100%;\n}\n\n.container {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width: 100%;\n  display: -webkit-box;\n}\n\n.nav {\n  margin: 0;\n  color: white;\n  background: #2e6da4;\n  width: 21rem;\n-ms-flex: 0 1rem;\n-webkit-box-flex:  0;\n-moz-box-flex:  0;\n-ms-box-flex:  0;\nbox-flex:  0;\ndisplay: -webkit-box;\ndisplay: -moz-box;\ndisplay: -ms-flexbox;\ndisplay: -webkit-flex;\ndisplay: flex;\n-webkit-box-orient: vertical;\n-moz-box-orient: vertical;\n-webkit-box-direction: normal;\n-moz-box-direction: normal;\n-webkit-flex-direction: column;\n-ms-flex-direction: column;\nflex-direction: column;\n-webkit-box-align: center;\n-moz-box-align: center;\n-ms-flex-align: center;\n-webkit-align-items: center;\nalign-items: center;\n-webkit-box-pack: center;\n-moz-box-pack: center;\n-ms-flex-pack: center;\n-webkit-justify-content: center;\njustify-content: flex-start;\n}\n\n.main {\n  margin: 0;\n  background: #F5F8FF;\n -ms-flex: 1;\n -webkit-box-flex: 1;\n -moz-box-flex: 1;\n -ms-box-flex: 1;\n box-flex: 1;\n align-items: stretch;\n}\n\n.container {\n  padding: 0;\n  height: 100%;\n  display: -ms-flexbox;\n  display: -webkit-box;\n  display: -moz-box;\n  display: -ms-box;\n  display: box;\n\n  -ms-flex-direction: row;\n  -webkit-box-orient: horizontal;\n  -moz-box-orient: horizontal;\n  -ms-box-orient: horizontal;\n  box-orient: horizontal;\n}\n\n.message-list {\n  word-wrap: break-word;\n  height: 50em;\n  margin: 0;\n  overflow-y: auto;\n  padding: 0;\n  width: 100%;\n}\n\n.channel-list {\n  height: auto;\n  margin: 0;\n  overflow-y: auto;\n  padding: 0;\n  /*z-index: -1;*/\n}\n\n.user-list {\n  height: auto;\n  overflow-y: auto;\n  width: 100%;\n  list-style: none;\n}\n\n.drop-down-menu {\n  align-self: baseline;\n  padding:0;\n  margin: 0;\n}\n.channel-section {\n  align-self: baseline;\n  padding-left: 0.8em;\n  padding-top: 1.6em;\n  padding-right: 0.8em;\n}\n\n.user-section {\n  align-self: baseline;\n  padding-left: 0.8em;\n  padding-top: 1.6em;\n  padding-right: 0.8em;\n}\n.typing-list {\n  font-size: 0.5em;\n}\n\n.channel-list-item {\n  cursor: pointer;\n}\n\n.message-user {\n  color: #66c;\n}\n\n.message-time, .channel-time {\n  color: #aad;\n  opacity: 0.8;\n}\n\n.message-content, .channel-last-message {\n  clear: both;\n  padding-top: 0.1em;\n  margin-top: -1px;\n  padding-bottom: 0.3em;\n}\n\n.message-composer {\n    bottom: 0px;\n    position: fixed;\n    z-index: 52;\n    height: 4rem;\n    left: 21.1rem;\n    right: 1rem;\n    background: #fff;\n    box-sizing: border-box;\n    display: block;\n    width: 100%;\n}\n.oser {\n  box-sizing: border-box;\n  font-family: inherit;\n  height: 2em;\n  width: 100%;\n  margin: 0.5em 0 0;\n}\n\n.header, .main, .aside-1, .aside-2, .footer {\n  flex: 1 100%;\n}\n\n.sign-up-textfield {\n  margin: auto;\n}\n.wrapper > * {\n  flex: 1 100%;\n}\n\n.header {\n  /*background: #EA4335*/\n  background: #000000;\n  color: #FFFFFF;\n}\n\n.brand-name {\n  text-align: center;\n}\n\n.footer {\n  font-size: small;\n}\n\n\n\n.sign-in {\n  justify-content: center;\n  display: flex;\n}\n\n.sign-in-button {\n  margin: auto;\n}\n\n.sign-up {\n  background: #23a608;\n  color: white;\n  margin: auto;\n  width: 12em;\n  height: 3.5em;\n}\n\n.sign-up-button {\n  background: #23a608;\n  color: white;\n  margin: auto;\n  width: 12em;\n  height: 3.5em;\n}\n\nspan[class*=\"glyphicon-one-fine\"] {\n    padding-top: 0.46em;\n    padding-right: 0.4em;\n}\n\n.glyphicon-one-fine-green-dot:before {\n    content:\"\\25cf\";\n    font-size: 0.7em;\n    color: #34A853;\n}\n\n.glyphicon-one-fine-empty-dot:before {\n    content:\"\\25cb\";\n    font-size: 0.7em;\n}\n\n.aside-1 {\n  /*background: lightgreen;*/\n}\n\n.aside-2 {\n  /*background: lightpink;*/\n}\n\n@media all and (min-width: 600px) {\n  .aside {\n    flex: 1 auto;\n  }\n}\n\n@media all and (min-width: 800px) {\n\n  /*.channel-section {\n    order: 1;\n  }*/\n\n  /*.channel-header {\n    order: 2;\n  }*/\n\n  .channel-section {\n    order: 2;\n  }\n\n  .user-section {\n    order: 3;\n  }\n\n  .drop-down-menu {\n    order: 1;\n  }\n}\n"
+	module.exports = "\na {\n  text-decoration: none;\n}\n\nhtml,\nbody {\n  height: 100%;\n  padding: 0;\n  margin: 0;\n}\n\n.react,\n.root {\n  height: 100%;\n}\n\n.container {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width: 100%;\n  display: -webkit-box;\n}\n\n.nav {\n  margin: 0;\n  color: white;\n  background: #2e6da4;\n  width: 21rem;\n-ms-flex: 0 1rem;\n-webkit-box-flex:  0;\n-moz-box-flex:  0;\n-ms-box-flex:  0;\nbox-flex:  0;\ndisplay: -webkit-box;\ndisplay: -moz-box;\ndisplay: -ms-flexbox;\ndisplay: -webkit-flex;\ndisplay: flex;\n-webkit-box-orient: vertical;\n-moz-box-orient: vertical;\n-webkit-box-direction: normal;\n-moz-box-direction: normal;\n-webkit-flex-direction: column;\n-ms-flex-direction: column;\nflex-direction: column;\n-webkit-box-align: center;\n-moz-box-align: center;\n-ms-flex-align: center;\n-webkit-align-items: center;\nalign-items: center;\n-webkit-box-pack: center;\n-moz-box-pack: center;\n-ms-flex-pack: center;\n-webkit-justify-content: center;\njustify-content: flex-start;\n}\n\n.main {\n  margin: 0;\n  background: #F5F8FF;\n -ms-flex: 1;\n -webkit-box-flex: 1;\n -moz-box-flex: 1;\n -ms-box-flex: 1;\n box-flex: 1;\n align-items: stretch;\n}\n\n.container {\n  padding: 0;\n  height: 100%;\n  display: -ms-flexbox;\n  display: -webkit-box;\n  display: -moz-box;\n  display: -ms-box;\n  display: box;\n\n  -ms-flex-direction: row;\n  -webkit-box-orient: horizontal;\n  -moz-box-orient: horizontal;\n  -ms-box-orient: horizontal;\n  box-orient: horizontal;\n}\n\n.message-list {\n  word-wrap: break-word;\n  height: 50em;\n  margin: 0;\n  overflow-y: auto;\n  padding: 0;\n  width: 100%;\n}\n\n.channel-list {\n  height: auto;\n  margin: 0;\n  overflow-y: auto;\n  padding: 0;\n  /*z-index: -1;*/\n}\n\n.user-list {\n  height: auto;\n  overflow-y: auto;\n  width: 100%;\n  list-style: none;\n}\n\n.drop-down-menu {\n  align-self: baseline;\n  padding:0;\n  margin: 0;\n}\n.channel-section {\n  align-self: baseline;\n  padding-left: 0.8em;\n  padding-top: 1.6em;\n  padding-right: 0.8em;\n}\n\n.user-section {\n  align-self: baseline;\n  padding-left: 0.8em;\n  padding-top: 1.6em;\n  padding-right: 0.8em;\n}\n.typing-list {\n  font-size: 0.8em;\n  position: fixed;\n  bottom: 0.5em;\n  left: 21.5rem;\n  color: #8B8B8B;\n}\n\n.channel-list-item {\n  cursor: pointer;\n}\n\n.message-user {\n  color: #66c;\n}\n\n.message-time, .channel-time {\n  color: #aad;\n  opacity: 0.8;\n}\n\n.message-content, .channel-last-message {\n  clear: both;\n  padding-top: 0.1em;\n  margin-top: -1px;\n  padding-bottom: 0.3em;\n}\n\n.message-composer {\n    bottom: 2em;\n    position: fixed;\n    z-index: 52;\n    height: 4rem;\n    left: 21.1rem;\n    right: 1rem;\n    background: #fff;\n    box-sizing: border-box;\n    display: block;\n    width: 100%;\n}\n.oser {\n  box-sizing: border-box;\n  font-family: inherit;\n  height: 2em;\n  width: 100%;\n  margin: 0.5em 0 0;\n}\n\n.header, .main, .aside-1, .aside-2, .footer {\n  flex: 1 100%;\n}\n\n.sign-up-textfield {\n  margin: auto;\n}\n.wrapper > * {\n  flex: 1 100%;\n}\n\n.header {\n  /*background: #EA4335*/\n  background: #000000;\n  color: #FFFFFF;\n}\n\n.brand-name {\n  text-align: center;\n}\n\n.footer {\n  font-size: small;\n}\n\n\n\n.sign-in {\n  justify-content: center;\n  display: flex;\n}\n\n.sign-in-button {\n  margin: auto;\n}\n\n.sign-up {\n  background: #23a608;\n  color: white;\n  margin: auto;\n  width: 12em;\n  height: 3.5em;\n}\n\n.sign-up-button {\n  background: #23a608;\n  color: white;\n  margin: auto;\n  width: 12em;\n  height: 3.5em;\n}\n\nspan[class*=\"glyphicon-one-fine\"] {\n    padding-top: 0.46em;\n    padding-right: 0.4em;\n}\n\n.glyphicon-one-fine-green-dot:before {\n    content:\"\\25cf\";\n    font-size: 0.7em;\n    color: #34A853;\n}\n\n.glyphicon-one-fine-empty-dot:before {\n    content:\"\\25cb\";\n    font-size: 0.7em;\n}\n\n.aside-1 {\n  /*background: lightgreen;*/\n}\n\n.aside-2 {\n  /*background: lightpink;*/\n}\n\n@media all and (min-width: 600px) {\n  .aside {\n    flex: 1 auto;\n  }\n}\n\n@media all and (min-width: 800px) {\n\n  /*.channel-section {\n    order: 1;\n  }*/\n\n  /*.channel-header {\n    order: 2;\n  }*/\n\n  .channel-section {\n    order: 2;\n  }\n\n  .user-section {\n    order: 3;\n  }\n\n  .drop-down-menu {\n    order: 1;\n  }\n}\n"
 
 /***/ },
 /* 188 */
@@ -23584,7 +23584,6 @@
 
 	exports['default'] = Root;
 
-	//
 	// <DebugPanel top right bottom >
 	//   <DevTools store={store} monitor={LogMonitor} />
 	// </DebugPanel>
@@ -28318,7 +28317,6 @@
 
 	      //this socket event listens to other users joining the channel and appends them to the channel users array
 	      socket.on('add user bc', function (username) {
-	        console.log('ADD USER BC IN CHAT.JS ' + username);
 	        actions.socketIOAddUser(username);
 	      });
 
@@ -28415,7 +28413,7 @@
 	      var userList = _props5.userList;
 
 	      var filteredMessages = messages.filter(function (message) {
-	        return message.channelID === activeChannel.id;
+	        return message.channelID === activeChannel.name;
 	      });
 	      // const filteredTypers = typing.filter(user => user.typing === true)
 	      // const  = channelUserList;
@@ -28669,7 +28667,7 @@
 	        event.preventDefault();
 	        var newMessage = {
 	          id: Date.now(),
-	          channelID: this.props.activeChannel.id,
+	          channelID: this.props.activeChannel.name,
 	          text: text,
 	          user: user,
 	          time: (0, _strftime2['default'])('%H:%M %p', new Date())
@@ -45322,7 +45320,6 @@
 	      var user = _props.user;
 
 	      var actions = (0, _redux.bindActionCreators)(Actions, dispatch);
-	      console.log(user);
 	      var payload = {
 	        username: user,
 	        channel: 'Lobby'

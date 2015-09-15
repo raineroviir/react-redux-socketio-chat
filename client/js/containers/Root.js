@@ -66,7 +66,7 @@ export default class Root extends React.Component {
     );
   }
 }
-// 
+
 // <DebugPanel top right bottom >
 //   <DevTools store={store} monitor={LogMonitor} />
 // </DebugPanel>

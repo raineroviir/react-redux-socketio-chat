@@ -48,7 +48,6 @@ export default class Chat extends Component {
     //this socket event listens to other users joining the channel and appends them to the channel users array
     socket.on('add user bc', username =>
     {
-      console.log('ADD USER BC IN CHAT.JS ' + username)
       actions.socketIOAddUser(username)
     }
 
@@ -128,7 +127,7 @@ export default class Chat extends Component {
 
   render() {
     const { messages, channels, actions, activeChannel, user, dispatch, typers, userList} = this.props;
-    const filteredMessages = messages.filter(message => message.channelID === activeChannel.id);
+    const filteredMessages = messages.filter(message => message.channelID === activeChannel.name);
     // const filteredTypers = typing.filter(user => user.typing === true)
     // const  = channelUserList;
     const onlineUsers = userList;

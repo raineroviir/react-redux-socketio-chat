@@ -127,7 +127,11 @@ justify-content: flex-start;
   padding-right: 0.8em;
 }
 .typing-list {
-  font-size: 0.5em;
+  font-size: 0.8em;
+  position: fixed;
+  bottom: 0.5em;
+  left: 21.5rem;
+  color: #8B8B8B;
 }
 
 .channel-list-item {
@@ -151,7 +155,7 @@ justify-content: flex-start;
 }
 
 .message-composer {
-    bottom: 0px;
+    bottom: 2em;
     position: fixed;
     z-index: 52;
     height: 4rem;
