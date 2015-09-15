@@ -83,7 +83,6 @@ export default class SignUp extends Component {
           this.context.router.transitionTo('/chat')
         })
         .then(() => {
-          console.log(payload);
           dispatch(Actions.userIsOnline(payload))
         })
 

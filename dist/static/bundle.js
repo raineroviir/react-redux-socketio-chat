@@ -26184,7 +26184,6 @@
 	          }).then(function () {
 	            _this.context.router.transitionTo('/chat');
 	          }).then(function () {
-	            console.log(payload);
 	            dispatch(Actions.userIsOnline(payload));
 	          });
 
@@ -26332,7 +26331,6 @@
 	      if (err) {
 	        reject(res.body || err);
 	      } else {
-	        console.log(res.body);
 	        resolve(res.body.user);
 	      }
 	    });
@@ -44929,7 +44927,6 @@
 	          }).then(function () {
 	            _this.context.router.transitionTo('/chat');
 	          }).then(function () {
-	            console.log(payload);
 	            dispatch(Actions.userIsOnline(payload));
 	          });
 
