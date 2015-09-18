@@ -19769,17 +19769,7 @@
 
 	var _middlewarePromiseMiddleware2 = _interopRequireDefault(_middlewarePromiseMiddleware);
 
-	// import logger from 'redux-logger';
-
-	var _reactDom = __webpack_require__(263);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
 	var _reduxDevtools = __webpack_require__(469);
-
-	// import persistState from 'redux-localstorage';
-	// import adapter from 'redux-localstorage/lib/adapters/localStorage';
-	// import filter from 'redux-localstorage-filter';
 
 	var _reduxDevtoolsLibReact = __webpack_require__(472);
 
@@ -19788,42 +19778,10 @@
 	var rootReducer = (0, _redux.combineReducers)(reducers);
 	var store = createStoreWithMiddleware(rootReducer);
 
-	// const storage = compose(
-	//   filter('key')
-	// )(adapter(window.localStorage));
-
-	// const createStoreWithMiddleware = compose(
-	//   applyMiddleware(logger),
-	//   // persistState(storage, 'my-storage-key')
-	// )(createStore);
-
-	// const createPersistentStoreWithDevTools = compose(
-	//   persistState(storage, 'my-storage-key'),
-	//   devTools(),
-	//   persistDevToolsState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-	// )(createStore);
-
 	function requireAuth(nextState, transition) {
 	  if (!_cookiesJs2['default'].get('eat')) {
 	    transition.to('/signin', null, { nextPathname: nextState.location.pathname });
 	  }
-	}
-
-	function renderRoutes(history) {
-	  return _react2['default'].createElement(
-	    _reactRouter.Router,
-	    { history: history },
-	    _react2['default'].createElement(_reactRouter.Redirect, { from: '/', to: '/welcome' }),
-	    _react2['default'].createElement(_reactRouter.Route, { path: '/welcome', component: _componentsWelcomePage2['default'] }),
-	    _react2['default'].createElement(_reactRouter.Route, { path: '/chat', component: _ChatContainer2['default'], onEnter: requireAuth }),
-	    _react2['default'].createElement(_reactRouter.Route, { path: '/signin', component: _componentsSignIn2['default'] }),
-	    _react2['default'].createElement(_reactRouter.Route, { path: '/signup', component: _componentsSignUp2['default'] }),
-	    _react2['default'].createElement(
-	      _reactRouter.Route,
-	      { path: '/signout', component: _componentsSignOut2['default'] },
-	      _react2['default'].createElement(_reactRouter.Redirect, { from: '/signout ', to: '/welcome' })
-	    )
-	  );
 	}
 
 	var Root = (function (_Component) {
@@ -19846,7 +19804,20 @@
 	        _react2['default'].createElement(
 	          _reactRedux.Provider,
 	          { store: store },
-	          renderRoutes.bind(null, history)
+	          _react2['default'].createElement(
+	            _reactRouter.Router,
+	            { history: history },
+	            _react2['default'].createElement(_reactRouter.Redirect, { from: '/', to: '/welcome' }),
+	            _react2['default'].createElement(_reactRouter.Route, { path: '/welcome', component: _componentsWelcomePage2['default'] }),
+	            _react2['default'].createElement(_reactRouter.Route, { path: '/chat', component: _ChatContainer2['default'], onEnter: requireAuth }),
+	            _react2['default'].createElement(_reactRouter.Route, { path: '/signin', component: _componentsSignIn2['default'] }),
+	            _react2['default'].createElement(_reactRouter.Route, { path: '/signup', component: _componentsSignUp2['default'] }),
+	            _react2['default'].createElement(
+	              _reactRouter.Route,
+	              { path: '/signout', component: _componentsSignOut2['default'] },
+	              _react2['default'].createElement(_reactRouter.Redirect, { from: '/signout ', to: '/welcome' })
+	            )
+	          )
 	        ),
 	        _react2['default'].createElement(
 	          _reduxDevtoolsLibReact.DebugPanel,
@@ -26547,10 +26518,6 @@
 
 	var _reactRedux = __webpack_require__(190);
 
-	var _reactDom = __webpack_require__(263);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
 	var ChatContainer = (function (_Component) {
 	  _inherits(ChatContainer, _Component);
 
@@ -26646,10 +26613,6 @@
 
 	var _reactBootstrap = __webpack_require__(232);
 
-	var _reactDom = __webpack_require__(263);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
 	// @ is an ES 7 decorator and connect passes the state into the App component
 
 	var socket = io();
@@ -26687,17 +26650,7 @@
 	    value: function componentWillMount() {
 	      var user = this.props.user;
 
-	      // const fetchData = () => {
-	      // actions.addUserToChannel(user)
 	      socket.emit('add user', user);
-	      //
-	      // if(!user) {
-	      //   actions.load()
-	      // }
-	      // const payload = {
-	      //   username: user,
-	      //   channel: 'Lobby'
-	      // }
 	    }
 
 	    // componentDidMount is a lifecycle method that is called once right after initial render
@@ -26706,7 +26659,6 @@
 	    value: function componentDidMount() {
 	      var actions = this.props.actions;
 
-	      // console.log(user)
 	      // The 'new bc message' socket event lets other users connected to the socket listen to the message
 	      socket.on('new bc message', function (msg) {
 	        return actions.receiveRawMessage(msg);
@@ -26770,8 +26722,6 @@
 	      var dispatch = _props.dispatch;
 	      var user = _props.user;
 
-	      // const actions = bindActionCreators(Actions, dispatch);
-	      // console.log(user);
 	      if (user) {
 	        socket.emit('signOut');
 	        dispatch(Actions.stopTyping(user));
@@ -26810,7 +26760,7 @@
 	        { style: { 'width': '21rem', 'top': '0' }, className: 'drop-down-menu' },
 	        _react2['default'].createElement(
 	          _reactBootstrap.DropdownButton,
-	          { style: { 'border': 'none', 'width': '21rem' }, id: 'user-menu', bsSize: 'large', bsStyle: 'primary', title: user },
+	          { key: 4, style: { 'border': 'none', 'width': '21rem' }, id: 'user-menu', bsSize: 'large', bsStyle: 'primary', title: user },
 	          _react2['default'].createElement(
 	            _reactBootstrap.MenuItem,
 	            { style: { 'width': '21rem' }, eventKey: '4', onSelect: this.handleSignOut.bind(this) },
@@ -26819,8 +26769,6 @@
 	        )
 	      );
 
-	      //deprecated due to react 0.14 issues
-	      // const dropDownMenu = '';
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'container' },
@@ -26910,7 +26858,7 @@
 	      messages: _react.PropTypes.array.isRequired,
 	      actions: _react.PropTypes.object.isRequired,
 	      user: _react.PropTypes.string.isRequired,
-	      dispatch: _react.PropTypes.object.isRequired,
+	      dispatch: _react.PropTypes.func.isRequired,
 	      channels: _react.PropTypes.array.isRequired,
 	      activeChannel: _react.PropTypes.object.isRequired,
 	      typers: _react.PropTypes.array.isRequired,
@@ -26984,9 +26932,9 @@
 	  _createClass(MessageComposer, null, [{
 	    key: 'propTypes',
 	    value: {
-	      activeChannel: _react.PropTypes.object.required,
-	      onSave: _react.PropTypes.object.required,
-	      user: _react.PropTypes.object.required
+	      activeChannel: _react.PropTypes.object.isRequired,
+	      onSave: _react.PropTypes.func.isRequired,
+	      user: _react.PropTypes.string.isRequired
 	    },
 	    enumerable: true
 	  }]);
@@ -27813,35 +27761,30 @@
 
 	var socket = io();
 
-	var ChannelContainer = (function (_Component) {
-	  _inherits(ChannelContainer, _Component);
+	var Channels = (function (_Component) {
+	  _inherits(Channels, _Component);
 
-	  _createClass(ChannelContainer, null, [{
+	  _createClass(Channels, null, [{
 	    key: 'propTypes',
 	    value: {
-	      channels: _react.PropTypes.object.isRequired,
+	      channels: _react.PropTypes.array.isRequired,
 	      actions: _react.PropTypes.object.isRequired,
 	      onClick: _react.PropTypes.func.isRequired
 	    },
 	    enumerable: true
 	  }]);
 
-	  function ChannelContainer(props, context) {
-	    _classCallCheck(this, ChannelContainer);
+	  function Channels(props, context) {
+	    _classCallCheck(this, Channels);
 
-	    _get(Object.getPrototypeOf(ChannelContainer.prototype), 'constructor', this).call(this, props, context);
+	    _get(Object.getPrototypeOf(Channels.prototype), 'constructor', this).call(this, props, context);
 	    this.state = {
 	      modal: false,
 	      channelName: ''
 	    };
 	  }
 
-	  // handleSaveChannel(channel) {
-	  //   this.props.actions.addChannel(channel);
-	  //
-	  // }
-
-	  _createClass(ChannelContainer, [{
+	  _createClass(Channels, [{
 	    key: 'handleChangeChannel',
 	    value: function handleChangeChannel(channel) {
 	      this.props.onClick(channel);
@@ -27902,7 +27845,7 @@
 	        null,
 	        _react2['default'].createElement(
 	          _reactBootstrap.Modal,
-	          { show: this.state.modal, onHide: this.closeModal.bind(this) },
+	          { key: 1, show: this.state.modal, onHide: this.closeModal.bind(this) },
 	          _react2['default'].createElement(
 	            _reactBootstrap.Modal.Header,
 	            { closeButton: true },
@@ -27946,8 +27889,6 @@
 	        )
 	      );
 
-	      // deprecated due to react 0.14 issues
-	      // const newChannelModal = '';
 	      return _react2['default'].createElement(
 	        'section',
 	        null,
@@ -27986,10 +27927,10 @@
 	    }
 	  }]);
 
-	  return ChannelContainer;
+	  return Channels;
 	})(_react.Component);
 
-	exports['default'] = ChannelContainer;
+	exports['default'] = Channels;
 	module.exports = exports['default'];
 
 /***/ },

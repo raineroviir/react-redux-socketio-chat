@@ -3,7 +3,6 @@ import * as Actions from '../actions/Actions';
 import Chat from '../components/Chat';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
 
 @connect()
 export default class ChatContainer extends Component {

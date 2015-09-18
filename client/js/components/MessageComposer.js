@@ -6,9 +6,9 @@ import strftime from 'strftime';
 export default class MessageComposer extends Component {
 
   static propTypes = {
-    activeChannel: PropTypes.object.required,
-    onSave: PropTypes.object.required,
-    user: PropTypes.object.required
+    activeChannel: PropTypes.object.isRequired,
+    onSave: PropTypes.func.isRequired,
+    user: PropTypes.string.isRequired
   }
 
   constructor(props, context) {

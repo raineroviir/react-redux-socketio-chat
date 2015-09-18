@@ -10,7 +10,6 @@ const socket = io();
 import * as UserAPIUtils from '../utils/UserAPIUtils';
 import classNames from 'classnames';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import ReactDOM from 'react-dom';
 
 // @ is an ES 7 decorator and connect passes the state into the App component
 
@@ -28,7 +27,7 @@ export default class Chat extends Component {
     messages: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
     user: PropTypes.string.isRequired,
-    dispatch: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
     channels: PropTypes.array.isRequired,
     activeChannel: PropTypes.object.isRequired,
     typers: PropTypes.array.isRequired,
@@ -42,23 +41,12 @@ export default class Chat extends Component {
   // componentWillMount is a lifecycle method called right before initial render
   componentWillMount() {
     const { user } = this.props;
-    // const fetchData = () => {
-    // actions.addUserToChannel(user)
     socket.emit('add user', user);
-    //
-    // if(!user) {
-    //   actions.load()
-    // }
-    // const payload = {
-    //   username: user,
-    //   channel: 'Lobby'
-    // }
   }
 
   // componentDidMount is a lifecycle method that is called once right after initial render
   componentDidMount() {
     const { actions } = this.props;
-    // console.log(user)
     // The 'new bc message' socket event lets other users connected to the socket listen to the message
     socket.on('new bc message', msg =>
       actions.receiveRawMessage(msg)
@@ -114,8 +102,6 @@ export default class Chat extends Component {
 
   handleSignOut() {
     const { dispatch, user } = this.props;
-    // const actions = bindActionCreators(Actions, dispatch);
-    // console.log(user);
     if (user) {
       socket.emit('signOut');
       dispatch(Actions.stopTyping(user));
@@ -139,14 +125,12 @@ export default class Chat extends Component {
     const onlineUsers = userList;
     const dropDownMenu = (
       <div style={{'width': '21rem', 'top': '0'}} className="drop-down-menu">
-        <DropdownButton style={{'border': 'none', 'width': '21rem'}} id="user-menu"  bsSize="large" bsStyle="primary" title={user}>
+        <DropdownButton key={4} style={{'border': 'none', 'width': '21rem'}} id="user-menu"  bsSize="large" bsStyle="primary" title={user}>
           <MenuItem style={{'width': '21rem'}} eventKey="4" onSelect={::this.handleSignOut}>Sign out</MenuItem>
         </DropdownButton>
       </div>
     );
 
-    //deprecated due to react 0.14 issues
-    // const dropDownMenu = '';
     return (
       <div className="container">
         <div className="nav">

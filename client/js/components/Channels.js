@@ -4,10 +4,10 @@ import { Modal, Glyphicon } from 'react-bootstrap';
 const socket = io();
 import * as UserAPIUtils from '../utils/UserAPIUtils';
 
-export default class ChannelContainer extends Component {
+export default class Channels extends Component {
 
   static propTypes = {
-    channels: PropTypes.object.isRequired,
+    channels: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired
   }
@@ -19,11 +19,6 @@ export default class ChannelContainer extends Component {
       channelName: ''
     };
   }
-
-  // handleSaveChannel(channel) {
-  //   this.props.actions.addChannel(channel);
-  //
-  // }
 
   handleChangeChannel(channel) {
     this.props.onClick(channel);
@@ -71,7 +66,7 @@ export default class ChannelContainer extends Component {
 
     const newChannelModal = (
       <div>
-        <Modal show={this.state.modal} onHide={::this.closeModal}>
+        <Modal key={1} show={this.state.modal} onHide={::this.closeModal}>
           <Modal.Header closeButton>
             <Modal.Title>Add New Channel</Modal.Title>
           </Modal.Header>
@@ -98,8 +93,6 @@ export default class ChannelContainer extends Component {
       </div>
     );
 
-    // deprecated due to react 0.14 issues
-    // const newChannelModal = '';
     return (
       <section>
         <div className="channel-header">
@@ -108,7 +101,6 @@ export default class ChannelContainer extends Component {
             <Glyphicon glyph="plus" />
           </button>
         </div>
-
           {newChannelModal}
         <div>
           <ul className="channel-list">
