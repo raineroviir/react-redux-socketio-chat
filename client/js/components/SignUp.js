@@ -1,17 +1,17 @@
 import React, { Component, PropTypes } from 'react';
-import * as UserAPIUtils from '../utils/UserAPIUtils';
-import { Router, Navigation } from 'react-router';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/Actions';
-import { bindActionCreators } from 'redux';
-const socket = io.connect();
 
 @connect(state => ({
-  user: state.auth.user,
   welcomePage: state.welcomePage
 }))
 
 export default class SignUp extends Component {
+
+  static propTypes = {
+    welcomePage: PropTypes.string.isRequired,
+    dispatch: PropTypes.func.isRequired
+  }
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -27,64 +27,56 @@ export default class SignUp extends Component {
   }
 
   componentDidMount() {
-    if(this.state.username.length) {
-      React.findDOMNode(this.refs.passwordInput).focus();
+    if (this.state.username.length) {
+      this.refs.passwordInput.focus();
     } else {
-      React.findDOMNode(this.refs.usernameInput).focus();
+      this.refs.usernameInput.focus();
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const { dispatch, user } = this.props;
-    const actions = bindActionCreators(Actions, dispatch);
+    const { dispatch } = this.props;
 
-    if(!this.state.username.length) {
-      React.findDOMNode(this.refs.usernameInput).focus();
+    if (!this.state.username.length) {
+      this.refs.usernameInput.focus();
     }
 
-    if(this.state.username.length && !this.state.password.length) {
-      React.findDOMNode(this.refs.passwordInput).focus();
+    if (this.state.username.length && !this.state.password.length) {
+      this.refs.passwordInput.focus();
     }
 
-    if(this.state.username.length && this.state.password.length && !this.state.confirmPassword.length) {
-      React.findDOMNode(this.refs.confirmPasswordInput).focus();
+    if (this.state.username.length && this.state.password.length && !this.state.confirmPassword.length) {
+      this.refs.confirmPasswordInput.focus();
     }
 
-    if(this.state.username.length && this.state.password.length && this.state.confirmPassword.length) {
-      let userpass = {
+    if (this.state.username.length && this.state.password.length && this.state.confirmPassword.length) {
+      const userpass = {
         username: this.state.username,
         password: this.state.password,
         confirmPassword: this.state.confirmPassword
-      }
+      };
 
       const payload = {
         username: this.state.username,
         channel: 'Lobby'
-      }
-
-      const fetchData = () => {
-        UserAPIUtils.addUserToChannel(payload)
-        UserAPIUtils.getAllChannels(actions)
-        UserAPIUtils.getAllUsersInChannel(actions)
-        UserAPIUtils.getAllMessages(actions)
-      }
+      };
 
       dispatch(Actions.signUp(userpass)).then(() => {
-        dispatch(Actions.loadInitialMessages())
-        })
-        .then(() => {
-          dispatch(Actions.loadInitialChannels())
-        })
-        .then(() => {
-          dispatch(Actions.loadUsersOnline())
-        })
-        .then(() => {
-          this.context.router.transitionTo('/chat')
-        })
-        .then(() => {
-          dispatch(Actions.userIsOnline(payload))
-        })
+        dispatch(Actions.loadInitialMessages());
+      })
+      .then(() => {
+        dispatch(Actions.loadInitialChannels());
+      })
+      .then(() => {
+        dispatch(Actions.loadUsersOnline());
+      })
+      .then(() => {
+        this.context.router.transitionTo('/chat');
+      })
+      .then(() => {
+        dispatch(Actions.userIsOnline(payload));
+      });
 
       this.setState({ username: '', password: '', confirmPassword: ''});
     }
@@ -103,17 +95,17 @@ export default class SignUp extends Component {
   }
 
   render() {
-    let labelStyle = {color: 'black'};
-    let buttonStyle = {background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'}
-    let signUpStyle = {justifyContent: 'center', display: 'flex'}
+    const labelStyle = {color: 'black'};
+    const buttonStyle = {background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'};
+    const signUpStyle = {justifyContent: 'center', display: 'flex'};
     return (
-      <div className='wrapper'>
+      <div className="wrapper">
 
-        <header style={{display: 'flex', justifyContent: 'center'}} className='header'>
+        <header style={{display: 'flex', justifyContent: 'center'}} className="header">
         Sign Up
         </header>
 
-        <main style={{display: 'flex', justifyContent: 'center'}} className='main'>
+        <main style={{display: 'flex', justifyContent: 'center'}} className="sign-up-page">
           <form onSubmit={::this.handleSubmit} onChange={::this.handleChange}>
             <section>
               <label style={labelStyle}>Username</label>
@@ -134,7 +126,7 @@ export default class SignUp extends Component {
               </div>
             </section>
             <section style={signUpStyle}>
-              <button style={buttonStyle} onClick={::this.handleSubmit} type="submit"><p style={{color: 'white', margin: '0', padding: '0', fontSize:'1.5em'}} >Sign Up</p></button>
+              <button style={buttonStyle} onClick={::this.handleSubmit} type="submit"><p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign Up</p></button>
             </section>
           </form>
         </main>

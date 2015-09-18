@@ -1,14 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-var socket = io();
 
 export default class MessageListItem extends Component {
 
   static propTypes = {
-    message: PropTypes.object.isRequired
+    message: PropTypes.object.isRequired,
   }
 
   render() {
-    const  { message, actions } = this.props;
+    const  { message } = this.props;
 
     return (
       <li className="message-list-item">

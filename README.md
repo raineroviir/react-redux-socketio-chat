@@ -11,6 +11,7 @@ Use Guide:
 - grunt build
 - npm start
 ```
+
 #####
 if you want to setup mongo:
 
@@ -24,9 +25,11 @@ To see the live version of the app go to http://slackclone.herokuapp.com
 
 #####
 Todos:
-- reorganize and make the code cleaner
-- redo this README
-- change the way ID's are assigned/stored?
-- reconfigure server calls from within React Components and move them into promises in actions?
-- Move to gulp?
-- Alternative to MongoDB?
+- change the way ID's are assigned/stored
+- reconfigure server calls from within React Components
+- upgrade the build tooling
+- switch from mongoDB to redis or cassandra
+
+#####
+Links to projects I used as guides when building this project:
+https://github.com/erikras/react-redux-universal-hot-example
