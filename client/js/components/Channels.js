@@ -1,12 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
 import ChannelListItem from './ChannelListItem';
 import { Modal, Glyphicon } from 'react-bootstrap';
 const socket = io();
 import * as UserAPIUtils from '../utils/UserAPIUtils';
-// import * as Actions from '../actions/Actions';
 
 export default class ChannelContainer extends Component {
+
+  static propTypes = {
+    channels: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired
+  }
 
   constructor(props, context) {
     super(props, context);
@@ -36,20 +40,20 @@ export default class ChannelContainer extends Component {
   }
 
   handleModalChange(event) {
-    this.setState({channelName: event.target.value})
+    this.setState({channelName: event.target.value});
   }
 
   handleModalSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
 
-    if(this.state.channelName.length < 1) {
-          React.findDOMNode(this.refs.channelName).focus()
-      }
-    if(this.state.channelName.length) {
+    if (this.state.channelName.length < 1) {
+      React.findDOMNode(this.refs.channelName).focus();
+    }
+    if (this.state.channelName.length) {
       const newChannel = {
         name: this.state.channelName.trim(),
         id: Date.now()
-      }
+      };
 
       UserAPIUtils.createChannel(newChannel);
       this.props.actions.addChannel(newChannel);
@@ -59,15 +63,11 @@ export default class ChannelContainer extends Component {
     }
   }
 
-  componentDidMount() {
-
-  }
-
   render() {
     const { channels, actions } = this.props;
     const filteredChannels = channels;
 
-    const glyphStyle = {'background': 'Transparent', 'backgroundRepeat': 'noRepeat', 'border': 'none', 'cursor': 'pointer', 'overflow': 'hidden', 'outline': 'none'}
+    const glyphStyle = {'background': 'Transparent', 'backgroundRepeat': 'noRepeat', 'border': 'none', 'cursor': 'pointer', 'overflow': 'hidden', 'outline': 'none'};
 
     const newChannelModal = (
       <div>
@@ -90,7 +90,7 @@ export default class ChannelContainer extends Component {
           </Modal.Body>
           <Modal.Footer>
             <button onClick={::this.closeModal}>Cancel</button>
-            <button onSubmit={::this.handleModalSubmit} type='submit'>
+            <button onSubmit={::this.handleModalSubmit} type="submit">
               Create Channel
             </button>
           </Modal.Footer>
@@ -100,10 +100,10 @@ export default class ChannelContainer extends Component {
 
     return (
       <section>
-        <div className='channel-header'>
+        <div className="channel-header">
           <strong style={{'marginRight': '10rem'}}>Channels</strong>
           <button onClick={::this.openModal} style={glyphStyle}>
-            <Glyphicon glyph='plus' />
+            <Glyphicon glyph="plus" />
           </button>
         </div>
 

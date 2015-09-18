@@ -2,66 +2,90 @@ import React, { Component, PropTypes } from 'react';
 import MessageComposer from './MessageComposer';
 import MessageListItem from './MessageListItem';
 import Channels from './Channels';
-import superagent from 'superagent';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import * as Actions from '../actions/Actions';
 import TypingListItem from './TypingListItem';
 import UserListItem from './UserListItem';
 const socket = io();
-import Footer from './Footer';
 import * as UserAPIUtils from '../utils/UserAPIUtils';
 import classNames from 'classnames';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
+// @ is an ES 7 decorator and connect passes the state into the App component
+
+@connect(state => ({
+  messages: state.messages.data,
+  channels: state.channels.data,
+  activeChannel: state.activeChannel,
+  user: (state.auth.user.name || state.auth.user),
+  typers: state.typers,
+  userList: state.userList.data
+}))
 export default class Chat extends Component {
 
   static propTypes = {
     messages: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
-    user: PropTypes.string.isRequired
+    user: PropTypes.string.isRequired,
+    dispatch: PropTypes.object.isRequired,
+    channels: PropTypes.array.isRequired,
+    activeChannel: PropTypes.object.isRequired,
+    typers: PropTypes.array.isRequired,
+    userList: PropTypes.array.isRequired
   }
 
   static contextTypes = {
     router: PropTypes.object.isRequired
   }
 
-//componentDidMount is a lifecycle method that is called once right after initial render
+  // componentWillMount is a lifecycle method called right before initial render
+  componentWillMount() {
+    const { user } = this.props;
+    // const fetchData = () => {
+    // actions.addUserToChannel(user)
+    socket.emit('add user', user);
+    //
+    // if(!user) {
+    //   actions.load()
+    // }
+    // const payload = {
+    //   username: user,
+    //   channel: 'Lobby'
+    // }
+  }
+
+  // componentDidMount is a lifecycle method that is called once right after initial render
   componentDidMount() {
-    const { actions, user } = this.props;
+    const { actions } = this.props;
     // console.log(user)
-    //The 'new bc message' socket event lets other users connected to the socket listen to the message
+    // The 'new bc message' socket event lets other users connected to the socket listen to the message
     socket.on('new bc message', msg =>
       actions.receiveRawMessage(msg)
     );
 
-    //the stop typing event from other users
+    // the stop typing event from other users
     socket.on('typing bc', username =>
       actions.typing(username)
     );
 
-    //the stop typing event from other users
+    // the stop typing event from other users
     socket.on('stop typing bc', username =>
       actions.stopTyping(username)
     );
 
-    //this socket event listens to other users joining the channel and appends them to the channel users array
-    socket.on('add user bc', username =>
-    {
-      actions.socketIOAddUser(username)
-    }
+    // this socket event listens to other users joining the channel and appends them to the channel users array
+    socket.on('add user bc', username => {
+      actions.socketIOAddUser(username);
+    });
 
-    );
-
-    //on client disconnect..
+    // on client disconnect..
     socket.on('client disconnect io', username => {
-      actions.userIsOffline(username)
-      actions.stopTyping(username)
-      console.log(username);
+      actions.userIsOffline(username);
+      actions.stopTyping(username);
       const payload = {
         username: username
-      }
-      UserAPIUtils.userIsOffline(payload)
+      };
+      UserAPIUtils.userIsOffline(payload);
     });
 
     socket.on('user logged out', username => {
@@ -71,28 +95,10 @@ export default class Chat extends Component {
 
     socket.on('new channel', channel =>
       actions.receiveRawChannel(channel)
-    )
+    );
   }
 
-
-//componentWillMount is a lifecycle method called right before initial render
-  componentWillMount() {
-    const { dispatch, actions, user } = this.props;
-    // const fetchData = () => {
-    //   actions.addUserToChannel(user)
-      socket.emit('add user', user)
-    //
-    // if(!user) {
-    //   actions.load()
-    // }
-    // const payload = {
-    //   username: user,
-    //   channel: 'Lobby'
-    // }
-
-  }
-
-//componentDidUpdate is a lifecycle method called when the component gets updated, not called on initial render
+  // componentDidUpdate is a lifecycle method called when the component gets updated, not called on initial render
   componentDidUpdate() {
     const messageList = React.findDOMNode(this.refs.messageList);
     messageList.scrollTop = messageList.scrollHeight;
@@ -100,7 +106,7 @@ export default class Chat extends Component {
 
   handleSave(newMessage) {
     const { actions } = this.props;
-    if(newMessage.text.length !== 0) {
+    if (newMessage.text.length !== 0) {
       actions.addMessage(newMessage);
     }
   }
@@ -109,54 +115,54 @@ export default class Chat extends Component {
     const { dispatch, user } = this.props;
     // const actions = bindActionCreators(Actions, dispatch);
     // console.log(user);
-    if(user) {
+    if (user) {
       socket.emit('signOut');
-      dispatch(Actions.stopTyping(user))
-      dispatch(Actions.userIsOffline(user))
-      UserAPIUtils.userIsOffline(user)
+      dispatch(Actions.stopTyping(user));
+      dispatch(Actions.userIsOffline(user));
+      UserAPIUtils.userIsOffline(user);
     }
-
-    const transitionToWelcome = this.context.router.transitionTo('/welcome')
+    const transitionToWelcome = this.context.router.transitionTo('/welcome');
     dispatch(Actions.signOut())
-    .then(transitionToWelcome)
+    .then(transitionToWelcome);
   }
+
   changeActiveChannel(channel) {
-    const { actions, user } = this.props;
+    const { actions } = this.props;
     actions.changeChannel(channel);
   }
 
   render() {
-    const { messages, channels, actions, activeChannel, user, dispatch, typers, userList} = this.props;
+    const { messages, channels, actions, activeChannel, user, typers, userList} = this.props;
     const filteredMessages = messages.filter(message => message.channelID === activeChannel.name);
     // const filteredTypers = typing.filter(user => user.typing === true)
     // const  = channelUserList;
     const onlineUsers = userList;
     const dropDownMenu = (
-      <div style={{'width': '21rem', 'top': '0'}} className='drop-down-menu'>
-        <DropdownButton style={{'border':'none', 'width': '21rem'}} id='user-menu'  bsSize='large' bsStyle='primary' title={user || 'USERNAME_HERE'}>
-          <MenuItem style={{'width': '21rem'}} eventKey='4' onSelect={::this.handleSignOut}>Sign out</MenuItem>
+      <div style={{'width': '21rem', 'top': '0'}} className="drop-down-menu">
+        <DropdownButton style={{'border': 'none', 'width': '21rem'}} id="user-menu"  bsSize="large" bsStyle="primary" title={user}>
+          <MenuItem style={{'width': '21rem'}} eventKey="4" onSelect={::this.handleSignOut}>Sign out</MenuItem>
         </DropdownButton>
       </div>
     );
 
     return (
-      <div className='container'>
-        <div className='nav'>
+      <div className="container">
+        <div className="nav">
           {dropDownMenu}
-          <section className='channel-section'>
+          <section className="channel-section">
             <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
           </section>
-          <section className='user-section'>
+          <section className="user-section">
             <strong>Users Online</strong>
             <ul className="user-list">
-              {onlineUsers && onlineUsers.map(user =>
-                <UserListItem user={user.username} key={user.id}/>
+              {onlineUsers && onlineUsers.map(onlineUser =>
+                <UserListItem user={onlineUser.username} key={onlineUser.id}/>
               )}
             </ul>
           </section>
         </div>
         <div className={classNames('main')}>
-          <header className='header'>
+          <header className="header">
             {activeChannel.name}
           </header>
           <ul className="message-list" ref="messageList">
@@ -165,7 +171,8 @@ export default class Chat extends Component {
             )}
           </ul>
           <MessageComposer activeChannel={activeChannel} user={user} onSave={::this.handleSave} />
-
+        </div>
+        <footer style={{background: 'pink'}} >
           {typers.length === 1 &&
           <span className="typing-list">
             <TypingListItem username={typers[0]} key={1}/>
@@ -183,29 +190,12 @@ export default class Chat extends Component {
           {typers.length > 2 &&
           <span className="typing-list">Several people are typing
           </span>}
-        </div>
+        </footer>
       </div>
     );
   }
 }
 
-@connect(state => ({
-  messages: state.messages.data,
-  channels: state.channels.data,
-  activeChannel: state.activeChannel,
-  user: (state.auth.user.name || state.auth.user),
-  typers: state.typers,
-  userList: state.userList.data
-}))
-export default class ChatContainer {
-  render() {
-    const { messages, channels, activeChannel, dispatch, user, typers} = this.props;
-    const actions = bindActionCreators(Actions, dispatch);
-    return (
-      <Chat {...this.props} actions={actions} />
-    );
-  }
-}
 
 // {typers.length === 2 &&
 //   <span className="typing-list"> {typers[0].map(username =>

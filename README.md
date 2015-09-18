@@ -11,6 +11,7 @@ Use Guide:
 - grunt build
 - npm start
 ```
+
 #####
 if you want to setup mongo:
 
@@ -30,3 +31,4 @@ Todos:
 - reconfigure server calls from within React Components and move them into promises in actions?
 - Move to gulp?
 - Alternative to MongoDB?
+- tests!!!!

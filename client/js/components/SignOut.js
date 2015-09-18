@@ -1,38 +1,40 @@
-//deprecated
-
-import React from 'react';
+// deprecated
+import React, { Component, PropTypes } from 'react';
 import * as Actions from '../actions/Actions';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as UserAPIUtils from '../utils/UserAPIUtils'
+import * as UserAPIUtils from '../utils/UserAPIUtils';
 const socket = io();
 
 @connect(state => ({
   user: state.auth.user
 }))
-export default class SignOut extends React.Component{
+export default class SignOut extends Component {
+
+  static propTypes = {
+    user: PropTypes.string.isRequired,
+    dispatch: PropTypes.func.isRequired
+  }
 
   componentWillMount() {
     const { dispatch, user } = this.props;
-    const actions = bindActionCreators(Actions, dispatch);
     const payload = {
       username: user,
       channel: 'Lobby'
-    }
-    if(user) {
+    };
+    if (user) {
       socket.emit('logout');
-      actions.stopTyping(user);
-      actions.removeUserFromChannel(user)
-      UserAPIUtils.removeUserFromChannel(payload)
+      dispatch(Actions.stopTyping(user));
+      dispatch(actions.removeUserFromChannel(user));
+      UserAPIUtils.removeUserFromChannel(payload);
     }
-    actions.signOut();
+    dispatch(Actions.signOut());
   }
-  render () {
+  render() {
     return (
       <div>
         Signed out!
       </div>
-    )
+    );
   }
 }
 

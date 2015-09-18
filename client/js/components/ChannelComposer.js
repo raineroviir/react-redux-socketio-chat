@@ -1,13 +1,30 @@
 import React, { Component, PropTypes } from 'react';
 
-//warning: this module is deprecated for the time being, replaced by the Modal.
+// warning: this module is deprecated for the time being, replaced by the Modal.
 export default class ChannelComposer extends Component {
+
+  static propTypes = {
+    onSave: PropTypes.func.isRequired
+  }
 
   constructor(props, context) {
     super(props, context);
     this.state = {
-      name: this.props.name || ''
+      name: ''
     };
+  }
+
+  handleSubmit(event) {
+    const channel = event.target.value.trim();
+    if (event.which === 13) {
+      event.preventDefault();
+      this.props.onSave(channel);
+      this.setState({ name: '' });
+    }
+  }
+
+  handleChange(event) {
+    this.setState({ name: event.target.value});
   }
 
   render() {
@@ -22,18 +39,5 @@ export default class ChannelComposer extends Component {
         onKeyDown={::this.handleSubmit}
       />
     );
-  }
-
-  handleSubmit(event) {
-    const channel = event.target.value.trim();
-    if (event.which === 13) {
-      event.preventDefault();
-      this.props.onSave(channel);
-      this.setState({ name: '' })
-    };
-  }
-
-  handleChange(event) {
-    this.setState({ name: event.target.value});
   }
 }
