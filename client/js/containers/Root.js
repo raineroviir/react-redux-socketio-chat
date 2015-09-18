@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Redirect, Router, Route } from 'react-router';
 import { Provider } from 'react-redux';
 import * as reducers from '../reducers';
@@ -12,7 +12,7 @@ import Cookies from 'cookies-js';
 import thunk from 'redux-thunk';
 import promiseMiddleware from '../middleware/promiseMiddleware';
 // import logger from 'redux-logger';
-
+import ReactDOM from 'react-dom';
 import { devTools, persistState } from 'redux-devtools';
 // import persistState from 'redux-localstorage';
 // import adapter from 'redux-localstorage/lib/adapters/localStorage';
@@ -66,7 +66,7 @@ function renderRoutes(history) {
   );
 }
 
-export default class Root extends React.Component {
+export default class Root extends Component {
 
   static propTypes = {
     history: PropTypes.object.isRequired

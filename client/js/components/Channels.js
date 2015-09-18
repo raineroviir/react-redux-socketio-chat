@@ -47,7 +47,7 @@ export default class ChannelContainer extends Component {
     event.preventDefault();
 
     if (this.state.channelName.length < 1) {
-      React.findDOMNode(this.refs.channelName).focus();
+      this.refs.channelName.focus();
     }
     if (this.state.channelName.length) {
       const newChannel = {
@@ -98,6 +98,8 @@ export default class ChannelContainer extends Component {
       </div>
     );
 
+    // deprecated due to react 0.14 issues
+    // const newChannelModal = '';
     return (
       <section>
         <div className="channel-header">

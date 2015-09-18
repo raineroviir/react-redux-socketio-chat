@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import * as Actions from '../actions/Actions';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
 
 // the empty connect is to pass in the dispatch function
 @connect()
@@ -20,7 +19,7 @@ export default class WelcomePage extends Component {
   }
 
   componentDidMount() {
-    ReactDOM.findDOMNode(this.refs.usernameInput).focus();
+    this.refs.usernameInput.focus();
   }
 
   handleChange(event) {
@@ -35,6 +34,7 @@ export default class WelcomePage extends Component {
     dispatch(Actions.welcomePage(username));
     this.setState({ username: '' });
   }
+
   render() {
     const welcomePageStyle = {height: '20rem', display: 'flex', justifyContent: 'center'};
     return (

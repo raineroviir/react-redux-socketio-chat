@@ -7,7 +7,7 @@ export function loadAuth() {
     .get('/api/refresh_token')
     .end((err, res) => {
       if (err) {
-        return reject(res.body || err);
+        return Promise.reject(res.body || err);
       } else {
         resolve(res.body.user);
       }
@@ -22,7 +22,7 @@ export function checkPassword(user) {
     .auth(user.username, user.password)
     .end((err, res) => {
       if (err) {
-        return reject(res.body || err);
+        return Promise.reject(res.body || err);
       } else {
         const serverResponse = {
           name: res.body.username
@@ -42,7 +42,7 @@ export function signUp(user) {
     .send(user)
     .end((err, res) => {
       if (err) {
-        return reject(res.body || err);
+        return Promise.reject(res.body || err);
       } else {
         resolve(res.body.username);
         Cookies.set('eat', res.body.eat);
@@ -58,7 +58,7 @@ export function signIn(user) {
     .auth(user.username, user.password)
     .end((err, res) => {
       if (err) {
-        return reject(res.body || err);
+        return Promise.reject(res.body || err);
       } else {
         const serverResponse = {
           name: res.body.username

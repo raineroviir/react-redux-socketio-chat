@@ -10,6 +10,7 @@ const socket = io();
 import * as UserAPIUtils from '../utils/UserAPIUtils';
 import classNames from 'classnames';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
+import ReactDOM from 'react-dom';
 
 // @ is an ES 7 decorator and connect passes the state into the App component
 
@@ -100,7 +101,7 @@ export default class Chat extends Component {
 
   // componentDidUpdate is a lifecycle method called when the component gets updated, not called on initial render
   componentDidUpdate() {
-    const messageList = React.findDOMNode(this.refs.messageList);
+    const messageList = this.refs.messageList;
     messageList.scrollTop = messageList.scrollHeight;
   }
 
@@ -134,8 +135,7 @@ export default class Chat extends Component {
   render() {
     const { messages, channels, actions, activeChannel, user, typers, userList} = this.props;
     const filteredMessages = messages.filter(message => message.channelID === activeChannel.name);
-    // const filteredTypers = typing.filter(user => user.typing === true)
-    // const  = channelUserList;
+
     const onlineUsers = userList;
     const dropDownMenu = (
       <div style={{'width': '21rem', 'top': '0'}} className="drop-down-menu">
@@ -145,6 +145,8 @@ export default class Chat extends Component {
       </div>
     );
 
+    //deprecated due to react 0.14 issues
+    // const dropDownMenu = '';
     return (
       <div className="container">
         <div className="nav">

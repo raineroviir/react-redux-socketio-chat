@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import * as Actions from '../actions/Actions';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
 
 @connect()
 export default class SignIn extends Component {
@@ -23,7 +22,7 @@ export default class SignIn extends Component {
   }
 
   componentDidMount() {
-    ReactDOM.findDOMNode(this.refs.usernameInput).focus();
+    this.refs.usernameInput.focus();
   }
 
   handleChange(event) {
@@ -39,11 +38,11 @@ export default class SignIn extends Component {
     event.preventDefault();
     const { dispatch } = this.props;
     if (this.state.username.length < 1) {
-      ReactDOM.findDOMNode(this.refs.usernameInput).focus();
+      this.refs.usernameInput.focus();
     }
 
     if (this.state.username.length > 0 && this.state.password.length < 1) {
-      ReactDOM.findDOMNode(this.refs.passwordInput).focus();
+      this.refs.passwordInput.focus();
     }
 
     if (this.state.username.length > 0 && this.state.password.length > 0) {

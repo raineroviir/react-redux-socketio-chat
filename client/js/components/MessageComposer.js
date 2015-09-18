@@ -7,8 +7,8 @@ export default class MessageComposer extends Component {
 
   static propTypes = {
     activeChannel: PropTypes.object.required,
-    onSave: PropTypes.func.required,
-    user: PropTypes.string.required
+    onSave: PropTypes.object.required,
+    user: PropTypes.object.required
   }
 
   constructor(props, context) {

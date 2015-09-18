@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/Actions';
-import ReactDOM from 'react-dom';
 
 @connect(state => ({
   welcomePage: state.welcomePage
@@ -29,9 +28,9 @@ export default class SignUp extends Component {
 
   componentDidMount() {
     if (this.state.username.length) {
-      ReactDOM.findDOMNode(this.refs.passwordInput).focus();
+      this.refs.passwordInput.focus();
     } else {
-      ReactDOM.findDOMNode(this.refs.usernameInput).focus();
+      this.refs.usernameInput.focus();
     }
   }
 
@@ -40,15 +39,15 @@ export default class SignUp extends Component {
     const { dispatch } = this.props;
 
     if (!this.state.username.length) {
-      ReactDOM.findDOMNode(this.refs.usernameInput).focus();
+      this.refs.usernameInput.focus();
     }
 
     if (this.state.username.length && !this.state.password.length) {
-      ReactDOM.findDOMNode(this.refs.passwordInput).focus();
+      this.refs.passwordInput.focus();
     }
 
     if (this.state.username.length && this.state.password.length && !this.state.confirmPassword.length) {
-      ReactDOM.findDOMNode(this.refs.confirmPasswordInput).focus();
+      this.refs.confirmPasswordInput.focus();
     }
 
     if (this.state.username.length && this.state.password.length && this.state.confirmPassword.length) {
