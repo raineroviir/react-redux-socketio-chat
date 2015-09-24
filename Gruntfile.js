@@ -49,7 +49,7 @@ module.exports = function(grunt) {
       html: {
         expand: true,
         flatten: false,
-        src: '*.html',
+        src: ['*.html', 'favicon.ico'],
         dest: 'dist/',
         filter: 'isFile'
       }
