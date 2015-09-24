@@ -10,7 +10,7 @@ import Cookies from 'cookies-js';
 import configureStore from '../store/configureStore';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 const store = configureStore();
-
+ 
 function requireAuth(nextState, transition) {
   if (!Cookies.get('eat')) {
     transition.to('/signin', null, { nextPathname: nextState.location.pathname });
