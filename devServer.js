@@ -61,7 +61,7 @@ app.use('/api', usersRouter);
 app.use('/api', channelRouter);
 
 app.use('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'developmentIndex.html'));
 });
 
 var webpackServer = app.listen(3001, 'localhost', function(err) {
