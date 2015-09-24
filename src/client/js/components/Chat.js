@@ -138,14 +138,7 @@ export default class Chat extends Component {
           <section className="channel-section">
             <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
           </section>
-          <section className="user-section">
-            <strong>Users Online</strong>
-            <ul className="user-list">
-              {onlineUsers && onlineUsers.map(onlineUser =>
-                <UserListItem user={onlineUser.username} key={onlineUser.id}/>
-              )}
-            </ul>
-          </section>
+
         </div>
         <div className={classNames('main')}>
           <header className="header">
@@ -183,6 +176,18 @@ export default class Chat extends Component {
 }
 
 
+// users online deprecated for the time being, since i don't have time to fix it will fix next patch
+// <section className="user-section">
+//   <strong>Users Online</strong>
+//   <ul className="user-list">
+//     {onlineUsers && onlineUsers.map(onlineUser =>
+//       <UserListItem user={onlineUser.username} key={onlineUser.id}/>
+//     )}
+//   </ul>
+// </section>
+
+
+// old code this can be deleted i think
 // {typers.length === 2 &&
 //   <span className="typing-list"> {typers[0].map(username =>
 //   <TypingListItem username={username} typers={typers}/>)} &&
