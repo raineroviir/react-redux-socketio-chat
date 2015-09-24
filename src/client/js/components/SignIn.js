@@ -55,7 +55,6 @@ export default class SignIn extends Component {
         username: this.state.username,
         id: Date.now()
       };
-
       dispatch(Actions.signIn(userpass)).then(() => {
         dispatch(Actions.loadInitialMessages());
       })

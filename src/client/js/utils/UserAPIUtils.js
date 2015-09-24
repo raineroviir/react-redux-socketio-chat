@@ -44,6 +44,7 @@ export function signUp(user) {
       if (err) {
         return Promise.reject(res.body || err);
       } else {
+        console.log(res);
         resolve(res.body.username);
         Cookies.set('eat', res.body.eat);
       }
@@ -60,6 +61,7 @@ export function signIn(user) {
       if (err) {
         return Promise.reject(res.body || err);
       } else {
+        console.log(res);
         const serverResponse = {
           name: res.body.username
         };

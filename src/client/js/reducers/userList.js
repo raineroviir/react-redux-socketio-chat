@@ -23,21 +23,6 @@ export default function userList(state = initialState, action) {
       };
 
   case ADD_USER_TO_CHANNEL_SUCCESS:
-
-    // commented out and will add validation back in later..
-
-    // if(state.data.filter(user =>
-    //   user.username === action.user.name
-    // ).length !== 0) {
-    //   return state
-    // } else {
-    //   return {...state,
-    //     data: [...state.data, {
-    //       username: action.user.name,
-    //       id: (state.data.length === 0) ? 0 : state.data[state.data.length - 1].id + 1
-    //     }]
-    //   }
-    // }
     return {...state,
       adding: false,
       added: true,
@@ -84,3 +69,19 @@ export default function userList(state = initialState, action) {
     return state;
   }
 }
+
+
+// commented out and will add validation back in later..
+// ADD_USER_TO_CHANNEL
+// if(state.data.filter(user =>
+//   user.username === action.user.name
+// ).length !== 0) {
+//   return state
+// } else {
+//   return {...state,
+//     data: [...state.data, {
+//       username: action.user.name,
+//       id: (state.data.length === 0) ? 0 : state.data[state.data.length - 1].id + 1
+//     }]
+//   }
+// }

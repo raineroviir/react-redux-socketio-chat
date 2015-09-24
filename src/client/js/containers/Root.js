@@ -1,27 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { Redirect, Router, Route } from 'react-router';
 import { Provider } from 'react-redux';
-import * as reducers from '../reducers';
 import SignIn from '../components/SignIn';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import ChatContainer from './ChatContainer';
 import SignUp from '../components/SignUp';
 import WelcomePage from '../components/WelcomePage';
 import SignOut from '../components/SignOut';
 import Cookies from 'cookies-js';
-import thunk from 'redux-thunk';
-import promiseMiddleware from '../middleware/promiseMiddleware';
-import { devTools, persistState } from 'redux-devtools';
+import configureStore from '../store/configureStore';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
-
-const createStoreWithMiddleware = compose(
-  applyMiddleware(thunk, promiseMiddleware),
-  devTools(),
-  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-)(createStore);
-
-const rootReducer = combineReducers(reducers);
-const store = createStoreWithMiddleware(rootReducer);
+const store = configureStore();
 
 function requireAuth(nextState, transition) {
   if (!Cookies.get('eat')) {
@@ -36,7 +24,9 @@ export default class Root extends Component {
   }
 
   render() {
+    const processENV = process.env.NODE_ENV;
     const { history } = this.props;
+
     return (
       <div className="root">
         <Provider store={store} >
@@ -52,9 +42,10 @@ export default class Root extends Component {
           </Router>
         </Provider>
 
-        <DebugPanel top right bottom >
+        {processENV === 'development' && <DebugPanel top right bottom >
           <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>
+        </DebugPanel>}
+
       </div>
     );
   }
