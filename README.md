@@ -14,7 +14,7 @@ Comes with [redux-dev tools](https://github.com/gaearon/redux-devtools) and [rea
 ```
 npm run dev
 ```
-
+And then point your browser to `localhost:3001`
 ### Production
 
 ```
