@@ -39,3 +39,4 @@ https://github.com/erikras/react-redux-universal-hot-example
 * Promise based auth library
 * A list of users online
 * A react-native version once exponentJS comes to PC
+* Move all the CSS to inline styling in the React Components
