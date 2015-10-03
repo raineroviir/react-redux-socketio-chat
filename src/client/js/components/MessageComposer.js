@@ -57,9 +57,21 @@ export default class MessageComposer extends Component {
   }
 
   render() {
+    const messageComposerStyle = {
+      zIndex: '52',
+      height: '4rem',
+      left: '21.1rem',
+      right: '1rem',
+      background: '#fff',
+      boxSizing: 'border-box',
+      display: 'block',
+      width: '100%',
+      flexShrink: '0',
+      order: '2'
+    }
     return (
       <textarea
-        className="message-composer"
+        style={messageComposerStyle}
         name="message"
         autoFocus="true"
         value={this.state.text}

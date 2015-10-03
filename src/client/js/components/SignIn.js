@@ -55,6 +55,7 @@ export default class SignIn extends Component {
         username: this.state.username,
         id: Date.now()
       };
+      // Event chain that progresses the user towards sign-in.  Since I'm using a promise middleware all of these actions are resolved through promises.
       dispatch(Actions.signIn(userpass)).then(() => {
         dispatch(Actions.loadInitialMessages());
       })
@@ -70,21 +71,18 @@ export default class SignIn extends Component {
       .then(() => {
         dispatch(Actions.userIsOnline(payload));
       });
-
       this.setState({ username: '', password: ''});
     }
   }
 
   render() {
     const labelStyle = {color: 'black'};
-    const buttonStyle = {background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'};
-    const signInStyle = {justifyContent: 'center', display: 'flex'};
     return (
-      <div className="wrapper">
-        <header style={{display: 'flex', justifyContent: 'center'}} className="header">
+      <div>
+        <header style={{display: 'flex', justifyContent: 'center', background: '#000000', color: '#FFFFFF', flexGrow: '0', order: '0'}}>
           Sign In to Chat
         </header>
-        <main style={{display: 'flex', justifyContent: 'center'}} className="sign-in">
+        <main style={{display: 'flex', justifyContent: 'center'}}>
           <form onSubmit={::this.handleSubmit}>
             <section>
               <label style={labelStyle}>Username</label>
@@ -98,13 +96,13 @@ export default class SignIn extends Component {
                   <input ref="passwordInput" type="password" name="password" placeholder="Enter password" value={this.state.password} onChange={::this.handleChange}/>
                 </div>
             </section>
-            <section style={signInStyle}>
-              <button style={buttonStyle} name="submitButton" type="submit" ><p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign In</p></button>
+            <section style={{justifyContent: 'center', display: 'flex'}}>
+              <button style={{background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'}} name="submitButton" type="submit" >
+                <p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign In</p>
+              </button>
             </section>
           </form>
         </main>
-        <aside className="aside aside-1"></aside>
-        <aside className="aside aside-2"></aside>
       </div>
     );
   }

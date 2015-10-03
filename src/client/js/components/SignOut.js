@@ -1,4 +1,5 @@
-// deprecated
+// NOTE This module is deprecated, and will most likely be deleted soon
+
 import React, { Component, PropTypes } from 'react';
 import * as Actions from '../actions/Actions';
 import { connect } from 'react-redux';

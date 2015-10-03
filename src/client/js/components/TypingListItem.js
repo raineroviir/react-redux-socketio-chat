@@ -10,7 +10,7 @@ export default class TypingListItem extends Component {
     const  { username } = this.props;
 
     return (
-        <span className="typing-list-item">
+        <span>
           {username}
         </span>
     );

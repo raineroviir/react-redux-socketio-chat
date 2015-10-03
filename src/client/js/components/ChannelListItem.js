@@ -13,10 +13,10 @@ export default class ChannelListItem extends Component {
     const { channel: selectedChannel, onShow } = this.props;
     return (
       <a className={classnames({ selected: channel === selectedChannel })}
-         style={{ cursor: 'hand', 'color': 'white'}}
+         style={{ cursor: 'hand', color: 'white'}}
          onClick={() => onShow(channel)}>
-        <li className="channel-list-item">
-          <h5 className="channel-name">{channel.name}</h5>
+        <li style={{cursor: 'pointer'}}>
+          <h5>{channel.name}</h5>
         </li>
       </a>
     );

@@ -96,16 +96,12 @@ export default class SignUp extends Component {
 
   render() {
     const labelStyle = {color: 'black'};
-    const buttonStyle = {background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'};
-    const signUpStyle = {justifyContent: 'center', display: 'flex'};
     return (
-      <div className="wrapper">
-
-        <header style={{display: 'flex', justifyContent: 'center'}} className="header">
+      <div>
+        <header style={{display: 'flex', justifyContent: 'center', background: '#000000', color: '#FFFFFF', flexGrow: '0', order: '0'}}>
         Sign Up
         </header>
-
-        <main style={{display: 'flex', justifyContent: 'center'}} className="sign-up-page">
+        <main style={{display: 'flex', justifyContent: 'center'}}>
           <form onSubmit={::this.handleSubmit} onChange={::this.handleChange}>
             <section>
               <label style={labelStyle}>Username</label>
@@ -125,14 +121,11 @@ export default class SignUp extends Component {
                 <input ref="confirmPasswordInput" type="password" name="confirm-password" placeholder="Enter password again" value={this.state.confirmPassword} onChange={::this.handleChange} />
               </div>
             </section>
-            <section style={signUpStyle}>
-              <button style={buttonStyle} onClick={::this.handleSubmit} type="submit"><p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign Up</p></button>
+            <section style={{justifyContent: 'center', display: 'flex'}}>
+              <button style={{background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'}} onClick={::this.handleSubmit} type="submit"><p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign Up</p></button>
             </section>
           </form>
         </main>
-
-        <aside className="aside aside-1"></aside>
-        <aside className="aside aside-2"></aside>
       </div>
     );
   }
