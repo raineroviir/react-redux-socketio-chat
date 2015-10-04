@@ -31,7 +31,10 @@ export default class WelcomePage extends Component {
   handleSubmit() {
     const { dispatch } = this.props;
     const username = this.state.username;
-    dispatch(Actions.welcomePage(username));
+    dispatch(Actions.welcomePage(username))
+    .then(() => {
+      dispatch(Actions.loadUserList());
+    })
     this.setState({ username: '' });
   }
 

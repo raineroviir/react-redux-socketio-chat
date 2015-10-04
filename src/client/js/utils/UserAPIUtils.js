@@ -42,14 +42,50 @@ export function signUp(user) {
     .send(user)
     .end((err, res) => {
       if (err) {
-        return Promise.reject(res.body || err);
+        // return Promise.reject(res.body || err);
+        return err;
       } else {
-        console.log(res);
         resolve(res.body.username);
         Cookies.set('eat', res.body.eat);
       }
     });
   });
+}
+
+export function validateUsername(username) {
+  return new Promise((resolve, reject) => {
+    superagent
+    .post('/api/validate_username')
+    .send(username)
+    .end((err, res) => {
+      if (err) {
+        return err;
+      } else {
+        var result = res.body.valid;
+        console.log(result);
+        if (result) {
+          resolve(result)
+        } else {
+          reject(result)
+        }
+      }
+    })
+  })
+}
+
+export function loadUserList() {
+  return new Promise((resolve, reject) => {
+    superagent
+    .get('/api/allusers')
+    .end((err, res) => {
+      if (err) {
+        return reject(res.body || err);
+      } else {
+        const rawUsers = res.body;
+        resolve(rawUsers);
+      }
+    })
+  })
 }
 
 export function signIn(user) {
@@ -61,7 +97,6 @@ export function signIn(user) {
       if (err) {
         return Promise.reject(res.body || err);
       } else {
-        console.log(res);
         const serverResponse = {
           name: res.body.username
         };

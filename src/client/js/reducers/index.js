@@ -5,3 +5,4 @@ export auth from './auth';
 export typers from './typers';
 export userList from './userList';
 export welcomePage from './welcomePage';
+export userValidation from './userValidation';

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ChannelListItem from './ChannelListItem';
-import { Modal, Glyphicon } from 'react-bootstrap';
+import { Modal, Glyphicon, Input, Button } from 'react-bootstrap';
 const socket = io();
 import * as UserAPIUtils from '../utils/UserAPIUtils';
 import classnames from 'classnames';
@@ -41,22 +41,34 @@ export default class Channels extends Component {
   }
 
   handleModalSubmit(event) {
+    const { channels } = this.props;
     event.preventDefault();
-
     if (this.state.channelName.length < 1) {
-      this.refs.channelName.focus();
+      this.refs.channelName.getInputDOMNode().focus();
     }
-    if (this.state.channelName.length) {
+    if (this.state.channelName.length > 0 && channels.filter(channel => {
+      return channel.name === this.state.channelName.trim()
+    }).length < 1) {
       const newChannel = {
         name: this.state.channelName.trim(),
         id: Date.now()
       };
-
       UserAPIUtils.createChannel(newChannel);
       this.props.actions.addChannel(newChannel);
       socket.emit('new channel', newChannel);
       this.setState({channelName: ''});
       this.closeAddChannelModal();
+    }
+  }
+
+  validateChannelName() {
+    const { channels } = this.props;
+    if(channels.filter(channel => {
+      return channel.name === this.state.channelName.trim();
+    }).length > 0) {
+      return 'error';
+    } else {
+      return 'success'
     }
   }
 
@@ -84,22 +96,26 @@ export default class Channels extends Component {
             <Modal.Title>Add New Channel</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form onSubmit={::this.handleModalSubmit}>
-            <input
+            <form onSubmit={::this.handleModalSubmit} >
+            <Input
+              ref="channelName"
+              type="text"
+              help={this.validateChannelName() === 'error' && 'A channel with that name already exists!'}
+              bsStyle={this.validateChannelName()}
+              hasFeedback
               name="channelName"
               autoFocus="true"
               placeholder="Enter the channel name"
               value={this.state.channelName}
               onChange={::this.handleModalChange}
-              onSubmit={::this.handleModalSubmit}
             />
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <button onClick={::this.closeAddChannelModal}>Cancel</button>
-            <button onSubmit={::this.handleModalSubmit} type="submit">
+            <Button onClick={::this.closeAddChannelModal}>Cancel</Button>
+            <Button disabled={this.validateChannelName() === 'error' && 'true'} onClick={::this.handleModalSubmit} type="submit">
               Create Channel
-            </button>
+            </Button>
           </Modal.Footer>
           </Modal>
       </div>
