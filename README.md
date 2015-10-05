@@ -32,7 +32,7 @@ mongod --dbpath=./db --smallfiles
 
 then to open the database open a new terminal and type in `mongo` and type in `use chat_dev` 
 
-## Helpful Resources and Projects that I draw inspiration from
+## Helpful Resources and Inspiring Projects
 
 * Erikras' universal redux example: https://github.com/erikras/react-redux-universal-hot-example
 * The facebook react flux-chat example: https://github.com/facebook/flux/tree/master/examples/flux-chat
