@@ -203,14 +203,14 @@ export default class SignUp extends Component {
                 onChange={::this.handleChange}
               />
             </section>
-            <section style={{justifyContent: 'center', display: 'flex'}}>
-              <Button
-                disabled={this.validateUsername() === 'error' || this.validateConfirmPassword() ==='error' && true}  style={{background: '#23a608', width: '100%', height: '4rem',   marginTop: '2rem'}}
-                onClick={::this.handleSubmit}
-                type="submit">
-                <p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign Up</p>
-              </Button>
-            </section>
+            <Button
+              disabled={this.validateUsername() === 'error' || this.validateConfirmPassword() ==='error' && true}
+              bsStyle='success'
+              style={{width: '100%', height: '4rem', marginTop: '2rem'}}
+              onClick={::this.handleSubmit}
+              type="submit">
+              <p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign Up</p>
+            </Button>
           </form>
         </main>
       </div>
@@ -218,7 +218,7 @@ export default class SignUp extends Component {
   }
 }
 
-// Old Username section
+// Old Signup section
 // <section>
 //   <label style={labelStyle}>Username</label>
 //   <div>
@@ -240,7 +240,6 @@ export default class SignUp extends Component {
 //   </div>
 // </section>
 
-//OLD BUTTON TO SIGN UP :
 // <section style={{justifyContent: 'center', display: 'flex'}}>
 //   <button style={{background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'}} onClick={::this.handleSubmit} type="submit"><p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign Up</p></button>
 // </section>

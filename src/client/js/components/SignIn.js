@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import * as Actions from '../actions/Actions';
 import { connect } from 'react-redux';
+import { Button, Input } from 'react-bootstrap';
 
 @connect()
 export default class SignIn extends Component {
@@ -22,7 +23,7 @@ export default class SignIn extends Component {
   }
 
   componentDidMount() {
-    this.refs.usernameInput.focus();
+    this.refs.usernameInput.getInputDOMNode().focus();
   }
 
   handleChange(event) {
@@ -39,11 +40,11 @@ export default class SignIn extends Component {
     const { dispatch } = this.props;
     if (this.state.username.length < 1) {
       console.log(this.refs);
-      this.refs.usernameInput.focus();
+      this.refs.usernameInput.getInputDOMNode().focus();
     }
 
     if (this.state.username.length > 0 && this.state.password.length < 1) {
-      this.refs.passwordInput.focus();
+      this.refs.passwordInput.getInputDOMNode().focus();
     }
 
     if (this.state.username.length > 0 && this.state.password.length > 0) {
@@ -85,26 +86,52 @@ export default class SignIn extends Component {
         </header>
         <main style={{display: 'flex', justifyContent: 'center'}}>
           <form onSubmit={::this.handleSubmit}>
-            <section>
-              <label style={labelStyle}>Username</label>
-                <div>
-                  <input ref="usernameInput" type="text" name="username" placeholder="Enter username" value={this.state.username} onChange={::this.handleChange}/>
-                </div>
-            </section>
-            <section>
-              <label style={labelStyle}>Password</label>
-                <div>
-                  <input ref="passwordInput" type="password" name="password" placeholder="Enter password" value={this.state.password} onChange={::this.handleChange}/>
-                </div>
-            </section>
-            <section style={{justifyContent: 'center', display: 'flex'}}>
-              <button style={{background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'}} name="submitButton" type="submit" >
+            <Input
+              label="Username"
+              ref="usernameInput"
+              type="text"
+              name="username"
+              placeholder="Enter username"
+              value={this.state.username}
+              onChange={::this.handleChange}
+            />
+            <Input
+              label="Password"
+              ref="passwordInput"
+              type="password"
+              name="password"
+              placeholder="Enter password"
+              value={this.state.password}
+              onChange={::this.handleChange}
+            />
+            <Button
+              bsStyle='success'
+              style={{width: '100%', height: '4rem', marginTop: '2rem'}} name="submitButton"
+              type="submit" >
                 <p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign In</p>
-              </button>
-            </section>
+            </Button>
           </form>
         </main>
       </div>
     );
   }
 }
+
+// OLD Sign in section
+// <section>
+//   <label style={labelStyle}>Username</label>
+//     <div>
+//       <input ref="usernameInput" type="text" name="username" placeholder="Enter username" value={this.state.username} onChange={::this.handleChange}/>
+//     </div>
+// </section>
+// <section>
+//   <label style={labelStyle}>Password</label>
+//     <div>
+//       <input ref="passwordInput" type="password" name="password" placeholder="Enter password" value={this.state.password} onChange={::this.handleChange}/>
+//     </div>
+// </section>
+// <section style={{justifyContent: 'center', display: 'flex'}}>
+// <button style={{background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'}} name="submitButton" type="submit" >
+//   <p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign In</p>
+// </button>
+// </section>
