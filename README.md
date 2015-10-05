@@ -15,6 +15,7 @@ Comes with [redux-dev tools](https://github.com/gaearon/redux-devtools) and [rea
 npm run dev
 ```
 And then point your browser to `localhost:3001`
+
 ### Production
 
 ```
@@ -41,5 +42,5 @@ https://github.com/erikras/react-redux-universal-hot-example
 * Promise based auth library
 * A list of users online
 * A react-native version once exponentJS comes to PC
-~~* Move all the CSS to inline styling in the React Components~~
-~~* validation for username/channelname exists~~
+* ~~Move all the CSS to inline styling in the React Components~~
+* ~~validation for username/channelname exists~~
