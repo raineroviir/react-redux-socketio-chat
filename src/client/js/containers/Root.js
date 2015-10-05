@@ -18,15 +18,12 @@ function requireAuth(nextState, transition) {
 }
 
 export default class Root extends Component {
-
   static propTypes = {
     history: PropTypes.object.isRequired
   }
-
   render() {
     const processENV = process.env.NODE_ENV;
     const { history } = this.props;
-
     return (
       <div className="root">
         <Provider store={store} >
@@ -41,11 +38,9 @@ export default class Root extends Component {
             </Route>
           </Router>
         </Provider>
-
         {processENV === 'development' && <DebugPanel top right bottom >
           <DevTools store={store} monitor={LogMonitor} />
         </DebugPanel>}
-
       </div>
     );
   }

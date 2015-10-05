@@ -30,7 +30,6 @@ export default class ChannelComposer extends Component {
   render() {
     return (
       <textarea
-        className="channel-composer"
         name="channel"
         autoFocus="true"
         placeholder="Add a new channel"

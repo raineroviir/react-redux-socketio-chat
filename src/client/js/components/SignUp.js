@@ -1,15 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/Actions';
+import { Input, Button } from 'react-bootstrap';
 
 @connect(state => ({
-  welcomePage: state.welcomePage
+  welcomePage: state.welcomePage,
+  userValidation: state.userValidation.data
 }))
 
 export default class SignUp extends Component {
 
   static propTypes = {
     welcomePage: PropTypes.string.isRequired,
+    userValidation: PropTypes.array.isrequired,
     dispatch: PropTypes.func.isRequired
   }
 
@@ -26,11 +29,16 @@ export default class SignUp extends Component {
     };
   }
 
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(Actions.loadUserList());
+  }
+
   componentDidMount() {
     if (this.state.username.length) {
-      this.refs.passwordInput.focus();
+      this.refs.passwordInput.getInputDOMNode().focus();
     } else {
-      this.refs.usernameInput.focus();
+      this.refs.usernameInput.getInputDOMNode().focus();
     }
   }
 
@@ -38,16 +46,17 @@ export default class SignUp extends Component {
     event.preventDefault();
     const { dispatch } = this.props;
 
+
     if (!this.state.username.length) {
-      this.refs.usernameInput.focus();
+      this.refs.usernameInput.getInputDOMNode().focus();
     }
 
     if (this.state.username.length && !this.state.password.length) {
-      this.refs.passwordInput.focus();
+      this.refs.passwordInput.getInputDOMNode().focus();
     }
 
     if (this.state.username.length && this.state.password.length && !this.state.confirmPassword.length) {
-      this.refs.confirmPasswordInput.focus();
+      this.refs.confirmPasswordInput.getInputDOMNode().focus();
     }
 
     if (this.state.username.length && this.state.password.length && this.state.confirmPassword.length) {
@@ -62,7 +71,11 @@ export default class SignUp extends Component {
         channel: 'Lobby'
       };
 
-      dispatch(Actions.signUp(userpass)).then(() => {
+      dispatch(Actions.signUp(userpass))
+      .then(() => {
+        this.context.router.transitionTo('/chat');
+      })
+      .then(() => {
         dispatch(Actions.loadInitialMessages());
       })
       .then(() => {
@@ -70,9 +83,6 @@ export default class SignUp extends Component {
       })
       .then(() => {
         dispatch(Actions.loadUsersOnline());
-      })
-      .then(() => {
-        this.context.router.transitionTo('/chat');
       })
       .then(() => {
         dispatch(Actions.userIsOnline(payload));
@@ -94,45 +104,82 @@ export default class SignUp extends Component {
     }
   }
 
-  render() {
-    const labelStyle = {color: 'black'};
-    const buttonStyle = {background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'};
-    const signUpStyle = {justifyContent: 'center', display: 'flex'};
-    return (
-      <div className="wrapper">
+  validateUsername() {
+    const { userValidation } = this.props;
+    if (userValidation.filter(user => {
+      return user.username === this.state.username.trim();
+    }).length > 0) {
+      return 'error';
+    } else {
+      return 'success';
+    }
+  }
 
-        <header style={{display: 'flex', justifyContent: 'center'}} className="header">
+  validateConfirmPassword() {
+    if (this.state.confirmPassword.length > 0 && this.state.password.length > 0) {
+      if (this.state.password === this.state.confirmPassword) {
+        return 'success';
+      } else {
+        return 'error';
+      }
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <header style={{display: 'flex', justifyContent: 'center', background: '#000000', color: '#FFFFFF', flexGrow: '0', order: '0'}}>
         Sign Up
         </header>
-
-        <main style={{display: 'flex', justifyContent: 'center'}} className="sign-up-page">
-          <form onSubmit={::this.handleSubmit} onChange={::this.handleChange}>
-            <section>
-              <label style={labelStyle}>Username</label>
-              <div>
-                <input ref="usernameInput" type="text" name="username" value={this.state.username} placeholder="Enter username" onChange={::this.handleChange} />
-              </div>
+        <main style={{display: 'flex', justifyContent: 'center'}}>
+          <form onSubmit={::this.handleSubmit} >
+            <section style={{height: '6em'}}>
+              <Input
+                label="Username"
+                ref="usernameInput"
+                type="text"
+                help={this.validateUsername() === 'error' && 'A user with that name already exists!'}
+                bsStyle={this.validateUsername()}
+                hasFeedback
+                name="username"
+                autoFocus="true"
+                placeholder="Enter username"
+                value={this.state.username}
+                onChange={::this.handleChange}
+              />
             </section>
-            <section>
-              <label style={labelStyle}>Password</label>
-              <div>
-                <input ref="passwordInput" type="password" name="password" value={this.state.password} placeholder="Enter password" onChange={::this.handleChange} />
-              </div>
+            <section style={{height: '6em'}}>
+              <Input
+                label="Password"
+                ref="passwordInput"
+                type="password"
+                name="password"
+                value={this.state.password}
+                placeholder="Enter password"
+                onChange={::this.handleChange}
+              />
             </section>
-            <section>
-              <label style={labelStyle}>Confirm Password</label>
-              <div>
-                <input ref="confirmPasswordInput" type="password" name="confirm-password" placeholder="Enter password again" value={this.state.confirmPassword} onChange={::this.handleChange} />
-              </div>
+            <section style={{height: '6em'}}>
+              <Input
+                label="Confirm Password"
+                ref="confirmPasswordInput"
+                help={this.validateConfirmPassword() === 'error' && 'Your password doesn\'t match'}
+                type="password"
+                name="confirm-password"
+                placeholder="Enter password again" value={this.state.confirmPassword}
+                onChange={::this.handleChange}
+              />
             </section>
-            <section style={signUpStyle}>
-              <button style={buttonStyle} onClick={::this.handleSubmit} type="submit"><p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign Up</p></button>
-            </section>
+            <Button
+              disabled={this.validateUsername() === 'error' || this.validateConfirmPassword() === 'error' && true}
+              bsStyle="success"
+              style={{width: '100%', height: '4rem', marginTop: '2rem'}}
+              onClick={::this.handleSubmit}
+              type="submit">
+              <p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign Up</p>
+            </Button>
           </form>
         </main>
-
-        <aside className="aside aside-1"></aside>
-        <aside className="aside aside-2"></aside>
       </div>
     );
   }

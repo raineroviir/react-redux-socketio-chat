@@ -29,6 +29,13 @@ export function addChannel(channel) {
   };
 }
 
+export function validateUsername(username) {
+  return {
+    types: [types.START_USERNAME_VALIDATION, types.USERNAME_VALIDATION_SUCCESS, types.USERNAME_VALIDATION_FAIL],
+    promise: UserAPIUtils.validateUsername(username)
+  };
+}
+
 export function userIsOnline(user) {
   return {
     types: [types.ADD_USER_TO_CHANNEL, types.ADD_USER_TO_CHANNEL_SUCCESS, types.ADD_USER_TO_CHANNEL_FAIL],
@@ -146,5 +153,12 @@ export function loadUsersOnline() {
   return {
     types: [types.LOAD_USERSONLINE, types.LOAD_USERSONLINE_SUCCESS, types.LOAD_USERSONLINE_FAIL],
     promise: UserAPIUtils.loadUsersOnline()
+  };
+}
+
+export function loadUserList() {
+  return {
+    types: [types.LOAD_USERVALIDATION, types.LOAD_USERVALIDATION_SUCCESS, types.LOAD_USERVALIDATION_FAIL],
+    promise: UserAPIUtils.loadUserList()
   };
 }

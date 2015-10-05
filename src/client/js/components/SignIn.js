@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import * as Actions from '../actions/Actions';
 import { connect } from 'react-redux';
+import { Button, Input } from 'react-bootstrap';
 
 @connect()
 export default class SignIn extends Component {
@@ -22,7 +23,7 @@ export default class SignIn extends Component {
   }
 
   componentDidMount() {
-    this.refs.usernameInput.focus();
+    this.refs.usernameInput.getInputDOMNode().focus();
   }
 
   handleChange(event) {
@@ -38,11 +39,11 @@ export default class SignIn extends Component {
     event.preventDefault();
     const { dispatch } = this.props;
     if (this.state.username.length < 1) {
-      this.refs.usernameInput.focus();
+      this.refs.usernameInput.getInputDOMNode().focus();
     }
 
     if (this.state.username.length > 0 && this.state.password.length < 1) {
-      this.refs.passwordInput.focus();
+      this.refs.passwordInput.getInputDOMNode().focus();
     }
 
     if (this.state.username.length > 0 && this.state.password.length > 0) {
@@ -55,7 +56,12 @@ export default class SignIn extends Component {
         username: this.state.username,
         id: Date.now()
       };
-      dispatch(Actions.signIn(userpass)).then(() => {
+      // Event chain that progresses the user towards sign-in.  Since I'm using a promise middleware all of these actions are resolved through promises.  Currently I'm actually unsure if this is the right way to go about chaining together promises and the right use case for them here.
+      dispatch(Actions.signIn(userpass))
+      .then(() => {
+        this.context.router.transitionTo('/chat');
+      })
+      .then(() => {
         dispatch(Actions.loadInitialMessages());
       })
       .then(() => {
@@ -63,9 +69,6 @@ export default class SignIn extends Component {
       })
       .then(() => {
         dispatch(Actions.loadUsersOnline());
-      })
-      .then(() => {
-        this.context.router.transitionTo('/chat');
       })
       .then(() => {
         dispatch(Actions.userIsOnline(payload));
@@ -76,35 +79,39 @@ export default class SignIn extends Component {
   }
 
   render() {
-    const labelStyle = {color: 'black'};
-    const buttonStyle = {background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'};
-    const signInStyle = {justifyContent: 'center', display: 'flex'};
     return (
-      <div className="wrapper">
-        <header style={{display: 'flex', justifyContent: 'center'}} className="header">
+      <div>
+        <header style={{display: 'flex', justifyContent: 'center', background: '#000000', color: '#FFFFFF', flexGrow: '0', order: '0'}}>
           Sign In to Chat
         </header>
-        <main style={{display: 'flex', justifyContent: 'center'}} className="sign-in">
+        <main style={{display: 'flex', justifyContent: 'center'}}>
           <form onSubmit={::this.handleSubmit}>
-            <section>
-              <label style={labelStyle}>Username</label>
-                <div>
-                  <input ref="usernameInput" type="text" name="username" placeholder="Enter username" value={this.state.username} onChange={::this.handleChange}/>
-                </div>
-            </section>
-            <section>
-              <label style={labelStyle}>Password</label>
-                <div>
-                  <input ref="passwordInput" type="password" name="password" placeholder="Enter password" value={this.state.password} onChange={::this.handleChange}/>
-                </div>
-            </section>
-            <section style={signInStyle}>
-              <button style={buttonStyle} name="submitButton" type="submit" ><p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign In</p></button>
-            </section>
+            <Input
+              label="Username"
+              ref="usernameInput"
+              type="text"
+              name="username"
+              placeholder="Enter username"
+              value={this.state.username}
+              onChange={::this.handleChange}
+            />
+            <Input
+              label="Password"
+              ref="passwordInput"
+              type="password"
+              name="password"
+              placeholder="Enter password"
+              value={this.state.password}
+              onChange={::this.handleChange}
+            />
+            <Button
+              bsStyle="success"
+              style={{width: '100%', height: '4rem', marginTop: '2rem'}} name="submitButton"
+              type="submit" >
+                <p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign In</p>
+            </Button>
           </form>
         </main>
-        <aside className="aside aside-1"></aside>
-        <aside className="aside aside-2"></aside>
       </div>
     );
   }

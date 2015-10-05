@@ -20,7 +20,7 @@ export default class UserListItem extends Component {
     // );
 
     return (
-        <li className="user-list-item">
+        <li>
           <h5>{user}</h5>
         </li>
     );

@@ -52,6 +52,33 @@ module.exports = function loadUserRoutes(router, passport) {
     // }
   })
 
+  // Secret API for pulling all usernames:
+  router.get('/allusers', function(req, res) {
+    User.find({},{username: 1, _id:0}, function(err, data) {
+      if(err) {
+        console.log(err);
+        return res.status(500).json({msg: 'internal server error'});
+      }
+      res.json(data);
+    });
+  })
+
+  // Check if username in DB
+  router.post('/validate_username', function(req, res) {
+    User.find({username: req.body.username}, function(err, data) {
+      if (err) {
+        console.log(err)
+        return res.status(500).json({msg: 'error validating username'})
+      }
+      console.log(data);
+      if (data.length > 0) {
+        res.json({valid: false})
+      } else {
+        res.json({valid: true})
+      }
+    }).limit(1)
+  })
+
   // Create new user
   router.post('/sign_up', function(req, res) {
     // return if confirm password isn't the same as password

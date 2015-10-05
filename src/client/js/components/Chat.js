@@ -8,7 +8,6 @@ import TypingListItem from './TypingListItem';
 import UserListItem from './UserListItem';
 const socket = io();
 import * as UserAPIUtils from '../utils/UserAPIUtils';
-import classNames from 'classnames';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 // @ is an ES 7 decorator and connect passes the state into the App component
@@ -124,34 +123,35 @@ export default class Chat extends Component {
 
     const onlineUsers = userList;
     const dropDownMenu = (
-      <div style={{'width': '21rem', 'top': '0'}} className="drop-down-menu">
+      <div style={{'width': '21rem', 'top': '0', alignSelf: 'baseline', padding: '0', margin: '0', order: '1'}}>
         <DropdownButton key={4} style={{'border': 'none', 'width': '21rem'}} id="user-menu"  bsSize="large" bsStyle="primary" title={user}>
           <MenuItem style={{'width': '21rem'}} eventKey="4" onSelect={::this.handleSignOut}>Sign out</MenuItem>
         </DropdownButton>
       </div>
     );
 
+    const typinglistStyle = {fontSize: '0.8em', position: 'fixed', bottom: '0.5em', left: '21.5rem', color: '#8B8B8B'};
     return (
-      <div className="container">
+      <div style={{  margin: '0', padding: '0', height: '100%', width: '100%', display: '-webkit-box'}}>
         <div className="nav">
           {dropDownMenu}
-          <section className="channel-section">
+          <section style={{paddingLeft: '0.8em', paddingTop: '1.6em', paddingRight: '0.8em', order: '2'}}>
             <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
           </section>
-          <section className="user-section">
+          <section style={{paddingLeft: '0.8em', paddingTop: '1.6em', paddingRight: '0.8em', order: '3'}}>
             <strong>Users Online</strong>
-            <ul className="user-list">
+            <ul style={{height: 'auto', overflowY: 'auto', width: '100%', listStyle: 'none'}}>
               {onlineUsers && onlineUsers.map(onlineUser =>
                 <UserListItem user={onlineUser.username} key={onlineUser.id}/>
               )}
             </ul>
           </section>
         </div>
-        <div className={classNames('main')}>
-          <header className="header">
+        <div className="main">
+          <header style={{background: '#000000', color: '#FFFFFF', flexGrow: '0', order: '0'}}>
             {activeChannel.name}
           </header>
-          <ul className="message-list" ref="messageList">
+          <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', width: '100%', flexGrow: '1', order: '1'}} ref="messageList">
             {filteredMessages.map(message =>
               <MessageListItem message={message} key={message.id} user={user} actions={actions} />
             )}
@@ -160,13 +160,13 @@ export default class Chat extends Component {
         </div>
         <footer style={{background: 'pink'}} >
           {typers.length === 1 &&
-          <span className="typing-list">
+          <span style={typinglistStyle}>
             <TypingListItem username={typers[0]} key={1}/>
             <span> is typing</span>
           </span>}
 
           {typers.length === 2 &&
-          <span className="typing-list">
+          <span style={typinglistStyle}>
             <TypingListItem username={typers[0]} key={2}/>
             <span> and </span>
             <TypingListItem username={typers[1]} key={3}/>
@@ -174,7 +174,7 @@ export default class Chat extends Component {
           </span>}
 
           {typers.length > 2 &&
-          <span className="typing-list">Several people are typing
+          <span style={typinglistStyle}>Several people are typing
           </span>}
         </footer>
       </div>

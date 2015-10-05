@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import * as Actions from '../actions/Actions';
 import { connect } from 'react-redux';
+import { Input, Button } from 'react-bootstrap';
 
 // the empty connect is to pass in the dispatch function
 @connect()
@@ -36,42 +37,43 @@ export default class WelcomePage extends Component {
   }
 
   render() {
-    const welcomePageStyle = {height: '20rem', display: 'flex', justifyContent: 'center'};
     return (
-      <div className="welcome-page-wrapper">
-        <header style={{display: 'flex', justifyContent: 'center'}} className="header">
-          <div className="title">React-Redux-Socket.io-Chat</div>
+      <div>
+        <header style={{display: 'flex', justifyContent: 'center', background: '#000000', color: '#FFFFFF', flexGrow: '0', order: '0'}}>
+        React-Redux-Socket.io-Chat
         </header>
-
-        <form style={welcomePageStyle}>
-
-        <aside className="aside aside-1"></aside>
-
-        <div className="sign-up-textfield">
-          <input style={{height: '4.5rem', fontSize: '1.25em'}} ref="usernameInput" type="text" name="username"
-          value={this.state.username} placeholder="Enter username" onChange={::this.handleChange}/>
-        </div>
-
-        <Link className="sign-up" to="/signup">
-          <button className="sign-up-button" type="submit" onClick={::this.handleSubmit}>
-            <p style={{margin: '0', padding: '0', fontSize: '1.5em'}} >Sign Up</p>
-          </button>
-        </Link>
-
-
-        <aside  className="aside aside-2"></aside>
-
-        </form>
-
-        <section className="sign-in">
-          <div>Already Signed Up?</div>
+        <main style={{display: 'flex', justifyContent: 'center'}}>
+          <form style={{height: '20rem', display: 'flex', justifyContent: 'center'}}>
+            <div style={{margin: 'auto', paddingRight: '0.2em', height: '3.5em'}}>
+              <Input
+                style={{height: '2.7em', fontSize: '1.3em'}}
+                ref="usernameInput"
+                type="text"
+                name="username"
+                value={this.state.username}
+                placeholder="Enter username"
+                onChange={::this.handleChange}
+              />
+            </div>
+            <Link style={{margin: 'auto', width: '12em', height: '3.5em'}} to="/signup">
+              <Button
+                bsStyle="success"
+                style={{margin: 'auto', width: '12em', height: '3.5em'}}
+                type="submit"
+                onClick={::this.handleSubmit}>
+                  <p style={{margin: '0', padding: '0', fontSize: '1.5em'}}>Sign Up</p>
+              </Button>
+            </Link>
+          </form>
+        </main>
+        <section style={{display: 'flex', justifyContent: 'center'}}>
+          <div style={{marginTop: '0.2em', marginRight: '0.2em', fontSize: '1.1em'}} >
+            Already Signed Up?
+          </div>
           <Link to="/signin">
-            <button className="sign-in-button">Sign in</button>
+            <Button bsStyle="default" >Sign in</Button>
           </Link>
         </section>
-
-        <footer className="footer">
-        </footer>
       </div>
     );
   }
