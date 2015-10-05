@@ -33,7 +33,7 @@ export function validateUsername(username) {
   return {
     types: [types.START_USERNAME_VALIDATION, types.USERNAME_VALIDATION_SUCCESS, types.USERNAME_VALIDATION_FAIL],
     promise: UserAPIUtils.validateUsername(username)
-  }
+  };
 }
 
 export function userIsOnline(user) {
@@ -160,5 +160,5 @@ export function loadUserList() {
   return {
     types: [types.LOAD_USERVALIDATION, types.LOAD_USERVALIDATION_SUCCESS, types.LOAD_USERVALIDATION_FAIL],
     promise: UserAPIUtils.loadUserList()
-  }
+  };
 }

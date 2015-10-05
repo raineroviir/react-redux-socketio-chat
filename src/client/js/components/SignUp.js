@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/Actions';
-import * as UserAPIUtils from '../utils/UserAPIUtils';
 import { Input, Button } from 'react-bootstrap';
 
 @connect(state => ({
@@ -72,50 +71,22 @@ export default class SignUp extends Component {
         channel: 'Lobby'
       };
 
-      // UserAPIUtils.validateUsername(payload)
-      // .then(() => {
-      //   // fulfilled
-      //   dispatch(Actions.signUp(userpass))
-      // },
-      //   // rejected
-      //   // TODO: SHOULD throw when passwords don't match
-      //   (val) => {
-      //     console.log(val);
-      //   }
-      // );
-
-
-
-      // console.log(dispatch(Actions.validateUsername(payload)));
-      // .then(() => {
-      //   return dispatch(Actions.signUp(userpass))
-      // });
-
-      // .then(() => {
-        //
-        // dispatch(Actions.validateUsername(userpass)).catch((...rest) => {
-        //   console.log(...rest);
-        // });
-      // dispatch(Actions.validateUsername(userpass)).then((userpass) => {
-      //   console.log(userpass);
-      //   dispatch(Actions.signUp(userpass))
-      // })
-      // })
-      // .then(() => {
-      //   dispatch(Actions.loadInitialMessages());
-      // })
-      // .then(() => {
-      //   dispatch(Actions.loadInitialChannels());
-      // })
-      // .then(() => {
-      //   dispatch(Actions.loadUsersOnline());
-      // })
-      // .then(() => {
-      //   this.context.router.transitionTo('/chat');
-      // })
-      // .then(() => {
-      //   dispatch(Actions.userIsOnline(payload));
-      // });
+      dispatch(Actions.signUp(userpass))
+      .then(() => {
+        this.context.router.transitionTo('/chat');
+      })
+      .then(() => {
+        dispatch(Actions.loadInitialMessages());
+      })
+      .then(() => {
+        dispatch(Actions.loadInitialChannels());
+      })
+      .then(() => {
+        dispatch(Actions.loadUsersOnline());
+      })
+      .then(() => {
+        dispatch(Actions.userIsOnline(payload));
+      });
 
       this.setState({ username: '', password: '', confirmPassword: ''});
     }
@@ -135,30 +106,26 @@ export default class SignUp extends Component {
 
   validateUsername() {
     const { userValidation } = this.props;
-    // if(this.state.username.length === 0) {
-    //   return 'error'
-    // }
-    if(userValidation.filter(user => {
+    if (userValidation.filter(user => {
       return user.username === this.state.username.trim();
     }).length > 0) {
       return 'error';
     } else {
-      return 'success'
+      return 'success';
     }
   }
 
   validateConfirmPassword() {
-    if(this.state.confirmPassword.length > 0 && this.state.password.length > 0) {
-      if(this.state.password === this.state.confirmPassword) {
-        return 'success'
+    if (this.state.confirmPassword.length > 0 && this.state.password.length > 0) {
+      if (this.state.password === this.state.confirmPassword) {
+        return 'success';
       } else {
-        return 'error'
+        return 'error';
       }
     }
   }
 
   render() {
-    const labelStyle = {color: 'black'};
     return (
       <div>
         <header style={{display: 'flex', justifyContent: 'center', background: '#000000', color: '#FFFFFF', flexGrow: '0', order: '0'}}>
@@ -204,8 +171,8 @@ export default class SignUp extends Component {
               />
             </section>
             <Button
-              disabled={this.validateUsername() === 'error' || this.validateConfirmPassword() ==='error' && true}
-              bsStyle='success'
+              disabled={this.validateUsername() === 'error' || this.validateConfirmPassword() === 'error' && true}
+              bsStyle="success"
               style={{width: '100%', height: '4rem', marginTop: '2rem'}}
               onClick={::this.handleSubmit}
               type="submit">
@@ -217,29 +184,3 @@ export default class SignUp extends Component {
     );
   }
 }
-
-// Old Signup section
-// <section>
-//   <label style={labelStyle}>Username</label>
-//   <div>
-//     <input ref="usernameInput" type="text" name="username" value={this.state.username} placeholder="Enter username" onChange={::this.handleChange} />
-//   </div>
-// </section>
-
-// <section>
-//   <label style={labelStyle}>Password</label>
-//   <div>
-//     <input ref="passwordInput" type="password" name="password" value={this.state.password} placeholder="Enter password" onChange={::this.handleChange} />
-//   </div>
-// </section>
-
-// <section>
-//   <label style={labelStyle}>Confirm Password</label>
-//   <div>
-//     <input ref="confirmPasswordInput" type="password" name="confirm-password" placeholder="Enter password again" value={this.state.confirmPassword} onChange={::this.handleChange} />
-//   </div>
-// </section>
-
-// <section style={{justifyContent: 'center', display: 'flex'}}>
-//   <button style={{background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'}} onClick={::this.handleSubmit} type="submit"><p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign Up</p></button>
-// </section>

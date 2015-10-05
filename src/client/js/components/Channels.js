@@ -47,7 +47,7 @@ export default class Channels extends Component {
       this.refs.channelName.getInputDOMNode().focus();
     }
     if (this.state.channelName.length > 0 && channels.filter(channel => {
-      return channel.name === this.state.channelName.trim()
+      return channel.name === this.state.channelName.trim();
     }).length < 1) {
       const newChannel = {
         name: this.state.channelName.trim(),
@@ -63,28 +63,28 @@ export default class Channels extends Component {
 
   validateChannelName() {
     const { channels } = this.props;
-    if(channels.filter(channel => {
+    if (channels.filter(channel => {
       return channel.name === this.state.channelName.trim();
     }).length > 0) {
       return 'error';
     } else {
-      return 'success'
+      return 'success';
     }
   }
 
   openMoreChannelsModal() {
-    event.preventDefault()
+    event.preventDefault();
     this.setState({moreChannelsModal: true});
   }
 
   closeMoreChannelsModal() {
-    event.preventDefault()
+    event.preventDefault();
     this.setState({moreChannelsModal: false});
   }
 
   render() {
     const { channels, actions } = this.props;
-    const filteredChannels = channels.slice(0,8);
+    const filteredChannels = channels.slice(0, 8);
     const moreChannelsBoolean = channels.length > 8;
     const restOfTheChannels = channels.slice(8);
     const glyphStyle = {'background': 'Transparent', 'backgroundRepeat': 'noRepeat', 'border': 'none', 'cursor': 'pointer', 'overflow': 'hidden', 'outline': 'none'};
@@ -139,7 +139,7 @@ export default class Channels extends Component {
           </Modal.Footer>
         </Modal>
       </div>
-    )
+    );
 
     return (
       <section>

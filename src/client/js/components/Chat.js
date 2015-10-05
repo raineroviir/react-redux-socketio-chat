@@ -130,7 +130,7 @@ export default class Chat extends Component {
       </div>
     );
 
-    const typinglistStyle = {fontSize: '0.8em', position: 'fixed', bottom: '0.5em', left: '21.5rem', color: '#8B8B8B'}
+    const typinglistStyle = {fontSize: '0.8em', position: 'fixed', bottom: '0.5em', left: '21.5rem', color: '#8B8B8B'};
     return (
       <div style={{  margin: '0', padding: '0', height: '100%', width: '100%', display: '-webkit-box'}}>
         <div className="nav">
@@ -147,7 +147,7 @@ export default class Chat extends Component {
             </ul>
           </section>
         </div>
-        <div className='main'>
+        <div className="main">
           <header style={{background: '#000000', color: '#FFFFFF', flexGrow: '0', order: '0'}}>
             {activeChannel.name}
           </header>

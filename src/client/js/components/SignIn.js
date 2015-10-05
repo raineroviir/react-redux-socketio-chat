@@ -39,7 +39,6 @@ export default class SignIn extends Component {
     event.preventDefault();
     const { dispatch } = this.props;
     if (this.state.username.length < 1) {
-      console.log(this.refs);
       this.refs.usernameInput.getInputDOMNode().focus();
     }
 
@@ -58,7 +57,11 @@ export default class SignIn extends Component {
         id: Date.now()
       };
       // Event chain that progresses the user towards sign-in.  Since I'm using a promise middleware all of these actions are resolved through promises.  Currently I'm actually unsure if this is the right way to go about chaining together promises and the right use case for them here.
-      dispatch(Actions.signIn(userpass)).then(() => {
+      dispatch(Actions.signIn(userpass))
+      .then(() => {
+        this.context.router.transitionTo('/chat');
+      })
+      .then(() => {
         dispatch(Actions.loadInitialMessages());
       })
       .then(() => {
@@ -68,17 +71,14 @@ export default class SignIn extends Component {
         dispatch(Actions.loadUsersOnline());
       })
       .then(() => {
-        this.context.router.transitionTo('/chat');
-      })
-      .then(() => {
         dispatch(Actions.userIsOnline(payload));
       });
+
       this.setState({ username: '', password: ''});
     }
   }
 
   render() {
-    const labelStyle = {color: 'black'};
     return (
       <div>
         <header style={{display: 'flex', justifyContent: 'center', background: '#000000', color: '#FFFFFF', flexGrow: '0', order: '0'}}>
@@ -105,7 +105,7 @@ export default class SignIn extends Component {
               onChange={::this.handleChange}
             />
             <Button
-              bsStyle='success'
+              bsStyle="success"
               style={{width: '100%', height: '4rem', marginTop: '2rem'}} name="submitButton"
               type="submit" >
                 <p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign In</p>
@@ -116,22 +116,3 @@ export default class SignIn extends Component {
     );
   }
 }
-
-// OLD Sign in section
-// <section>
-//   <label style={labelStyle}>Username</label>
-//     <div>
-//       <input ref="usernameInput" type="text" name="username" placeholder="Enter username" value={this.state.username} onChange={::this.handleChange}/>
-//     </div>
-// </section>
-// <section>
-//   <label style={labelStyle}>Password</label>
-//     <div>
-//       <input ref="passwordInput" type="password" name="password" placeholder="Enter password" value={this.state.password} onChange={::this.handleChange}/>
-//     </div>
-// </section>
-// <section style={{justifyContent: 'center', display: 'flex'}}>
-// <button style={{background: '#23a608', width: '100%', height: '4rem', marginTop: '2rem'}} name="submitButton" type="submit" >
-//   <p style={{color: 'white', margin: '0', padding: '0', fontSize: '1.5em'}} >Sign In</p>
-// </button>
-// </section>

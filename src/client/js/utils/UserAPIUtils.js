@@ -42,8 +42,7 @@ export function signUp(user) {
     .send(user)
     .end((err, res) => {
       if (err) {
-        // return Promise.reject(res.body || err);
-        return err;
+        reject(err);
       } else {
         resolve(res.body.username);
         Cookies.set('eat', res.body.eat);
@@ -62,15 +61,14 @@ export function validateUsername(username) {
         return err;
       } else {
         var result = res.body.valid;
-        console.log(result);
         if (result) {
-          resolve(result)
+          resolve(result);
         } else {
-          reject(result)
+          reject(result);
         }
       }
-    })
-  })
+    });
+  });
 }
 
 export function loadUserList() {
@@ -84,8 +82,8 @@ export function loadUserList() {
         const rawUsers = res.body;
         resolve(rawUsers);
       }
-    })
-  })
+    });
+  });
 }
 
 export function signIn(user) {
@@ -95,7 +93,7 @@ export function signIn(user) {
     .auth(user.username, user.password)
     .end((err, res) => {
       if (err) {
-        return Promise.reject(res.body || err);
+        reject(err);
       } else {
         const serverResponse = {
           name: res.body.username

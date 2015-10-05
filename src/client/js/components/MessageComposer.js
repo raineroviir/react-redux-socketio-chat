@@ -68,7 +68,7 @@ export default class MessageComposer extends Component {
       width: '100%',
       flexShrink: '0',
       order: '2'
-    }
+    };
     return (
       <textarea
         style={messageComposerStyle}

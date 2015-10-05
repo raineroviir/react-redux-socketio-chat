@@ -5,8 +5,6 @@ export default function promiseMiddleware() {
     if (!promise) {
       return next(action);
     }
-    console.log(promise);
-    console.log(action);
     const [REQUEST, SUCCESS, FAILURE] = types;
     next({ ...rest, type: REQUEST });
     return promise.then(

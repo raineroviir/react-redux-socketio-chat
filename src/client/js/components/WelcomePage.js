@@ -57,7 +57,7 @@ export default class WelcomePage extends Component {
             </div>
             <Link style={{margin: 'auto', width: '12em', height: '3.5em'}} to="/signup">
               <Button
-                bsStyle='success'
+                bsStyle="success"
                 style={{margin: 'auto', width: '12em', height: '3.5em'}}
                 type="submit"
                 onClick={::this.handleSubmit}>
@@ -71,24 +71,10 @@ export default class WelcomePage extends Component {
             Already Signed Up?
           </div>
           <Link to="/signin">
-            <Button bsStyle='default' >Sign in</Button>
+            <Button bsStyle="default" >Sign in</Button>
           </Link>
         </section>
       </div>
     );
   }
 }
-
-// old welcome page
-// <div style={{margin: 'auto'}}>
-//   <input style={{height: '4.5rem', fontSize: '1.25em'}}
-//   ref="usernameInput"
-//   type="text"
-//   name="username"
-//   value={this.state.username}
-//   placeholder="Enter username"
-//   onChange={::this.handleChange}/>
-// </div>
-// <button style={{background: '#23a608', color: 'white', margin: 'auto', width: '12em', height: '3.5em'}} type="submit" onClick={::this.handleSubmit}>
-//   <p style={{margin: '0', padding: '0', fontSize: '1.5em'}}>Sign Up</p>
-// </button>
