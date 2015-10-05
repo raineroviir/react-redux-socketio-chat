@@ -32,10 +32,11 @@ mongod --dbpath=./db --smallfiles
 
 then to open the database open a new terminal and type in `mongo` and type in `use chat_dev` 
 
-## Helpful Resources
+## Helpful Resources and Projects that I draw inspiration from
 
-https://github.com/erikras/react-redux-universal-hot-example
-
+Erikras' universal redux example: https://github.com/erikras/react-redux-universal-hot-example
+The official redux chat example: https://github.com/facebook/flux/tree/master/examples/flux-chat
+The awesome community on [(http://reactiflux.slack.com)]
 
 ## Todos
 * Make the app persist on browser refresh
