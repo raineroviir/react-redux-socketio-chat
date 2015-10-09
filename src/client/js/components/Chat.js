@@ -22,7 +22,8 @@ export default class Chat extends Component {
     channels: PropTypes.array.isRequired,
     activeChannel: PropTypes.object.isRequired,
     typers: PropTypes.array.isRequired,
-    onlineUsers: PropTypes.array.isRequired
+    onlineUsers: PropTypes.array.isRequired,
+    checkAuth: PropTypes.object.isRequired
   }
 
   static contextTypes = {
@@ -38,9 +39,24 @@ export default class Chat extends Component {
   // componentWillMount is a lifecycle method called right before initial render
   componentWillMount() {
     const { user } = this.props;
-    console.log(user);
     socket.emit('user online', user);
   }
+  //
+  // fetchData(checkAuth) {
+  //   const { dispatch } = this.props;
+  //   if(checkAuth.auth.loaded === 'false') {
+  //     dispatch(Actions.load())
+  //     .then(() => {
+  //       dispatch(Actions.loadInitialMessages());
+  //     })
+  //     .then(() => {
+  //       dispatch(Actions.loadInitialChannels());
+  //     })
+  //     .then(() => {
+  //       dispatch(Actions.loadUsersOnline());
+  //     })
+  //   }
+  // }
 
   // componentDidMount is a lifecycle method that is called once right after initial render
   componentDidMount() {
@@ -63,7 +79,6 @@ export default class Chat extends Component {
 
     // this socket event listens to other users joining the channel and appends them to the channel users array
     socket.on('user online', username => {
-      console.log(username);
       const userObj = {
         username: username,
         id: Date.now()
@@ -91,19 +106,10 @@ export default class Chat extends Component {
     );
 
     socket.on('disconnect bc', username => {
-      console.log('user disconnected from componentWillUnMount');
       actions.userIsOffline(username);
       UserAPIUtils.userIsOffline(username);
     });
   }
-
-  // componentWillUnMount() {
-  //   const { actions } = this.props;
-  //   socket.on('user disconnected', username => {
-  //     console.log('user disconnected from componentWillUnMount');
-  //     actions.userIsOffline(username);
-  //   })
-  // }
 
   // componentDidUpdate is a lifecycle method called when the component gets updated, not called on initial render
   componentDidUpdate() {
@@ -113,7 +119,6 @@ export default class Chat extends Component {
 
   componentWillUnMount() {
     const { user } = this.props;
-    console.log(user);
     socket.emit('disconnect', user);
   }
 
@@ -139,7 +144,6 @@ export default class Chat extends Component {
 
   changeActiveChannel(channel) {
     const { actions } = this.props;
-    console.log(MessageComposer);
     actions.changeChannel(channel);
   }
 
@@ -154,7 +158,7 @@ export default class Chat extends Component {
   }
 
   render() {
-    const { messages, channels, actions, activeChannel, user, typers, onlineUsers} = this.props;
+    const { messages, channels, actions, activeChannel, user, typers, onlineUsers, checkAuth} = this.props;
     const filteredMessages = messages.filter(message => message.channelID === activeChannel.name);
 
     const filteredUsers = onlineUsers.slice(0, 8);
@@ -163,7 +167,7 @@ export default class Chat extends Component {
 
     const dropDownMenu = (
       <div style={{'width': '21rem', 'top': '0', alignSelf: 'baseline', padding: '0', margin: '0', order: '1'}}>
-        <DropdownButton key={4} style={{'width': '21rem'}} id="user-menu"  bsSize="large" bsStyle="primary" title={user}>
+        <DropdownButton key={95} style={{'width': '21rem'}} id="user-menu"  bsSize="large" bsStyle="primary" title={user}>
           <MenuItem style={{'width': '21rem'}} eventKey="4" onSelect={::this.handleSignOut}>Sign out</MenuItem>
         </DropdownButton>
       </div>
@@ -171,7 +175,7 @@ export default class Chat extends Component {
 
     const moreUsersModal = (
       <div style={{background: 'grey'}}>
-        <Modal key={2} show={this.state.moreUsersModal} onHide={::this.closeMoreUsersModal}>
+        <Modal key={96} show={this.state.moreUsersModal} onHide={::this.closeMoreUsersModal}>
           <Modal.Header closeButton >
             <Modal.Title>More Users</Modal.Title>
           </Modal.Header>
@@ -193,7 +197,7 @@ export default class Chat extends Component {
       <Jumbotron style={{paddingLeft: '1em', height: '100%'}}>
         <div>
           <h1> There are no messages in this channel :(</h1>
-          <p> Add a message by using the message composer (the white box) at the bottom of your screen and make the channel happy :)
+          <p> Add a message by typing into the white box at the bottom of your screen!
           </p>
         </div>
       </Jumbotron>
@@ -232,23 +236,23 @@ export default class Chat extends Component {
               <MessageListItem message={message} key={message.id} user={user} actions={actions} />
             )}
           </ul>
-          {filteredMessages.length === 0 && noMessagesJumbotron}
+          {(filteredMessages.length === 0 && checkAuth.loaded === true) && noMessagesJumbotron}
           <MessageComposer activeChannel={activeChannel} user={user} onSave={::this.handleSave} />
         </div>
         <footer style={{fontSize: '0.9em', position: 'fixed', bottom: '0.2em', left: '21.5rem', color: '#000000', width: '100%', opacity: '0.5'}}>
           {typers.length === 1 &&
           <div>
               <span>
-                <TypingListItem username={typers[0]} key={1}/>
+                <TypingListItem username={typers[0]} key={97}/>
                 <span> is typing</span>
               </span>
             </div>}
           {typers.length === 2 &&
           <div>
             <span>
-              <TypingListItem username={typers[0]} key={2}/>
+              <TypingListItem username={typers[0]} key={98}/>
               <span> and </span>
-              <TypingListItem username={typers[1]} key={3}/>
+              <TypingListItem username={typers[1]} key={99}/>
               <span> are typing</span>
             </span>
           </div>}

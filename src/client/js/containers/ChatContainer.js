@@ -12,7 +12,8 @@ import { connect } from 'react-redux';
   activeChannel: state.activeChannel,
   user: state.auth.user,
   typers: state.typers,
-  onlineUsers: state.onlineUsers.data
+  onlineUsers: state.onlineUsers.data,
+  checkAuth: state.auth
 }))
 export default class ChatContainer extends Component {
 
@@ -23,11 +24,12 @@ export default class ChatContainer extends Component {
     channels: PropTypes.array.isRequired,
     activeChannel: PropTypes.object.isRequired,
     typers: PropTypes.array.isRequired,
-    onlineUsers: PropTypes.array.isRequired
+    onlineUsers: PropTypes.array.isRequired,
+    checkAuth: PropTypes.object.isRequired
   }
 
   render() {
-    const { dispatch, messages, channels, activeChannel, user, typers, onlineUsers } = this.props;
+    const { dispatch, messages, channels, activeChannel, user, typers, onlineUsers, checkAuth } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
     return (
       <Chat actions={actions} {...this.props}/>

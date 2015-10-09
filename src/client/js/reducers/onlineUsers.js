@@ -47,7 +47,7 @@ export default function onlineUsers(state = initialState, action) {
       added: true,
       data: [...state.data, {
         username: action.user.username,
-        id: (state.data.length === 0) ? 0 : state.data[state.data.length - 1].id + 1
+        id: (action.user.id) ? action.user.id : state.data[state.data.length - 1].id + 1
       }]
     };
 
