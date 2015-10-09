@@ -1,6 +1,8 @@
 import * as types from '../constants/ActionTypes';
 import * as UserAPIUtils from '../utils/UserAPIUtils';
 
+// NOTE:Chat actions
+
 export function addMessage(message) {
   return {
     type: types.ADD_MESSAGE,
@@ -29,13 +31,6 @@ export function addChannel(channel) {
   };
 }
 
-export function validateUsername(username) {
-  return {
-    types: [types.START_USERNAME_VALIDATION, types.USERNAME_VALIDATION_SUCCESS, types.USERNAME_VALIDATION_FAIL],
-    promise: UserAPIUtils.validateUsername(username)
-  };
-}
-
 export function userIsOnline(user) {
   return {
     types: [types.ADD_USER_TO_CHANNEL, types.ADD_USER_TO_CHANNEL_SUCCESS, types.ADD_USER_TO_CHANNEL_FAIL],
@@ -51,9 +46,9 @@ export function userIsOffline(user) {
   };
 }
 
-export function socketIOAddUser(user) {
+export function receiveUserOnline(user) {
   return {
-    type: types.SOCKET_IO_ADD,
+    type: types.RECEIVE_USER,
     user
   };
 }
@@ -65,12 +60,19 @@ export function addUserToChannel(user) {
   };
 }
 
-// export function removeUserFromChannel(user) {
-//   return {
-//     type: types.REMOVE_USER_FROM_CHANNEL,
-//     user
-//   }
-// }
+export function typing(username) {
+  return {
+    type: types.TYPING,
+    username
+  };
+}
+
+export function stopTyping(username) {
+  return {
+    type: types.STOP_TYPING,
+    username
+  };
+}
 
 export function changeChannel(channel) {
   return {
@@ -79,13 +81,14 @@ export function changeChannel(channel) {
   };
 }
 
+// NOTE:Auth actions
+
 export function load() {
   return {
     types: [types.AUTH_LOAD, types.AUTH_LOAD_SUCCESS, types.AUTH_LOAD_FAIL],
     promise: UserAPIUtils.loadAuth()
   };
 }
-
 export function signIn(user) {
   return {
     types: [types.AUTH_SIGNIN,
@@ -114,17 +117,12 @@ export function signOut() {
   };
 }
 
-export function typing(username) {
-  return {
-    type: types.TYPING,
-    username
-  };
-}
+// NOTE:Data Fetching actions
 
-export function stopTyping(username) {
+export function validateUsername(username) {
   return {
-    type: types.STOP_TYPING,
-    username
+    types: [types.START_USERNAME_VALIDATION, types.USERNAME_VALIDATION_SUCCESS, types.USERNAME_VALIDATION_FAIL],
+    promise: UserAPIUtils.validateUsername(username)
   };
 }
 

@@ -10,7 +10,8 @@ export default class Channels extends Component {
   static propTypes = {
     channels: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    messages: PropTypes.array.isRequired
   }
 
   constructor(props, context) {
@@ -41,7 +42,7 @@ export default class Channels extends Component {
   }
 
   handleModalSubmit(event) {
-    const { channels } = this.props;
+    const { channels, actions } = this.props;
     event.preventDefault();
     if (this.state.channelName.length < 1) {
       this.refs.channelName.getInputDOMNode().focus();
@@ -54,7 +55,8 @@ export default class Channels extends Component {
         id: Date.now()
       };
       UserAPIUtils.createChannel(newChannel);
-      this.props.actions.addChannel(newChannel);
+      actions.addChannel(newChannel);
+      this.handleChangeChannel(newChannel);
       socket.emit('new channel', newChannel);
       this.setState({channelName: ''});
       this.closeAddChannelModal();
@@ -82,13 +84,21 @@ export default class Channels extends Component {
     this.setState({moreChannelsModal: false});
   }
 
+  createChannelWithinModal() {
+    this.closeMoreChannelsModal();
+    this.openAddChannelModal();
+  }
+
+  changeChannelWithinModal(channel) {
+    this.closeMoreChannelsModal();
+    this.handleChangeChannel(channel);
+  }
+
   render() {
-    const { channels, actions } = this.props;
+    const { channels, actions, messages } = this.props;
     const filteredChannels = channels.slice(0, 8);
     const moreChannelsBoolean = channels.length > 8;
     const restOfTheChannels = channels.slice(8);
-    const glyphStyle = {'background': 'Transparent', 'backgroundRepeat': 'noRepeat', 'border': 'none', 'cursor': 'pointer', 'overflow': 'hidden', 'outline': 'none'};
-
     const newChannelModal = (
       <div>
         <Modal key={1} show={this.state.addChannelModal} onHide={::this.closeAddChannelModal}>
@@ -124,13 +134,16 @@ export default class Channels extends Component {
     const moreChannelsModal = (
       <div style={{background: 'grey'}}>
         <Modal key={2} show={this.state.moreChannelsModal} onHide={::this.closeMoreChannelsModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>All the Channels</Modal.Title>
+          <Modal.Header closeButton >
+            <Modal.Title>More Channels</Modal.Title>
+            <a onClick={::this.createChannelWithinModal} style={{'cursor': 'pointer', 'color': '#85BBE9'}}>
+              Create a channel
+            </a>
           </Modal.Header>
           <Modal.Body>
             <ul style={{height: 'auto', margin: '0', overflowY: 'auto', padding: '0'}}>
               {restOfTheChannels.map(channel =>
-                <ChannelListModalItem channel={channel} key={channel.id} {...actions} onShow={::this.handleChangeChannel} />
+                <ChannelListModalItem channel={channel} key={channel.id} {...actions} onClick={::this.changeChannelWithinModal} />
                 )}
             </ul>
           </Modal.Body>
@@ -144,24 +157,26 @@ export default class Channels extends Component {
     return (
       <section>
         <div>
-          <strong style={{'marginRight': '10rem'}}>Channels</strong>
-          <button onClick={::this.openAddChannelModal} style={glyphStyle}>
-            <Glyphicon glyph="plus" />
-          </button>
+          <span style={{paddingLeft: '0.8em', fontSize: '1.5em'}}>
+            Channels
+            <button onClick={::this.openAddChannelModal} style={{fontSize: '0.8em', 'background': 'Transparent', marginLeft: '2.8em', 'backgroundRepeat': 'noRepeat', 'border': 'none', 'cursor': 'pointer', 'overflow': 'hidden', 'outline': 'none'}}>
+              <Glyphicon glyph="plus" />
+            </button>
+          </span>
+
         </div>
           {newChannelModal}
         <div>
-          <ul style={{height: 'auto', margin: '0', overflowY: 'auto', padding: '0'}}>
+          <ul style={{display: 'flex', flexDirection: 'column', listStyle: 'none', margin: '0', overflowY: 'auto', padding: '0'}}>
             {filteredChannels.map(channel =>
-              <ChannelListItem channel={channel} key={channel.id} {...actions} onShow={::this.handleChangeChannel} />
+              <ChannelListItem  style={{paddingLeft: '0.8em', background: '#2E6DA4', height: '0.7em'}} messageCount={messages.filter(msg => {
+                return msg.channelID === channel.name;
+              }).length} channel={channel} key={channel.id} {...actions} onClick={::this.handleChangeChannel} />
               )}
           </ul>
 
-          {moreChannelsBoolean && <a onClick={::this.openMoreChannelsModal} style={{'cursor': 'pointer', 'color': '#85BBE9'}}> + {channels.length} more...</a>}
+          {moreChannelsBoolean && <a onClick={::this.openMoreChannelsModal} style={{'cursor': 'pointer', 'color': '#85BBE9'}}> + {channels.length - 8} more...</a>}
           {moreChannelsModal}
-          <a onClick={::this.openAddChannelModal} style={{'cursor': 'pointer', 'color': '#85BBE9'}}>
-            Create a channel
-          </a>
         </div>
       </section>
     );
@@ -172,16 +187,16 @@ class ChannelListModalItem extends Component {
 
   static propTypes = {
     channel: PropTypes.object.isRequired,
-    onShow: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired
   }
 
   render() {
     const { channel } = this.props;
-    const { channel: selectedChannel, onShow } = this.props;
+    const { channel: selectedChannel, onClick } = this.props;
     return (
       <a className={classnames({ selected: channel === selectedChannel })}
          style={{ cursor: 'hand', color: 'black'}}
-         onClick={() => onShow(channel)}>
+         onClick={() => onClick(channel)}>
         <li style={{cursor: 'pointer'}}>
           <h5>{channel.name}</h5>
         </li>

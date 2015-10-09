@@ -57,10 +57,8 @@ export default class SignIn extends Component {
         id: Date.now()
       };
       // Event chain that progresses the user towards sign-in.  Since I'm using a promise middleware all of these actions are resolved through promises.  Currently I'm actually unsure if this is the right way to go about chaining together promises and the right use case for them here.
+
       dispatch(Actions.signIn(userpass))
-      .then(() => {
-        this.context.router.transitionTo('/chat');
-      })
       .then(() => {
         dispatch(Actions.loadInitialMessages());
       })
@@ -72,8 +70,10 @@ export default class SignIn extends Component {
       })
       .then(() => {
         dispatch(Actions.userIsOnline(payload));
-      });
-
+      })
+      .then(() => {
+        this.context.router.transitionTo('/chat');
+      })
       this.setState({ username: '', password: ''});
     }
   }

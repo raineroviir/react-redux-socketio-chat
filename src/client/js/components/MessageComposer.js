@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import * as UserAPIUtils from '../utils/UserAPIUtils';
 const socket = io.connect();
 import strftime from 'strftime';
+import { Input } from 'react-bootstrap';
 
 export default class MessageComposer extends Component {
 
@@ -57,27 +58,36 @@ export default class MessageComposer extends Component {
   }
 
   render() {
-    const messageComposerStyle = {
-      zIndex: '52',
-      height: '4rem',
-      left: '21.1rem',
-      right: '1rem',
-      background: '#fff',
-      boxSizing: 'border-box',
-      display: 'block',
-      width: '100%',
-      flexShrink: '0',
-      order: '2'
-    };
     return (
-      <textarea
-        style={messageComposerStyle}
-        name="message"
-        autoFocus="true"
-        value={this.state.text}
-        onChange={::this.handleChange}
-        onKeyDown={::this.handleSubmit}
-      />
+      <div style={{
+        zIndex: '52',
+        left: '21.1rem',
+        right: '1rem',
+        width: '100%',
+        flexShrink: '0',
+        order: '2',
+        height: '5rem',
+        marginBottom: '0',
+        marginTop: '0.5em'
+        }}>
+        <Input
+          style={{
+            height: '100%',
+            fontSize: '2em'
+          }}
+          type="textarea"
+          name="message"
+          autoFocus="true"
+          placeholder="Type here to chat!"
+          value={this.state.text}
+          onChange={::this.handleChange}
+          onKeyDown={::this.handleSubmit}
+        />
+      </div>
     );
   }
 }
+
+// background: '#fff',
+// boxSizing: 'border-box',
+// display: 'block',

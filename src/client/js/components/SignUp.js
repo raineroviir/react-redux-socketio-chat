@@ -12,7 +12,7 @@ export default class SignUp extends Component {
 
   static propTypes = {
     welcomePage: PropTypes.string.isRequired,
-    userValidation: PropTypes.array.isrequired,
+    userValidation: PropTypes.func.isrequired,
     dispatch: PropTypes.func.isRequired
   }
 
@@ -73,9 +73,6 @@ export default class SignUp extends Component {
 
       dispatch(Actions.signUp(userpass))
       .then(() => {
-        this.context.router.transitionTo('/chat');
-      })
-      .then(() => {
         dispatch(Actions.loadInitialMessages());
       })
       .then(() => {
@@ -86,6 +83,9 @@ export default class SignUp extends Component {
       })
       .then(() => {
         dispatch(Actions.userIsOnline(payload));
+      })
+      .then(() => {
+        this.context.router.transitionTo('/chat');
       });
 
       this.setState({ username: '', password: '', confirmPassword: ''});

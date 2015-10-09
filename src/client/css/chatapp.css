@@ -18,18 +18,19 @@ body {
 .nav {
   margin: 0;
   color: white;
-  background: #2e6da4;
+  background: #337ab7;
   width: 21rem;
 -ms-flex: 0 1rem;
 -webkit-box-flex:  0;
 -moz-box-flex:  0;
 -ms-box-flex:  0;
 box-flex:  0;
-display: -webkit-box;
+display: flex;
+justify-content: flex-start;
+/*display: -webkit-box;
 display: -moz-box;
 display: -ms-flexbox;
-display: -webkit-flex;
-display: flex;
+display: -webkit-flex;*/
 -webkit-box-orient: vertical;
 -moz-box-orient: vertical;
 -webkit-box-direction: normal;
@@ -37,16 +38,13 @@ display: flex;
 -webkit-flex-direction: column;
 -ms-flex-direction: column;
 flex-direction: column;
--webkit-box-align: center;
+/*-webkit-box-align: center;
 -moz-box-align: center;
 -ms-flex-align: center;
--webkit-align-items: center;
-align-items: center;
 -webkit-box-pack: center;
 -moz-box-pack: center;
 -ms-flex-pack: center;
--webkit-justify-content: center;
-justify-content: flex-start;
+-webkit-justify-content: center;*/
 }
 
 .main {
@@ -79,4 +77,8 @@ span[class*="glyphicon-one-fine"] {
 .glyphicon-one-fine-empty-dot:before {
     content:"\25cb";
     font-size: 0.7em;
+}
+
+.btn-primary {
+  border: none;
 }

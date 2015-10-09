@@ -9,17 +9,9 @@ import UserListItem from './UserListItem';
 const socket = io();
 import * as UserAPIUtils from '../utils/UserAPIUtils';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { isLoaded } from '../reducers/auth';
+import { Modal, Jumbotron } from 'react-bootstrap';
 
-// @ is an ES 7 decorator and connect passes the state into the App component
-
-@connect(state => ({
-  messages: state.messages.data,
-  channels: state.channels.data,
-  activeChannel: state.activeChannel,
-  user: (state.auth.user.name || state.auth.user),
-  typers: state.typers,
-  userList: state.userList.data
-}))
 export default class Chat extends Component {
 
   static propTypes = {
@@ -30,21 +22,45 @@ export default class Chat extends Component {
     channels: PropTypes.array.isRequired,
     activeChannel: PropTypes.object.isRequired,
     typers: PropTypes.array.isRequired,
-    userList: PropTypes.array.isRequired
+    onlineUsers: PropTypes.array.isRequired,
+    checkAuth: PropTypes.object.isRequired
   }
 
   static contextTypes = {
     router: PropTypes.object.isRequired
   }
 
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      moreUsersModal: false
+    }
+  }
   // componentWillMount is a lifecycle method called right before initial render
   componentWillMount() {
     const { user } = this.props;
-    socket.emit('add user', user);
+    socket.emit('user online', user);
   }
+  //
+  // fetchData(checkAuth) {
+  //   const { dispatch } = this.props;
+  //   if(checkAuth.auth.loaded === 'false') {
+  //     dispatch(Actions.load())
+  //     .then(() => {
+  //       dispatch(Actions.loadInitialMessages());
+  //     })
+  //     .then(() => {
+  //       dispatch(Actions.loadInitialChannels());
+  //     })
+  //     .then(() => {
+  //       dispatch(Actions.loadUsersOnline());
+  //     })
+  //   }
+  // }
 
   // componentDidMount is a lifecycle method that is called once right after initial render
   componentDidMount() {
+
     const { actions } = this.props;
     // The 'new bc message' socket event lets other users connected to the socket listen to the message
     socket.on('new bc message', msg =>
@@ -62,8 +78,12 @@ export default class Chat extends Component {
     );
 
     // this socket event listens to other users joining the channel and appends them to the channel users array
-    socket.on('add user bc', username => {
-      actions.socketIOAddUser(username);
+    socket.on('user online', username => {
+      const userObj = {
+        username: username,
+        id: Date.now()
+      }
+      actions.receiveUserOnline(userObj);
     });
 
     // on client disconnect..
@@ -84,12 +104,22 @@ export default class Chat extends Component {
     socket.on('new channel', channel =>
       actions.receiveRawChannel(channel)
     );
+
+    socket.on('disconnect bc', username => {
+      actions.userIsOffline(username);
+      UserAPIUtils.userIsOffline(username);
+    });
   }
 
   // componentDidUpdate is a lifecycle method called when the component gets updated, not called on initial render
   componentDidUpdate() {
     const messageList = this.refs.messageList;
     messageList.scrollTop = messageList.scrollHeight;
+  }
+
+  componentWillUnMount() {
+    const { user } = this.props;
+    socket.emit('disconnect', user);
   }
 
   handleSave(newMessage) {
@@ -117,85 +147,122 @@ export default class Chat extends Component {
     actions.changeChannel(channel);
   }
 
+  openMoreUsersModal() {
+    event.preventDefault();
+    this.setState({moreUsersModal: true});
+  }
+
+  closeMoreUsersModal() {
+    event.preventDefault();
+    this.setState({moreUsersModal: false});
+  }
+
   render() {
-    const { messages, channels, actions, activeChannel, user, typers, userList} = this.props;
+    const { messages, channels, actions, activeChannel, user, typers, onlineUsers, checkAuth} = this.props;
     const filteredMessages = messages.filter(message => message.channelID === activeChannel.name);
 
-    const onlineUsers = userList;
+    const filteredUsers = onlineUsers.slice(0, 8);
+    const moreUsersBoolean = onlineUsers.length > 8;
+    const restOfTheUsers = onlineUsers.slice(8);
+
     const dropDownMenu = (
       <div style={{'width': '21rem', 'top': '0', alignSelf: 'baseline', padding: '0', margin: '0', order: '1'}}>
-        <DropdownButton key={4} style={{'border': 'none', 'width': '21rem'}} id="user-menu"  bsSize="large" bsStyle="primary" title={user}>
+        <DropdownButton key={95} style={{'width': '21rem'}} id="user-menu"  bsSize="large" bsStyle="primary" title={user}>
           <MenuItem style={{'width': '21rem'}} eventKey="4" onSelect={::this.handleSignOut}>Sign out</MenuItem>
         </DropdownButton>
       </div>
     );
 
-    const typinglistStyle = {fontSize: '0.8em', position: 'fixed', bottom: '0.5em', left: '21.5rem', color: '#8B8B8B'};
-    return (
-      <div style={{  margin: '0', padding: '0', height: '100%', width: '100%', display: '-webkit-box'}}>
-        <div className="nav">
-          {dropDownMenu}
-          <section style={{paddingLeft: '0.8em', paddingTop: '1.6em', paddingRight: '0.8em', order: '2'}}>
-            <Channels onClick={::this.changeActiveChannel} channels={channels} actions={actions} />
-          </section>
-          <section style={{paddingLeft: '0.8em', paddingTop: '1.6em', paddingRight: '0.8em', order: '3'}}>
-            <strong>Users Online</strong>
-            <ul style={{height: 'auto', overflowY: 'auto', width: '100%', listStyle: 'none'}}>
-              {onlineUsers && onlineUsers.map(onlineUser =>
+    const moreUsersModal = (
+      <div style={{background: 'grey'}}>
+        <Modal key={96} show={this.state.moreUsersModal} onHide={::this.closeMoreUsersModal}>
+          <Modal.Header closeButton >
+            <Modal.Title>More Users</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <ul style={{height: 'auto', margin: '0', overflowY: 'auto', padding: '0'}}>
+              {restOfTheUsers.map(onlineUser =>
                 <UserListItem user={onlineUser.username} key={onlineUser.id}/>
               )}
             </ul>
+          </Modal.Body>
+          <Modal.Footer>
+            <button onClick={::this.closeMoreUsersModal}>Cancel</button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    );
+
+    const noMessagesJumbotron = (
+      <Jumbotron style={{paddingLeft: '1em', height: '100%'}}>
+        <div>
+          <h1> There are no messages in this channel :(</h1>
+          <p> Add a message by typing into the white box at the bottom of your screen!
+          </p>
+        </div>
+      </Jumbotron>
+    )
+
+    return (
+      <div style={{margin: '0', padding: '0', height: '100%', width: '100%', display: '-webkit-box'}}>
+        <div className="nav">
+          {dropDownMenu}
+          <section style={{order: '2', marginTop: '1.5em'}}>
+            <Channels onClick={::this.changeActiveChannel} channels={channels} messages={messages} actions={actions} />
+          </section>
+          <section style={{order: '3', marginTop: '1.5em'}}>
+            <span style={{paddingLeft: '0.8em', fontSize: '1.5em'}}>Online Users</span>
+            <ul style={{height: 'auto', overflowY: 'auto', width: '100%', listStyle: 'none'}}>
+              {filteredUsers && filteredUsers.map(onlineUser =>
+                <UserListItem user={onlineUser.username} key={onlineUser.id}/>
+              )}
+            </ul>
+            {moreUsersBoolean && <a onClick={::this.openMoreUsersModal} style={{'cursor': 'pointer', 'color': '#85BBE9'}}> + {onlineUsers.length - 8} more...</a>}
+            {moreUsersModal}
           </section>
         </div>
         <div className="main">
-          <header style={{background: '#000000', color: '#FFFFFF', flexGrow: '0', order: '0'}}>
+          <header style={{background: '#FFFFFF', color: 'black', flexGrow: '0', order: '0', fontSize: '2.3em', paddingLeft: '0.2em'}}>
+            <div>
             {activeChannel.name}
+            <span style={{fontSize: '0.5em', marginLeft: '2em'}}>
+            Message Count: {filteredMessages.length}
+            </span>
+            </div>
+
           </header>
           <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', width: '100%', flexGrow: '1', order: '1'}} ref="messageList">
             {filteredMessages.map(message =>
               <MessageListItem message={message} key={message.id} user={user} actions={actions} />
             )}
           </ul>
+          {(filteredMessages.length === 0 && checkAuth.loaded === true) && noMessagesJumbotron}
           <MessageComposer activeChannel={activeChannel} user={user} onSave={::this.handleSave} />
         </div>
-        <footer style={{background: 'pink'}} >
+        <footer style={{fontSize: '0.9em', position: 'fixed', bottom: '0.2em', left: '21.5rem', color: '#000000', width: '100%', opacity: '0.5'}}>
           {typers.length === 1 &&
-          <span style={typinglistStyle}>
-            <TypingListItem username={typers[0]} key={1}/>
-            <span> is typing</span>
-          </span>}
-
+          <div>
+              <span>
+                <TypingListItem username={typers[0]} key={97}/>
+                <span> is typing</span>
+              </span>
+            </div>}
           {typers.length === 2 &&
-          <span style={typinglistStyle}>
-            <TypingListItem username={typers[0]} key={2}/>
-            <span> and </span>
-            <TypingListItem username={typers[1]} key={3}/>
-            <span> are typing</span>
-          </span>}
-
+          <div>
+            <span>
+              <TypingListItem username={typers[0]} key={98}/>
+              <span> and </span>
+              <TypingListItem username={typers[1]} key={99}/>
+              <span> are typing</span>
+            </span>
+          </div>}
           {typers.length > 2 &&
-          <span style={typinglistStyle}>Several people are typing
-          </span>}
+          <div>
+            <span>Several people are typing
+            </span>
+          </div>}
         </footer>
       </div>
     );
   }
 }
-
-
-// {typers.length === 2 &&
-//   <span className="typing-list"> {typers[0].map(username =>
-//   <TypingListItem username={username} typers={typers}/>)} &&
-//   <span> and </span> &&
-//  {typers[1].map(username =>
-//   <TypingListItem username={username} typers={typers}/>
-// )} && <span> are typing</span>
-// </span>}
-//
-// {typers.length === 2 &&
-//   <span className="typing-list" ref="typersList"> {typers.map(username =>
-//     console.log(username)
-//     console.log(typers)
-//   <TypingListItem username={username} typers={typers}/>)}
-//   <span> are typing</span>
-// </span>}

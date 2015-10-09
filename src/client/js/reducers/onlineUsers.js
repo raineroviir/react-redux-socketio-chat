@@ -1,4 +1,4 @@
-import { ADD_USER_TO_CHANNEL, ADD_USER_TO_CHANNEL_SUCCESS, ADD_USER_TO_CHANNEL_FAIL, REMOVE_USER_FROM_CHANNEL, LOAD_USERSONLINE, LOAD_USERSONLINE_FAIL, LOAD_USERSONLINE_SUCCESS, SOCKET_IO_ADD } from '../constants/ActionTypes';
+import { ADD_USER_TO_CHANNEL, ADD_USER_TO_CHANNEL_SUCCESS, ADD_USER_TO_CHANNEL_FAIL, REMOVE_USER_FROM_CHANNEL, LOAD_USERSONLINE, LOAD_USERSONLINE_FAIL, LOAD_USERSONLINE_SUCCESS, RECEIVE_USER } from '../constants/ActionTypes';
 
 const initialState = {
   loaded: false,
@@ -6,16 +6,32 @@ const initialState = {
 };
 
 // currently ADD USER TO CHANNEL = USER IS ONLINE
-export default function userList(state = initialState, action) {
+export default function onlineUsers(state = initialState, action) {
   switch (action.type) {
 
-  case SOCKET_IO_ADD:
+  case RECEIVE_USER:
+    if (state.data.filter(user => user.username === action.user.username).length !== 0) {
+      return state;
+    }
     return {...state,
       data: [...state.data, {
-        username: action.user,
-        id: (state.data.length === 0) ? 0 : state.data[state.data.length - 1].id + 1
+        username: action.user.username,
+        id: (action.user.id) ? action.user.id : state.data[state.data.length - 1].id + 1
       }]
     };
+
+// why are these promises? because if they weren't they would occur before we load all users online in the signup/signin process and would write over the previous state..
+
+  // case ADD_USER_TO_CHANNEL:
+    // if (state.data.filter(user => user.username === action.user.username).length !== 0) {
+    //   return state;
+    // }
+  //   return {...state,
+  //     data: [...state.data, {
+  //       username: action.user.username,
+  //       id: (state.data.length === 0) ? 0 : state.data[state.data.length - 1].id + 1
+  //     }]
+  //   };
 
   case ADD_USER_TO_CHANNEL:
     return {...state,
@@ -23,12 +39,15 @@ export default function userList(state = initialState, action) {
       };
 
   case ADD_USER_TO_CHANNEL_SUCCESS:
+    if (state.data.filter(user => user.username === action.user.username).length !== 0) {
+      return state;
+    }
     return {...state,
       adding: false,
       added: true,
       data: [...state.data, {
         username: action.user.username,
-        id: (state.data.length === 0) ? 0 : state.data[state.data.length - 1].id + 1
+        id: (action.user.id) ? action.user.id : state.data[state.data.length - 1].id + 1
       }]
     };
 

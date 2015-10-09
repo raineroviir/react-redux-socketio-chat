@@ -7,7 +7,7 @@ module.exports = function(router) {
   //query db for messages
   router.get('/messages', function(req, res) {
 
-    Message.find({}, function(err, data) {
+    Message.find({}, {id: 1, channelID: 1, text: 1, user: 1, time: 1, _id: 0}, function(err, data) {
       if(err) {
         console.log(err);
         return res.status(500).json({msg: 'internal server error'});

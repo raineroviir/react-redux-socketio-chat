@@ -8,6 +8,7 @@ export default class MessageListItem extends Component {
 
   render() {
     const  { message } = this.props;
+
     return (
       <li>
         <span>
