@@ -11,6 +11,7 @@ var eat_auth = require('./lib/eat_auth');
 var session = require('express-session');
 var cors = require('cors');
 var uuid = require('uuid');
+var socketEvents = require('./socketEvents')(io);
 
 //set env vars
 process.env.AUTH_SECRET = process.env.AUTH_SECRET || 'this is a temp AUTH_SECRET';
@@ -38,11 +39,6 @@ var usersRouter = express.Router();
 var channelRouter = express.Router();
 
 app.use('/', express.static(path.join(__dirname)));
-// app.use('/', express.static('index.html'));
-
-// app.use('/', function(req, res) {
-//   res.sendFile(path.join(__dirname, 'index.html'));
-// });
 
 require('./server/routes/message_routes')(messageRouter);
 require('./server/routes/channel_routes')(channelRouter);
@@ -50,49 +46,6 @@ require('./server/routes/user_routes')(usersRouter, passport);
 app.use('/api', messageRouter);
 app.use('/api', usersRouter);
 app.use('/api', channelRouter);
-
-io.on('connection', function(socket) {
-  console.log('user connected to socket ' + socket.id);
-  socket.on('add user', function(username) {
-    socket.broadcast.emit('add user bc', username)
-    console.log(username);
-    socket.username = username;
-    // usernames[username] = username;
-  });
-  socket.on('new message', function(msg) {
-    socket.broadcast.emit('new bc message', msg);
-  });
-
-  socket.on('new channel', function(channel) {
-    console.log(channel);
-    socket.broadcast.emit('new channel', channel)
-  });
-
-  // when the client emits 'typing', we broadcast it to others
-  socket.on('typing', function () {
-    console.log('typing from server');
-    socket.broadcast.emit('typing bc', socket.username);
-  });
-
-  // when the client emits 'stop typing', we broadcast it to others
-  socket.on('stop typing', function () {
-    console.log('stop typing from server');
-    socket.broadcast.emit('stop typing bc', socket.username);
-  });
-
-  // when a disconnection occurs, we do some things
-  socket.on('disconnect', function() {
-    console.log('io.emit occured');
-    io.emit('client disconnect io', socket.username)
-    console.log(socket.username + ' left the chat');
-    console.log(socket.id + ' disconnected ');
-  });
-
-  socket.on('signOut', function() {
-    console.log('signOut occured');
-    socket.broadcast.emit('user logged out', socket.username)
-  })
-});
 
 http.listen(process.env.PORT, function() {
     console.log('server listening on port: %s', process.env.PORT);

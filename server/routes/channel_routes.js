@@ -5,10 +5,10 @@ var UserList = require('../models/UserList');
 module.exports = function(router) {
   router.use(bodyparser.json());
 
-  //query db for channel users
+  // query db for channel users
   router.get('/channels', function(req, res) {
 
-    Channel.find({}, function(err, data) {
+    Channel.find({},{name: 1, id:1, _id:0}, function(err, data) {
       if(err) {
         console.log(err);
         return res.status(500).json({msg: 'internal server error'});
@@ -30,7 +30,7 @@ module.exports = function(router) {
     })
   })
 
-  //post a new user to channel list db
+  // post a new user to channel list db
   router.post('/channels/new_channel', function(req, res) {
     var newChannel = new Channel(req.body);
     newChannel.save(function (err, data) {
@@ -43,40 +43,10 @@ module.exports = function(router) {
     });
   });
 
-  //add users to the channel user list
-  // router.patch('/channels/add_user_to_channel', function(req, res) {
-  //   var channel = req.body.channel;
-  //   var username = req.body.username
-  //   console.log(req.body);
-  //   Channel.update({name: channel}, { $addToSet: {users: username} },
-  //     function(err, data) {
-  //       if(err) {
-  //         console.log(err);
-  //         return res.status(500).json({msg: 'internal server error'});
-  //       }
-  //     });
-  //
-  //   res.json({msg: 'added user'});
-  // })
-  //
-  // router.patch('/channels/remove_user_from_channel', function(req, res) {
-  //   var username = req.body.username;
-  //   var channel = req.body.channel;
-  //   console.log(req.body);
-  //   Channel.update({name: channel}, { $pull: {users: username} },
-  //     function(err, data) {
-  //     if(err) {
-  //       console.log(err);
-  //       return res.status(500).json({msg: 'internal server error'});
-  //     }
-  //
-  //     res.json({msg: 'removed user'});
-  //   })
-  // })
-
+  // userlists
   router.get('/userlist', function(req, res) {
 
-    UserList.find({}, function(err, data) {
+    UserList.find({},{username: 1, id:1, _id:0}, function(err, data) {
       if(err) {
         console.log(err);
         return res.status(500).json({msg: 'internal server error'});
@@ -86,8 +56,6 @@ module.exports = function(router) {
     });
   });
 
-
-  //users online module ...
   router.post('/userlist/user_is_online', function(req, res) {
     console.log(req.body);
     var newUserListItem = new UserList(req.body);

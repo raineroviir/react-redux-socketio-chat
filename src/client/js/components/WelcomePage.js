@@ -20,7 +20,7 @@ export default class WelcomePage extends Component {
   }
 
   componentDidMount() {
-    this.refs.usernameInput.focus();
+    this.refs.usernameInput.getInputDOMNode().focus();
   }
 
   handleChange(event) {

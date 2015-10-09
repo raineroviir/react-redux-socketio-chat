@@ -95,3 +95,7 @@ export default function info(state = initialState, action = {}) {
     return state;
   }
 }
+
+export function isLoaded(globalState) {
+  return globalState.auth && globalState.auth.loaded;
+}

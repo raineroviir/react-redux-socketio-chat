@@ -29,7 +29,7 @@ module.exports = function loadUserRoutes(router, passport) {
           console.log(err);
           return res.status(500).json({msg: 'error generating token'});
         }
-        console.log(req.session);
+        // console.log(req.session);
         req.session.user = req.user.username;
         // .res(req.user.username);
 
