@@ -41,7 +41,8 @@ then to open the database open a new terminal and type in `mongo` and type in `u
 ## Todos
 * ~~Make the app persist on browser refresh~~
 * Promise based auth library
+* Users properly get removed from the list of users online
+* My session implementation needs to be fixed
 * ~~A list of users online~~
-* A react-native version once exponentJS comes to PC
 * ~~Move all the CSS to inline styling in the React Components~~
 * ~~validation for username/channelname exists~~
