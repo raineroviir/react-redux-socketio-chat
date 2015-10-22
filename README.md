@@ -36,7 +36,7 @@ then to open the database open a new terminal and type in `mongo` and type in `u
 
 * Erikras' universal redux example: https://github.com/erikras/react-redux-universal-hot-example
 * The facebook react flux-chat example: https://github.com/facebook/flux/tree/master/examples/flux-chat
-* The awesome community at http://reactiflux.slack.com
+* The awesome community at ~~http://reactiflux.slack.com~~ that recently moved to: https://discordapp.com/channels/102860784329052160/102860784329052160
 
 ## Todos
 * ~~Make the app persist on browser refresh~~
