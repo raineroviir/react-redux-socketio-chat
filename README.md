@@ -22,6 +22,7 @@ And then point your browser to `localhost:3001`
 npm run build
 npm start
 ```
+And then point your browser to `localhost:3000`
 
 For setting up mongoDB in your local environment
 
