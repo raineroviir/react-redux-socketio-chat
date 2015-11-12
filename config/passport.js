@@ -70,7 +70,7 @@ module.exports = function(passport) {
   passport.use(new FacebookStrategy({
     clientID: oAuthConfig.facebook.clientID,
     clientSecret: oAuthConfig.facebook.clientSecret,
-    callbackURL: "http://localhost:3000/api/auth/facebook/callback"
+    callbackURL: "http://slackclone.herokuapp.com/api/auth/facebook/callback"
   },
     function(accessToken, refreshToken, profile, done) {
       User.findOne({ 'facebook.id': profile.id }, function(err, user) {

@@ -1,5 +1,4 @@
 var bcrypt = require('bcrypt-nodejs');
-var eat = require('eat');
 var mongoose = require('mongoose');
 
 var UserSchema = mongoose.Schema({
