@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 var UserSchema = mongoose.Schema({
   local: {
-    username: String,
+    username: { type: String, unique: true },
     password: String,
     email: String,
   },
@@ -13,8 +13,7 @@ var UserSchema = mongoose.Schema({
     username: String,
     token: String,
     email: String,
-  },
-  online: Boolean
+  }
 });
 
 // stashed async methods

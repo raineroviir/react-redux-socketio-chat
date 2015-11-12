@@ -14,7 +14,7 @@ Comes with [redux-dev tools](https://github.com/gaearon/redux-devtools) and [rea
 ```
 npm run dev
 ```
-And then point your browser to `localhost:3001`
+And then point your browser to `localhost:3000`
 
 ### Production
 
@@ -31,7 +31,7 @@ mkdir db
 mongod --dbpath=./db --smallfiles
 ```
 
-then to open the database open a new terminal and type in `mongo` and type in `use chat_dev` 
+then to open the database open a new terminal and type in `mongo` and type in `use chat_dev`
 
 ## Helpful Resources and Inspiring Projects
 
@@ -41,9 +41,9 @@ then to open the database open a new terminal and type in `mongo` and type in `u
 
 ## Todos
 * ~~Make the app persist on browser refresh~~
-* Promise based auth library
-* Users properly get removed from the list of users online
-* My session implementation needs to be fixed
-* ~~A list of users online~~
+* ~~My session implementation needs to be fixed~~
 * ~~Move all the CSS to inline styling in the React Components~~
 * ~~validation for username/channelname exists~~
+* small profile page for users
+* link accounts together for fb/local users
+* install redux-local storage so on refresh we don't ping the server

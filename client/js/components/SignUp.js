@@ -74,7 +74,7 @@ export default class SignUp extends Component {
   validateUsername() {
     const { userValidation } = this.props;
     if (userValidation.filter(user => {
-      return user.username === this.state.username.trim();
+      return user.local.username === this.state.username.trim();
     }).length > 0) {
       return 'error';
     }

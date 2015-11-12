@@ -17,6 +17,7 @@ module.exports = function(router) {
     });
   });
 
+  // get a specific channel
   router.get('/channels/:id', function(req, res) {
 
     Channel.find({name: req.params.id}, function(err, data) {
