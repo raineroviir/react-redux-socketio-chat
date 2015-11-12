@@ -1,7 +1,7 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../server/models/User');
-var oAuthConfig = require('../oAuthConfig');
+var oAuthConfig = require('./oAuthConfig');
 
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
