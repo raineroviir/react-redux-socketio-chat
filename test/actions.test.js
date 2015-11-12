@@ -1,21 +1,17 @@
 import expect from 'expect';
 import * as actions from '../src/client/js/actions/Actions';
 import * as types from '../src/client/js/constants/ActionTypes';
-// import jsdomReact from '../jsdomReact';
 import React, { addon } from 'react-addons';
 import WelcomePage from '../src/client/js/components/WelcomePage';
 const { TestUtils } = React.addons;
 
 function setup() {
-  // let props = {
-  //   welcomePage: expect.createSpy()
-  // };
+
   let renderer = TestUtils.createRenderer();
   renderer.render(<Header {...props} />);
   let output = renderer.getRenderOutput();
 
   return {
-    // props,
     output,
     renderer
   }
@@ -62,18 +58,3 @@ describe('actions', () => {
     expect(actions.addChannel(channel)).toEqual(expectedAction);
   });
 });
-
-// describe('components', () => {
-//
-//   it('should render WelcomePage correctly', () => {
-//     const { output } = setup();
-//
-//     expect(output.type).toBe('WelcomePage');
-//
-//     expect(output.props.className).toBe('header');
-//
-//     let [h1, input] = output.props.children;
-//
-//     expect(h1.type).toBe('h1');
-//   });
-// });

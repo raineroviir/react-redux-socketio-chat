@@ -15,7 +15,10 @@ import {
 
 const initialState = {
   loaded: false,
-  user: null
+  user: {
+    username: null,
+    id: null
+  }
 };
 
 export default function info(state = initialState, action = {}) {
@@ -30,8 +33,10 @@ export default function info(state = initialState, action = {}) {
       ...state,
       loading: false,
       loaded: true,
-      user: action.result
-
+      user: {
+        username: action.result.facebook ?  action.result.facebook.username : action.result.local.username,
+        id: action.result._id
+      }
     };
   case AUTH_LOAD_FAIL:
     return {
@@ -49,7 +54,10 @@ export default function info(state = initialState, action = {}) {
     return {
       ...state,
       signingIn: false,
-      user: action.result
+      user: {
+        username: action.result.local.username,
+        id: action.result.id
+      }
     };
   case AUTH_SIGNIN_FAIL:
     return {
@@ -67,7 +75,10 @@ export default function info(state = initialState, action = {}) {
     return {
       ...state,
       signingUp: false,
-      user: action.result
+      user: {
+        username: action.result.local.username,
+        id: action.result._id
+      }
     };
   case AUTH_SIGNUP_FAIL:
     return {
@@ -83,7 +94,10 @@ export default function info(state = initialState, action = {}) {
     return {
       ...state,
       signingOut: false,
-      user: null
+      user: {
+        username: null,
+        id: null
+      }
     };
   case AUTH_SIGNOUT_FAIL:
     return {

@@ -5,10 +5,8 @@ export default class MessageListItem extends Component {
   static propTypes = {
     message: PropTypes.object.isRequired,
   }
-
   render() {
     const  { message } = this.props;
-
     return (
       <li>
         <span>

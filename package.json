@@ -68,7 +68,9 @@
     "webpack-dev-middleware": "^1.2.0",
     "webpack-dev-server": "^1.9.0",
     "webpack-hot-middleware": "^1.1.0",
-    "webpack-isomorphic-tools": "^0.8.8"
+    "webpack-isomorphic-tools": "^0.8.8",
+    "react-dom": "^0.14.2",
+    "react": "^0.14.2"
   },
   "dependencies": {
     "babel": "^5.8.23",
@@ -84,10 +86,12 @@
     "mongoose": "^4.0.5",
     "object-assign": "^3.0.0",
     "passport": "^0.2.2",
+    "passport-facebook": "^2.0.0",
     "passport-http": "^0.2.2",
-    "react": "^0.14.0-rc1",
+    "passport-local": "^1.0.0",
+    "react": "^0.14.2",
     "react-bootstrap": "^0.25.100-react-pre.1",
-    "react-dom": "^0.14.0-rc1",
+    "react-dom": "^0.14.2",
     "react-redux": "^2.1.2",
     "react-router": "1.0.0-beta3",
     "redux": "^3.0.0",

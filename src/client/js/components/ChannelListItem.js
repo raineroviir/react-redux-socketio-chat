@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { Button } from 'react-bootstrap';
+
 export default class ChannelListItem extends Component {
 
   static propTypes = {
     channel: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired
   }
-
   render() {
-    const { channel, messageCount } = this.props;
+    const { channel } = this.props;
     const { channel: selectedChannel, onClick } = this.props;
     return (
       <Button bsSize="xsmall" bsStyle="primary" >
@@ -24,5 +24,3 @@ export default class ChannelListItem extends Component {
     );
   }
 }
-
-// <span>{messageCount > 0 && messageCount}</span>

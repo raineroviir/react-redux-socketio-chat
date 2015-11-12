@@ -7,7 +7,6 @@ export default function typing(state = initialState, action) {
   case SAVE_USERNAME:
     return action.username;
   default:
-
     return state;
   }
 }
