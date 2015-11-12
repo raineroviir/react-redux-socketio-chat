@@ -46,3 +46,4 @@ then to open the database open a new terminal and type in `mongo` and type in `u
 * ~~validation for username/channelname exists~~
 * small profile page for users
 * link accounts together for fb/local users
+* install redux-local storage so on refresh we don't ping the server
