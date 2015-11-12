@@ -6,7 +6,7 @@ export function loadAuth() {
     .get('/api/load_auth_into_state')
     .end((err, res) => {
       if (err) {
-        reject(res.body || err);
+        Promise.reject(err);
       } else {
         resolve(res.body);
       }
@@ -20,7 +20,7 @@ export function signUp(user) {
     .send(user)
     .end((err, res) => {
       if (err) {
-        reject(err);
+        Promise.reject(err);
       } else {
         resolve(res.body);
       }
@@ -34,7 +34,7 @@ export function signIn(user) {
     .send(user)
     .end((err, res) => {
       if (err) {
-        reject(err);
+        Promise.reject(err);
       } else {
         resolve(res.body);
       }

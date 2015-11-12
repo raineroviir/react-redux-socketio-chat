@@ -8,6 +8,9 @@
           "target": "react-transform-hmr",
           "imports": ["react"],
           "locals": ["module"]
+        }, {
+          "target": "react-transform-catch-errors",
+          "imports": ["react","redbox-react"]
         }]
       }
     }
