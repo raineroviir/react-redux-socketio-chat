@@ -11,7 +11,6 @@ export default class MessageComposer extends Component {
     onSave: PropTypes.func.isRequired,
     user: PropTypes.string.isRequired
   }
-
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -19,7 +18,6 @@ export default class MessageComposer extends Component {
       typing: false
     };
   }
-
   handleSubmit(event) {
     const { user } = this.props;
     const text = event.target.value.trim();
@@ -32,19 +30,13 @@ export default class MessageComposer extends Component {
         user: user,
         time: strftime('%H:%M %p', new Date())
       };
-      // Emit the message to others in the chat room
       socket.emit('new message', newMessage);
-
-      // Save the message to the server
       UserAPIUtils.createMessage(newMessage);
-
-      // Pass the message up to the Chat component
       this.props.onSave(newMessage);
       this.setState({ text: '', typing: false });
       socket.emit('stop typing');
     }
   }
-
   handleChange(event) {
     this.setState({ text: event.target.value });
     if (event.target.value.length > 0 && !this.state.typing) {
@@ -56,7 +48,6 @@ export default class MessageComposer extends Component {
       this.setState({ typing: false});
     }
   }
-
   render() {
     return (
       <div style={{
@@ -69,7 +60,7 @@ export default class MessageComposer extends Component {
         height: '5rem',
         marginBottom: '0',
         marginTop: '0.5em'
-        }}>
+      }}>
         <Input
           style={{
             height: '100%',
@@ -87,7 +78,3 @@ export default class MessageComposer extends Component {
     );
   }
 }
-
-// background: '#fff',
-// boxSizing: 'border-box',
-// display: 'block',

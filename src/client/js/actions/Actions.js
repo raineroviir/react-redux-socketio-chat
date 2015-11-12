@@ -31,35 +31,6 @@ export function addChannel(channel) {
   };
 }
 
-export function userIsOnline(user) {
-  return {
-    types: [types.ADD_USER_TO_CHANNEL, types.ADD_USER_TO_CHANNEL_SUCCESS, types.ADD_USER_TO_CHANNEL_FAIL],
-    promise: UserAPIUtils.userIsOnline(user),
-    user
-  };
-}
-
-export function userIsOffline(user) {
-  return {
-    type: types.REMOVE_USER_FROM_CHANNEL,
-    user
-  };
-}
-
-export function receiveUserOnline(user) {
-  return {
-    type: types.RECEIVE_USER,
-    user
-  };
-}
-
-export function addUserToChannel(user) {
-  return {
-    type: types.ADD_USER_TO_CHANNEL,
-    user
-  };
-}
-
 export function typing(username) {
   return {
     type: types.TYPING,
@@ -83,12 +54,13 @@ export function changeChannel(channel) {
 
 // NOTE:Auth actions
 
-export function load() {
+export function loadAuth() {
   return {
     types: [types.AUTH_LOAD, types.AUTH_LOAD_SUCCESS, types.AUTH_LOAD_FAIL],
     promise: UserAPIUtils.loadAuth()
   };
 }
+
 export function signIn(user) {
   return {
     types: [types.AUTH_SIGNIN,
@@ -103,28 +75,20 @@ export function signUp(user) {
     types: [types.AUTH_SIGNUP,
       types.AUTH_SIGNUP_SUCCESS,
       types.AUTH_SIGNUP_FAIL],
-    promise: UserAPIUtils.signUp(user),
-    user
+    promise: UserAPIUtils.signUp(user)
   };
 }
 
-export function signOut() {
+export function signOut(user) {
   return {
     types: [types.AUTH_SIGNOUT,
       types.AUTH_SIGNOUT_SUCCESS,
       types.AUTH_SIGNOUT_FAIL],
-    promise: UserAPIUtils.signOut()
+    promise: UserAPIUtils.signOut(user)
   };
 }
 
 // NOTE:Data Fetching actions
-
-export function validateUsername(username) {
-  return {
-    types: [types.START_USERNAME_VALIDATION, types.USERNAME_VALIDATION_SUCCESS, types.USERNAME_VALIDATION_FAIL],
-    promise: UserAPIUtils.validateUsername(username)
-  };
-}
 
 export function welcomePage(username) {
   return {
@@ -147,16 +111,9 @@ export function loadInitialChannels() {
   };
 }
 
-export function loadUsersOnline() {
-  return {
-    types: [types.LOAD_USERSONLINE, types.LOAD_USERSONLINE_SUCCESS, types.LOAD_USERSONLINE_FAIL],
-    promise: UserAPIUtils.loadUsersOnline()
-  };
-}
-
-export function loadUserList() {
+export function usernameValidationList() {
   return {
     types: [types.LOAD_USERVALIDATION, types.LOAD_USERVALIDATION_SUCCESS, types.LOAD_USERVALIDATION_FAIL],
-    promise: UserAPIUtils.loadUserList()
+    promise: UserAPIUtils.usernameValidationList()
   };
 }

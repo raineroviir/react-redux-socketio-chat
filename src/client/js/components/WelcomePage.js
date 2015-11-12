@@ -3,45 +3,41 @@ import { Link } from 'react-router';
 import * as Actions from '../actions/Actions';
 import { connect } from 'react-redux';
 import { Input, Button } from 'react-bootstrap';
+import FBSignIn from './FBSignIn';
 
-// the empty connect is to pass in the dispatch function
 @connect()
 export default class WelcomePage extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired
   }
-
   constructor(props, context) {
     super(props, context);
     this.state = {
       username: ''
     };
   }
-
   componentDidMount() {
     this.refs.usernameInput.getInputDOMNode().focus();
   }
-
   handleChange(event) {
     if (event.target.name === 'username') {
       this.setState({ username: event.target.value });
     }
   }
-
   handleSubmit() {
     const { dispatch } = this.props;
     const username = this.state.username;
     dispatch(Actions.welcomePage(username));
     this.setState({ username: '' });
   }
-
   render() {
     return (
       <div>
-        <header style={{display: 'flex', justifyContent: 'center', background: '#000000', color: '#FFFFFF', flexGrow: '0', order: '0'}}>
-        React-Redux-Socket.io-Chat
+        <header style={{display: 'flex', justifyContent: 'center', flexGrow: '0', order: '0'}}>
+          <p style={{fontSize: '1.5em', marginRight: '1em'}}>Welcome to React Redux Socket.io Chat</p>
         </header>
+        <FBSignIn />
         <main style={{display: 'flex', justifyContent: 'center'}}>
           <form style={{height: '20rem', display: 'flex', justifyContent: 'center'}}>
             <div style={{margin: 'auto', paddingRight: '0.2em', height: '3.5em'}}>
@@ -55,25 +51,25 @@ export default class WelcomePage extends Component {
                 onChange={::this.handleChange}
               />
             </div>
-            <Link style={{margin: 'auto', width: '12em', height: '3.5em'}} to="/signup">
-              <Button
-                bsStyle="success"
-                style={{margin: 'auto', width: '12em', height: '3.5em'}}
-                type="submit"
-                onClick={::this.handleSubmit}>
-                  <p style={{margin: '0', padding: '0', fontSize: '1.5em'}}>Sign Up</p>
-              </Button>
-            </Link>
+            <section style={{margin: 'auto', width: '12em', height: '3.5em'}}>
+              <Link to="/signup">
+                <Button
+                  bsStyle="success"
+                  style={{margin: 'auto', width: '12em', height: '3.5em'}}
+                  type="submit"
+                  onClick={::this.handleSubmit}>
+                    <p style={{margin: '0', padding: '0', fontSize: '1.5em'}}>Sign Up</p>
+                </Button>
+              </Link>
+            </section>
           </form>
-        </main>
-        <section style={{display: 'flex', justifyContent: 'center'}}>
-          <div style={{marginTop: '0.2em', marginRight: '0.2em', fontSize: '1.1em'}} >
-            Already Signed Up?
+          <div style={{height: '3.5em', marginBottom: '1em', width: '12em', alignSelf: 'center', display: 'flex', marginLeft: '1em'}}>
+            <p style={{marginRight: '1em', marginTop: '1em'}}> Or </p>
+            <Link to="/signin">
+              <Button style={{margin: 'auto', height: '3.5em'}} bsStyle="default" >Sign in</Button>
+            </Link>
           </div>
-          <Link to="/signin">
-            <Button bsStyle="default" >Sign in</Button>
-          </Link>
-        </section>
+        </main>
       </div>
     );
   }

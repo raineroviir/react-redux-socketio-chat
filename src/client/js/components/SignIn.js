@@ -3,29 +3,27 @@ import * as Actions from '../actions/Actions';
 import { connect } from 'react-redux';
 import { Button, Input } from 'react-bootstrap';
 
-@connect()
+@connect(state => ({
+  welcomePage: state.welcomePage,
+}))
 export default class SignIn extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   }
-
   static contextTypes = {
     router: PropTypes.object.isRequired
   }
-
   constructor(props, context) {
     super(props, context);
     this.state = {
-      username: '',
+      username: this.props.welcomePage || '',
       password: ''
     };
   }
-
   componentDidMount() {
     this.refs.usernameInput.getInputDOMNode().focus();
   }
-
   handleChange(event) {
     if (event.target.name === 'username') {
       this.setState({ username: event.target.value });
@@ -34,50 +32,26 @@ export default class SignIn extends Component {
       this.setState({ password: event.target.value });
     }
   }
-
   handleSubmit(event) {
     event.preventDefault();
     const { dispatch } = this.props;
     if (this.state.username.length < 1) {
       this.refs.usernameInput.getInputDOMNode().focus();
     }
-
     if (this.state.username.length > 0 && this.state.password.length < 1) {
       this.refs.passwordInput.getInputDOMNode().focus();
     }
-
     if (this.state.username.length > 0 && this.state.password.length > 0) {
-      var userpass = {
+      var userObj = {
         username: this.state.username,
         password: this.state.password
       };
-
-      const payload = {
-        username: this.state.username,
-        id: Date.now()
-      };
-      // Event chain that progresses the user towards sign-in.  Since I'm using a promise middleware all of these actions are resolved through promises.  Currently I'm actually unsure if this is the right way to go about chaining together promises and the right use case for them here.
-
-      dispatch(Actions.signIn(userpass))
-      .then(() => {
-        dispatch(Actions.loadInitialMessages());
-      })
-      .then(() => {
-        dispatch(Actions.loadInitialChannels());
-      })
-      .then(() => {
-        dispatch(Actions.loadUsersOnline());
-      })
-      .then(() => {
-        dispatch(Actions.userIsOnline(payload));
-      })
-      .then(() => {
+      dispatch(Actions.signIn(userObj)).then(() => {
         this.context.router.transitionTo('/chat');
-      })
+      });
       this.setState({ username: '', password: ''});
     }
   }
-
   render() {
     return (
       <div>

@@ -3,4 +3,4 @@
 .env
 npm-debug.log
 db/
-dist/
+config/oAuthConfig.js

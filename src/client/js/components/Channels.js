@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import ChannelListItem from './ChannelListItem';
+import ChannelListModalItem from './ChannelListModalItem';
 import { Modal, Glyphicon, Input, Button } from 'react-bootstrap';
 const socket = io();
 import * as UserAPIUtils from '../utils/UserAPIUtils';
-import classnames from 'classnames';
 
 export default class Channels extends Component {
 
@@ -13,7 +13,6 @@ export default class Channels extends Component {
     onClick: PropTypes.func.isRequired,
     messages: PropTypes.array.isRequired
   }
-
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -22,25 +21,20 @@ export default class Channels extends Component {
       moreChannelsModal: false
     };
   }
-
   handleChangeChannel(channel) {
     this.props.onClick(channel);
   }
-
   openAddChannelModal() {
     event.preventDefault();
     this.setState({addChannelModal: true});
   }
-
   closeAddChannelModal() {
     event.preventDefault();
     this.setState({addChannelModal: false});
   }
-
   handleModalChange(event) {
     this.setState({channelName: event.target.value});
   }
-
   handleModalSubmit(event) {
     const { channels, actions } = this.props;
     event.preventDefault();
@@ -62,38 +56,31 @@ export default class Channels extends Component {
       this.closeAddChannelModal();
     }
   }
-
   validateChannelName() {
     const { channels } = this.props;
     if (channels.filter(channel => {
       return channel.name === this.state.channelName.trim();
     }).length > 0) {
       return 'error';
-    } else {
-      return 'success';
     }
+    return 'success';
   }
-
   openMoreChannelsModal() {
     event.preventDefault();
     this.setState({moreChannelsModal: true});
   }
-
   closeMoreChannelsModal() {
     event.preventDefault();
     this.setState({moreChannelsModal: false});
   }
-
   createChannelWithinModal() {
     this.closeMoreChannelsModal();
     this.openAddChannelModal();
   }
-
   changeChannelWithinModal(channel) {
     this.closeMoreChannelsModal();
     this.handleChangeChannel(channel);
   }
-
   render() {
     const { channels, actions, messages } = this.props;
     const filteredChannels = channels.slice(0, 8);
@@ -130,7 +117,6 @@ export default class Channels extends Component {
           </Modal>
       </div>
     );
-
     const moreChannelsModal = (
       <div style={{background: 'grey'}}>
         <Modal key={2} show={this.state.moreChannelsModal} onHide={::this.closeMoreChannelsModal}>
@@ -153,7 +139,6 @@ export default class Channels extends Component {
         </Modal>
       </div>
     );
-
     return (
       <section>
         <div>
@@ -163,7 +148,6 @@ export default class Channels extends Component {
               <Glyphicon glyph="plus" />
             </button>
           </span>
-
         </div>
           {newChannelModal}
         <div>
@@ -174,33 +158,10 @@ export default class Channels extends Component {
               }).length} channel={channel} key={channel.id} {...actions} onClick={::this.handleChangeChannel} />
               )}
           </ul>
-
           {moreChannelsBoolean && <a onClick={::this.openMoreChannelsModal} style={{'cursor': 'pointer', 'color': '#85BBE9'}}> + {channels.length - 8} more...</a>}
           {moreChannelsModal}
         </div>
       </section>
-    );
-  }
-}
-
-class ChannelListModalItem extends Component {
-
-  static propTypes = {
-    channel: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired
-  }
-
-  render() {
-    const { channel } = this.props;
-    const { channel: selectedChannel, onClick } = this.props;
-    return (
-      <a className={classnames({ selected: channel === selectedChannel })}
-         style={{ cursor: 'hand', color: 'black'}}
-         onClick={() => onClick(channel)}>
-        <li style={{cursor: 'pointer'}}>
-          <h5>{channel.name}</h5>
-        </li>
-      </a>
     );
   }
 }

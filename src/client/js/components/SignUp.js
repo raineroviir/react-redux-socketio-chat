@@ -7,19 +7,16 @@ import { Input, Button } from 'react-bootstrap';
   welcomePage: state.welcomePage,
   userValidation: state.userValidation.data
 }))
-
 export default class SignUp extends Component {
 
   static propTypes = {
     welcomePage: PropTypes.string.isRequired,
-    userValidation: PropTypes.func.isrequired,
+    userValidation: PropTypes.array.isrequired,
     dispatch: PropTypes.func.isRequired
   }
-
   static contextTypes = {
     router: PropTypes.object.isRequired
   }
-
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -28,12 +25,10 @@ export default class SignUp extends Component {
       confirmPassword: ''
     };
   }
-
   componentWillMount() {
     const { dispatch } = this.props;
-    dispatch(Actions.loadUserList());
+    dispatch(Actions.usernameValidationList());
   }
-
   componentDidMount() {
     if (this.state.username.length) {
       this.refs.passwordInput.getInputDOMNode().focus();
@@ -41,57 +36,30 @@ export default class SignUp extends Component {
       this.refs.usernameInput.getInputDOMNode().focus();
     }
   }
-
   handleSubmit(event) {
     event.preventDefault();
     const { dispatch } = this.props;
-
-
     if (!this.state.username.length) {
       this.refs.usernameInput.getInputDOMNode().focus();
     }
-
     if (this.state.username.length && !this.state.password.length) {
       this.refs.passwordInput.getInputDOMNode().focus();
     }
-
     if (this.state.username.length && this.state.password.length && !this.state.confirmPassword.length) {
       this.refs.confirmPasswordInput.getInputDOMNode().focus();
     }
-
     if (this.state.username.length && this.state.password.length && this.state.confirmPassword.length) {
-      const userpass = {
+      const userObj = {
         username: this.state.username,
         password: this.state.password,
         confirmPassword: this.state.confirmPassword
       };
-
-      const payload = {
-        username: this.state.username,
-        channel: 'Lobby'
-      };
-
-      dispatch(Actions.signUp(userpass))
-      .then(() => {
-        dispatch(Actions.loadInitialMessages());
-      })
-      .then(() => {
-        dispatch(Actions.loadInitialChannels());
-      })
-      .then(() => {
-        dispatch(Actions.loadUsersOnline());
-      })
-      .then(() => {
-        dispatch(Actions.userIsOnline(payload));
-      })
-      .then(() => {
+      dispatch(Actions.signUp(userObj)).then(() => {
         this.context.router.transitionTo('/chat');
       });
-
       this.setState({ username: '', password: '', confirmPassword: ''});
     }
   }
-
   handleChange(event) {
     if (event.target.name === 'username') {
       this.setState({ username: event.target.value });
@@ -103,28 +71,23 @@ export default class SignUp extends Component {
       this.setState({ confirmPassword: event.target.value });
     }
   }
-
   validateUsername() {
     const { userValidation } = this.props;
     if (userValidation.filter(user => {
       return user.username === this.state.username.trim();
     }).length > 0) {
       return 'error';
-    } else {
-      return 'success';
     }
+    return 'success';
   }
-
   validateConfirmPassword() {
     if (this.state.confirmPassword.length > 0 && this.state.password.length > 0) {
       if (this.state.password === this.state.confirmPassword) {
         return 'success';
-      } else {
-        return 'error';
       }
+      return 'error';
     }
   }
-
   render() {
     return (
       <div>

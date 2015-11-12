@@ -9,12 +9,10 @@ export default function typing(state = initialState, action) {
       return [...state, action.username];
     }
     return state;
-
   case STOP_TYPING:
     return state.filter(user =>
       user !== action.username
     );
-
   default:
     return state;
   }

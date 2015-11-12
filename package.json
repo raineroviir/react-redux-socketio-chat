@@ -1,6 +1,6 @@
 {
   "name": "React-redux-socketio-chat",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "react frontend, socketio powered chat. redux as the flux implementation",
   "main": "server.js",
   "directories": {
@@ -68,7 +68,9 @@
     "webpack-dev-middleware": "^1.2.0",
     "webpack-dev-server": "^1.9.0",
     "webpack-hot-middleware": "^1.1.0",
-    "webpack-isomorphic-tools": "^0.8.8"
+    "webpack-isomorphic-tools": "^0.8.8",
+    "react-dom": "^0.14.2",
+    "react": "^0.14.2"
   },
   "dependencies": {
     "babel": "^5.8.23",
@@ -77,17 +79,17 @@
     "body-parser": "^1.13.0",
     "classnames": "^2.1.2",
     "cors": "^2.7.1",
-    "eat": "^0.1.1",
     "express": "^4.12.4",
     "express-session": "^1.11.3",
     "lodash": "^3.9.3",
     "mongoose": "^4.0.5",
     "object-assign": "^3.0.0",
     "passport": "^0.2.2",
-    "passport-http": "^0.2.2",
-    "react": "^0.14.0-rc1",
+    "passport-facebook": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "react": "^0.14.2",
     "react-bootstrap": "^0.25.100-react-pre.1",
-    "react-dom": "^0.14.0-rc1",
+    "react-dom": "^0.14.2",
     "react-redux": "^2.1.2",
     "react-router": "1.0.0-beta3",
     "redux": "^3.0.0",
