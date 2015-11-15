@@ -34,7 +34,7 @@ export default function messages(state = initialState, action) {
     return {...state,
       loading: false,
       loaded: true,
-      data: action.result
+      data: [...action.json]
     };
   case LOAD_MESSAGES_FAIL:
     return {...state,

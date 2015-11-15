@@ -2,6 +2,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../server/models/User');
 var oAuthConfig = require('./oAuthConfig');
+var host = process.env.NODE_ENV === 'development' ? 'localhost:3000' : 'slackclone.herokuapp.com'
 
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
@@ -67,10 +68,11 @@ module.exports = function(passport) {
     });
   }));
 
+  // NOTE: to set up FB auth you need your own clientID, clientSecret and set up your callbackURL.  This can all be done at https://developers.facebook.com/
   passport.use(new FacebookStrategy({
     clientID: oAuthConfig.facebook.clientID,
     clientSecret: oAuthConfig.facebook.clientSecret,
-    callbackURL: "http://slackclone.herokuapp.com/api/auth/facebook/callback"
+    callbackURL: "http://" + host + "/api/auth/facebook/callback"
   },
     function(accessToken, refreshToken, profile, done) {
       User.findOne({ 'facebook.id': profile.id }, function(err, user) {

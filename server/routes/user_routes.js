@@ -41,7 +41,6 @@ module.exports = function loadUserRoutes(router, passport) {
         console.log(err);
         return res.status(500).json({msg: 'internal server error'});
       }
-      console.log(data);
       res.json(data);
     });
   })
