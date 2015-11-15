@@ -1,21 +1,21 @@
 import expect from 'expect';
-import * as actions from '../src/client/js/actions/Actions';
-import * as types from '../src/client/js/constants/ActionTypes';
-import React, { addon } from 'react-addons';
-import WelcomePage from '../src/client/js/components/WelcomePage';
-const { TestUtils } = React.addons;
+import * as actions from '../client/js/actions/Actions';
+import * as types from '../client/js/constants/ActionTypes';
+// import React, { addon } from 'react-addons';
+// import WelcomePage from '../client/js/components/WelcomePage';
+// const { TestUtils } = React.addons;
 
-function setup() {
-
-  let renderer = TestUtils.createRenderer();
-  renderer.render(<Header {...props} />);
-  let output = renderer.getRenderOutput();
-
-  return {
-    output,
-    renderer
-  }
-}
+// function setup() {
+//
+//   let renderer = TestUtils.createRenderer();
+//   renderer.render(<Header {...props} />);
+//   let output = renderer.getRenderOutput();
+//
+//   return {
+//     output,
+//     renderer
+//   }
+// }
 
 describe('actions', () => {
   it('should add a message', () => {

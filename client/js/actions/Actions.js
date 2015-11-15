@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes';
 import * as UserAPIUtils from '../utils/UserAPIUtils';
+import fetch from 'isomorphic-fetch';
 
 // NOTE:Chat actions
 
@@ -116,4 +117,41 @@ export function usernameValidationList() {
     types: [types.LOAD_USERVALIDATION, types.LOAD_USERVALIDATION_SUCCESS, types.LOAD_USERVALIDATION_FAIL],
     promise: UserAPIUtils.usernameValidationList()
   };
+}
+
+function requestMessages() {
+  return {
+    type: types.LOAD_MESSAGES
+  }
+}
+
+export function fetchMessages() {
+  return dispatch => {
+    dispatch(requestMessages())
+    return fetch('/api/messages')
+      .then(response => response.json())
+      .then(json => dispatch(receiveMessages(json)))
+  }
+}
+
+function receiveMessages(json) {
+  return {
+    type: types.LOAD_MESSAGES_SUCCESS,
+    json
+  }
+}
+
+function shouldFetchMessages(state) {
+  const messages = state.messages.data;
+  if (!messages) {
+    return true
+  }
+}
+
+export function fetchMessagesIfNeeded() {
+  return (dispatch, getState) => {
+    if (shouldFetchMessages(getState())) {
+      return dispatch(fetchMessages())
+    }
+  }
 }
