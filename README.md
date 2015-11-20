@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/raineroviir/react-redux-socketio-chat.svg?style=svg)](https://circleci.com/gh/raineroviir/react-redux-socketio-chat)
+
 # React-redux-socketio-chat
 
 To see the live version of the app go to http://slackclone.herokuapp.com
@@ -40,10 +42,6 @@ then to open the database open a new terminal and type in `mongo` and type in `u
 * The awesome community at https://discordapp.com/channels/102860784329052160/102860784329052160
 
 ## Todos
-* ~~Make the app persist on browser refresh~~
-* ~~My session implementation needs to be fixed~~
-* ~~Move all the CSS to inline styling in the React Components~~
-* ~~validation for username/channelname exists~~
 * small profile page for users
 * link accounts together for fb/local users
 * install redux-local storage so on refresh we don't ping the server
