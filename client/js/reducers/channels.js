@@ -1,4 +1,5 @@
 import { ADD_CHANNEL, RECEIVE_CHANNEL, LOAD_CHANNELS, LOAD_CHANNELS_SUCCESS, LOAD_CHANNELS_FAIL } from '../constants/ActionTypes';
+import getId from '../utils/GetIdUtils';
 
 const initialState = {
   loaded: false,
@@ -14,7 +15,7 @@ export default function channels(state = initialState, action) {
     return {...state,
       data: [...state.data, {
         name: action.channel.name,
-        id: (state.data.length === 0) ? 0 : state.data[state.data.length - 1].id + 1
+        id: getId(state.data)
       }]
     };
   case RECEIVE_CHANNEL:
@@ -24,7 +25,7 @@ export default function channels(state = initialState, action) {
     return {...state,
       data: [...state.data, {
         name: action.channel.name,
-        id: (state.data.length === 0) ? 0 : state.data[state.data.length - 1].id + 1
+        id: getId(state.data)
       }]
     };
   case LOAD_CHANNELS:
