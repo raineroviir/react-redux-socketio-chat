@@ -1,4 +1,5 @@
 import { ADD_MESSAGE, RECEIVE_MESSAGE, LOAD_MESSAGES, LOAD_MESSAGES_SUCCESS, LOAD_MESSAGES_FAIL} from '../constants/ActionTypes';
+import getId from '../utils/GetIdUtils';
 
 const initialState = {
   loaded: false,
@@ -9,7 +10,7 @@ export default function messages(state = initialState, action) {
   case ADD_MESSAGE:
     return {...state,
       data: [...state.data, {
-        id: (state.data.length === 0 ) ? 0 : state.data[state.data.length - 1].id + 1,
+        id: getId(state.data),
         channelID: action.message.channelID,
         text: action.message.text,
         user: action.message.user,
@@ -19,7 +20,7 @@ export default function messages(state = initialState, action) {
   case RECEIVE_MESSAGE:
     return {...state,
       data: [...state.data, {
-        id: (state.data.length === 0 ) ? 0 : state.data[state.data.length - 1].id + 1,
+        id: getId(state.data),
         channelID: action.message.channelID,
         text: action.message.text,
         user: action.message.user,
