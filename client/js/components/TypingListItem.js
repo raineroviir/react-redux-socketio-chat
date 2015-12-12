@@ -1,15 +1,16 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
-export default class TypingListItem extends Component {
-
-  static propTypes = {
-    username: PropTypes.string.isRequired
-  }
-  render() {
-    return (
-      <span>
-        {this.props.username}
-      </span>
-    );
-  }
+let TypingListItem = (props) => {
+  const { username } = props;
+  return (
+    <span>
+      {username}
+    </span>
+  );
 }
+
+TypingListItem.propTypes = {
+  username: PropTypes.string.isRequired
+}
+
+export default TypingListItem;
