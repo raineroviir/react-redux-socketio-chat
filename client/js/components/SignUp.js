@@ -151,4 +151,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(ChatContainer)
+export default connect(mapStateToProps)(SignUp)

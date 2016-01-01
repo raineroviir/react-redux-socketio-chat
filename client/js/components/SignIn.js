@@ -94,4 +94,4 @@ function mapStateToProps(state) {
       welcomePage: state.welcomePage,
   }
 }
-export default connect(mapStateToProps)(ChatContainer)
+export default connect(mapStateToProps)(SignIn)

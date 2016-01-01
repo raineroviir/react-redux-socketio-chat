@@ -74,4 +74,4 @@ class WelcomePage extends Component {
   }
 }
 
-export default connect()(ChatContainer)
+export default connect()(WelcomePage)
