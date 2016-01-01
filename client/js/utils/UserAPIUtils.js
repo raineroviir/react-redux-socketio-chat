@@ -34,7 +34,7 @@ export function signIn(user) {
     .send(user)
     .end((err, res) => {
       if (err) {
-        Promise.reject(err);
+        reject(err);
       } else {
         resolve(res.body);
       }

@@ -46,9 +46,10 @@ export default class SignIn extends Component {
         username: this.state.username,
         password: this.state.password
       };
-      dispatch(Actions.signIn(userObj)).then(() => {
-        this.context.router.transitionTo('/chat');
-      });
+      dispatch(Actions.signIn(userObj))
+      // .then(() => {
+      //   this.context.router.transitionTo('/chat');
+      // });
       this.setState({ username: '', password: ''});
     }
   }

@@ -13,7 +13,6 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
-
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
@@ -25,12 +24,30 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loaders: ['babel'],
+      loader: 'babel',
+      query: {
+        plugins: [
+          [
+            'react-transform', {
+              transforms: [{
+                transform: 'react-transform-hmr',
+                imports: ['react'],
+                locals: ['module']
+              }, {
+                transform: 'react-transform-catch-errors',
+                imports: ['react', 'redbox-react']
+              }]
+            }
+          ]
+        ]
+      },
       include: path.join(__dirname, 'client')
-    }, {
+    },
+    {
       test: /\.css?$/,
       loaders: ['style', 'raw']
-    }, {
+    },
+    {
       test: /\.json$/,
       loader: 'json-loader'
     }]
