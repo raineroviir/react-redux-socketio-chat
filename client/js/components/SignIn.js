@@ -3,10 +3,7 @@ import * as Actions from '../actions/Actions';
 import { connect } from 'react-redux';
 import { Button, Input } from 'react-bootstrap';
 
-@connect(state => ({
-  welcomePage: state.welcomePage,
-}))
-export default class SignIn extends Component {
+class SignIn extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -91,3 +88,10 @@ export default class SignIn extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+      welcomePage: state.welcomePage,
+  }
+}
+export default connect(mapStateToProps)(ChatContainer)

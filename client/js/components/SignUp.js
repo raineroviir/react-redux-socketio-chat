@@ -3,11 +3,7 @@ import { connect } from 'react-redux';
 import * as Actions from '../actions/Actions';
 import { Input, Button } from 'react-bootstrap';
 
-@connect(state => ({
-  welcomePage: state.welcomePage,
-  userValidation: state.userValidation.data
-}))
-export default class SignUp extends Component {
+class SignUp extends Component {
 
   static propTypes = {
     welcomePage: PropTypes.string.isRequired,
@@ -147,3 +143,12 @@ export default class SignUp extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+      welcomePage: state.welcomePage,
+      userValidation: state.userValidation.data
+  }
+}
+
+export default connect(mapStateToProps)(ChatContainer)

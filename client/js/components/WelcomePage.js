@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import { Input, Button } from 'react-bootstrap';
 import FBSignIn from './FBSignIn';
 
-@connect()
-export default class WelcomePage extends Component {
+class WelcomePage extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired
@@ -74,3 +73,5 @@ export default class WelcomePage extends Component {
     );
   }
 }
+
+export default connect()(ChatContainer)
