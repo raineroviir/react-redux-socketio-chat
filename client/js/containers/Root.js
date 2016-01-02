@@ -6,7 +6,8 @@ import ChatContainer from './ChatContainer';
 import SignUp from '../components/SignUp';
 import WelcomePage from '../components/WelcomePage';
 import configureStore from '../store/configureStore';
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
+import DevTools from './DevTools';
+
 const store = configureStore();
 
 export default class Root extends Component {
@@ -14,23 +15,21 @@ export default class Root extends Component {
     history: PropTypes.object.isRequired
   }
   render() {
-    const processENV = process.env.NODE_ENV;
     const { history } = this.props;
     return (
       <div className="root">
         <Provider store={store} >
-          <Router history={history}>
-            <Redirect from="/" to="/welcome" />
-            <Redirect from="/_=_" to="/chat" />
-            <Route path="/welcome" component={WelcomePage} />
-            <Route path="/chat" component={ChatContainer} />
-            <Route path="/signin" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
-          </Router>
+          <div>
+            <Router history={history}>
+              <Redirect from="/_=_" to="/chat" />
+              <Route path="/" component={WelcomePage} />
+              <Route path="/chat" component={ChatContainer} />
+              <Route path="/signin" component={SignIn} />
+              <Route path="/signup" component={SignUp} />
+            </Router>
+            {process.env.NODE_ENV !== 'production' && <DevTools />}
+          </div>
         </Provider>
-        {processENV === 'development' && <DebugPanel top right bottom >
-          <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>}
       </div>
     );
   }

@@ -1,7 +1,20 @@
-export messages from './messages';
-export channels from './channels';
-export activeChannel from './activeChannel';
-export auth from './auth';
-export typers from './typers';
-export welcomePage from './welcomePage';
-export userValidation from './userValidation';
+import messages from './messages';
+import channels from './channels';
+import activeChannel from './activeChannel';
+import auth from './auth';
+import typers from './typers';
+import welcomePage from './welcomePage';
+import userValidation from './userValidation';
+import {combineReducers} from 'redux';
+
+const rootReducer = combineReducers({
+  messages,
+  channels,
+  activeChannel,
+  auth,
+  typers,
+  welcomePage,
+  userValidation
+});
+
+export default rootReducer;

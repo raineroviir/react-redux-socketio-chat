@@ -18,9 +18,6 @@ export default class Chat extends Component {
     activeChannel: PropTypes.object.isRequired,
     typers: PropTypes.array.isRequired
   }
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  }
   componentDidMount() {
     const { actions } = this.props;
     socket.on('new bc message', msg =>
@@ -52,7 +49,6 @@ export default class Chat extends Component {
   handleSignOut() {
     const { dispatch } = this.props;
     dispatch(Actions.signOut());
-    this.context.router.transitionTo('/welcome');
   }
   changeActiveChannel(channel) {
     const { actions } = this.props;

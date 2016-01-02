@@ -63,7 +63,10 @@ export default function info(state = initialState, action = {}) {
     return {
       ...state,
       signingIn: false,
-      user: null,
+      user: {
+        username: null,
+        id: null
+      },
       signInError: action.error
     };
   case AUTH_SIGNUP:

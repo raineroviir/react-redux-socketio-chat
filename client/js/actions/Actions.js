@@ -1,6 +1,7 @@
 import * as types from '../constants/ActionTypes';
 import * as UserAPIUtils from '../utils/UserAPIUtils';
 import fetch from 'isomorphic-fetch';
+import { browserHistory } from 'react-router';
 
 // NOTE:Chat actions
 

@@ -2,14 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import * as Actions from '../actions/Actions';
 import { connect } from 'react-redux';
 import { Button, Input } from 'react-bootstrap';
+import { browserHistory } from 'react-router'
 
 class SignIn extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-  }
-  static contextTypes = {
-    router: PropTypes.object.isRequired
   }
   constructor(props, context) {
     super(props, context);
@@ -44,9 +42,6 @@ class SignIn extends Component {
         password: this.state.password
       };
       dispatch(Actions.signIn(userObj))
-      // .then(() => {
-      //   this.context.router.transitionTo('/chat');
-      // });
       this.setState({ username: '', password: ''});
     }
   }

@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/Actions';
 import { Input, Button } from 'react-bootstrap';
+import { browserHistory } from 'react-router'
+
 
 class SignUp extends Component {
 
@@ -9,9 +11,6 @@ class SignUp extends Component {
     welcomePage: PropTypes.string.isRequired,
     userValidation: PropTypes.array.isrequired,
     dispatch: PropTypes.func.isRequired
-  }
-  static contextTypes = {
-    router: PropTypes.object.isRequired
   }
   constructor(props, context) {
     super(props, context);
@@ -50,9 +49,7 @@ class SignUp extends Component {
         password: this.state.password,
         confirmPassword: this.state.confirmPassword
       };
-      dispatch(Actions.signUp(userObj)).then(() => {
-        this.context.router.transitionTo('/chat');
-      });
+      dispatch(Actions.signUp(userObj))
       this.setState({ username: '', password: '', confirmPassword: ''});
     }
   }

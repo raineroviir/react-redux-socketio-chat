@@ -22,6 +22,10 @@ process.on('uncaughtException', function (err) {
     console.log(err);
 });
 
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+})
+
 app.use(cors());
 app.use(session({
   secret: 'I need more minerals',

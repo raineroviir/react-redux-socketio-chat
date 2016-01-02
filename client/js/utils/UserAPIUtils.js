@@ -1,4 +1,5 @@
 import superagent from 'superagent';
+import { browserHistory } from 'react-router'
 
 export function loadAuth() {
   return new Promise((resolve, reject) => {
@@ -23,6 +24,7 @@ export function signUp(user) {
         Promise.reject(err);
       } else {
         resolve(res.body);
+        browserHistory.push('/chat')
       }
     });
   });
@@ -37,6 +39,7 @@ export function signIn(user) {
         reject(err);
       } else {
         resolve(res.body);
+        browserHistory.push('/chat')
       }
     });
   });
@@ -49,6 +52,7 @@ export function signOut() {
       if (err) {
         reject(err);
       } else {
+        browserHistory.push('/')
         resolve(true);
       }
     });

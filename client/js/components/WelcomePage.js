@@ -36,7 +36,7 @@ class WelcomePage extends Component {
         <header style={{display: 'flex', justifyContent: 'center', flexGrow: '0', order: '0'}}>
           <p style={{fontSize: '1.5em', marginRight: '1em'}}>Welcome to React Redux Socket.io Chat</p>
         </header>
-        <FBSignIn />
+        {process.env.NODE_ENV === 'production' && <FBSignIn />}
         <main style={{display: 'flex', justifyContent: 'center'}}>
           <form style={{height: '20rem', display: 'flex', justifyContent: 'center'}}>
             <div style={{margin: 'auto', paddingRight: '0.2em', height: '3.5em'}}>
