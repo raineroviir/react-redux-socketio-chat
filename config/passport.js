@@ -1,6 +1,6 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('../server/models/User');
+var User = require('../src/server/models/User');
 var oAuthConfig = require('./oAuthConfig');
 var host = process.env.NODE_ENV === 'development' ? 'localhost:3000' : 'slackclone.herokuapp.com'
 
