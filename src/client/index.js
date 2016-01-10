@@ -14,8 +14,8 @@ const rootElement = document.getElementById('react');
 
 
 ReactDOM.render(
-  <Provider className="root" store={store}>
-    <div>
+  <Provider store={store}>
+    <div style={{height: '100%'}}>
       <Router children={routes} history={browserHistory} />
       {process.env.NODE_ENV !== 'production' && <DevTools />}
     </div>

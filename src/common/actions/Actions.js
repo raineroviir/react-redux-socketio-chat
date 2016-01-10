@@ -124,13 +124,6 @@ export function fetchMessagesIfNeeded() {
   }
 }
 
-export function usernameValidationList() {
-  return {
-    types: [types.LOAD_USERVALIDATION, types.LOAD_USERVALIDATION_SUCCESS, types.LOAD_USERVALIDATION_FAIL],
-    promise: UserAPIUtils.usernameValidationList()
-  };
-}
-
 function loadingValidationList() {
   return {
     type: types.LOAD_USERVALIDATION
@@ -147,9 +140,13 @@ function receiveValidationList(json) {
 export function usernameValidationList() {
   return dispatch => {
     dispatch(loadingValidationList())
-    return fetch('/api/allusers')
-      .then(response => response.json())
-      .then(json => dispatch(receiveValidationList(json)))
+    return fetch('/api/all_usernames')
+      .then(response => {
+        return response.json()
+    })
+      .then(json => {
+        return dispatch(receiveValidationList(json.map((item) => item.local.username)))
+    })
       .catch(error => {throw error});
   }
 }

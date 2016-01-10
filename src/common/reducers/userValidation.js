@@ -5,7 +5,7 @@ const initialState = {
   data: []
 };
 
-export default function messages(state = initialState, action) {
+export default function userValidation(state = initialState, action) {
   switch (action.type) {
   case LOAD_USERVALIDATION:
     return {...state,

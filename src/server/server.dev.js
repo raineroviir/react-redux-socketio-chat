@@ -1,7 +1,7 @@
 'use strict';
 var express = require('express');
 var path = require('path');
-var http = require('http').Server(app);
+// var http = require('http').Server(app);
 var mongoose = require('mongoose');
 const app = express();
 
@@ -21,27 +21,47 @@ import cors from 'cors';
 import webpack from 'webpack';
 import webpackConfig from '../../config/webpack.config.dev'
 const compiler = webpack(webpackConfig);
-
+var User = require('./models/User.js');
 import passport from 'passport';
 require('../../config/passport')(passport);
+import SocketIo from 'socket.io';
 
 //set env vars
 process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat_dev';
 process.env.PORT = process.env.PORT || 3000;
 
 // connect our DB
-if (process.env.NODE_ENV === 'production') {
-  mongoose.connect(process.env.MONGOLAB_URI);
-}
+mongoose.connect(process.env.MONGOLAB_URI);
+
 process.on('uncaughtException', function (err) {
   console.log(err);
 });
+
+app.use(cors());
+// app.use(cookieSession({
+//   name: 'session',
+//   keys: ['accessToken', 'username']
+// }))
+app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: webpackConfig.output.publicPath
 }));
 app.use(require('webpack-hot-middleware')(compiler));
+
+//load routers
+var messageRouter = express.Router();
+var usersRouter = express.Router();
+var channelRouter = express.Router();
+require('./routes/message_routes')(messageRouter);
+require('./routes/channel_routes')(channelRouter);
+require('./routes/user_routes')(usersRouter, passport);
+app.use('/api', messageRouter);
+app.use('/api', usersRouter);
+app.use('/api', channelRouter);
+
 app.use('/', express.static(path.join(__dirname, '..', 'static')));
 
 app.get('/*', function(req, res) {
@@ -63,7 +83,7 @@ app.get('/*', function(req, res) {
 
     const InitialView = (
       <Provider className="root" store={store}>
-        <div>
+        <div style={{height: '100%'}}>
           <RouterContext {...renderProps} />
           {process.env.NODE_ENV !== 'production' && <DevTools />}
         </div>
@@ -76,26 +96,6 @@ app.get('/*', function(req, res) {
   })
 })
 
-app.use(cors());
-app.use(cookieSession({
-  name: 'session',
-  keys: ['accessToken', 'username']
-}))
-app.use(passport.initialize());
-app.use(passport.session());
-
-//load routers
-var messageRouter = express.Router();
-var usersRouter = express.Router();
-var channelRouter = express.Router();
-require('./routes/message_routes')(messageRouter);
-require('./routes/channel_routes')(channelRouter);
-require('./routes/user_routes')(usersRouter, passport);
-app.use('/api', messageRouter);
-app.use('/api', usersRouter);
-app.use('/api', channelRouter);
-
-
 var webpackServer = app.listen(process.env.PORT, 'localhost', function(err) {
   if (err) {
     console.log(err);
@@ -104,9 +104,8 @@ var webpackServer = app.listen(process.env.PORT, 'localhost', function(err) {
   console.log('server listening on port: %s', process.env.PORT);
 });
 
-// attach socket.io onto our development server
-var io = require('socket.io')(webpackServer);
-var socketEvents = require('./socketEvents')(io);
+const io = new SocketIo(webpackServer, {path: '/api/chat'})
+const socketEvents = require('./socketEvents')(io);
 
 function renderFullPage(html, initialState) {
   return `
@@ -120,7 +119,7 @@ function renderFullPage(html, initialState) {
         <title>spotify3x</title>
       </head>
       <body>
-        <div id="react">${html}</div>
+        <container id="react">${html}</container>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
         </script>

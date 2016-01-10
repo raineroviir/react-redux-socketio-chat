@@ -5,17 +5,17 @@ var oAuthConfig = require('./oAuthConfig');
 var host = process.env.NODE_ENV === 'development' ? 'localhost:3000' : 'slackclone.herokuapp.com'
 
 module.exports = function(passport) {
-  passport.serializeUser(function(user, done) {
-    // console.log('serializeUser: ' + user.id);
-    done(null, user.id);
-  });
+  // passport.serializeUser(function(user, done) {
+  //   console.log('serializeUser: ' + user.id);
+  //   done(null, user.id);
+  // });
 
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      // console.log('deserializeUser: ' + user);
-      done(err, user);
-    });
-  });
+  // passport.deserializeUser(function(id, done) {
+  //   User.findById(id, function(err, user) {
+  //     console.log('deserializeUser: ' + user);
+  //     done(err, user);
+  //   });
+  // });
 
   passport.use('local-signup', new LocalStrategy({
     usernameField: 'username',
@@ -59,12 +59,7 @@ module.exports = function(passport) {
       if (!user.validPassword(password)) {
         return done(null, false)
       }
-      user.online = true;
-      user.save(function(err) {
-        if (err) { console.log(err); }
-        console.log(user);
-        return done(null, user);
-      });
+      return done(null, user);
     });
   }));
 
@@ -78,11 +73,7 @@ module.exports = function(passport) {
       User.findOne({ 'facebook.id': profile.id }, function(err, user) {
         if (err) { console.log(err); }
         if (!err && user !== null) {
-          user.online = true;
-          user.save(function(err) {
-            if (err) { console.log(err); }
-            done(null, user);
-          });
+          done(null, user);
         } else {
           var newUser = new User({ 'facebook.id': profile.id, 'facebook.username': profile.displayName, online: true});
           newUser.save(function(err, user) {

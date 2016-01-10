@@ -5,9 +5,9 @@ import { Input } from 'react-bootstrap';
 export default class MessageComposer extends Component {
 
   static propTypes = {
-    activeChannel: PropTypes.object.isRequired,
+    activeChannel: PropTypes.string.isRequired,
     onSave: PropTypes.func.isRequired,
-    user: PropTypes.string.isRequired,
+    user: PropTypes.object.isRequired,
     socket: PropTypes.object.isRequired
   };
   constructor(props, context) {
@@ -18,13 +18,13 @@ export default class MessageComposer extends Component {
     };
   }
   handleSubmit(event) {
-    const { user, socket } = this.props;
+    const { user, socket, activeChannel} = this.props;
     const text = event.target.value.trim();
     if (event.which === 13) {
       event.preventDefault();
       var newMessage = {
         id: Date.now(),
-        channelID: this.props.activeChannel.name,
+        channelID: this.props.activeChannel,
         text: text,
         user: user,
         time: moment().format('lll')
@@ -32,18 +32,18 @@ export default class MessageComposer extends Component {
       socket.emit('new message', newMessage);
       this.props.onSave(newMessage);
       this.setState({ text: '', typing: false });
-      socket.emit('stop typing');
+      socket.emit('stop typing', { user: user.username, channel: activeChannel });
     }
   }
   handleChange(event) {
-    const { socket } = this.props;
+    const { socket, user, activeChannel } = this.props;
     this.setState({ text: event.target.value });
     if (event.target.value.length > 0 && !this.state.typing) {
-      socket.emit('typing');
+      socket.emit('typing', { user: user.username, channel: activeChannel });
       this.setState({ typing: true});
     }
     if (event.target.value.length === 0 && this.state.typing) {
-      socket.emit('stop typing');
+      socket.emit('stop typing', { user: user.username, channel: activeChannel });
       this.setState({ typing: false});
     }
   }
@@ -56,14 +56,13 @@ export default class MessageComposer extends Component {
         width: '100%',
         flexShrink: '0',
         order: '2',
-        height: '5rem',
-        marginBottom: '0',
         marginTop: '0.5em'
       }}>
         <Input
           style={{
             height: '100%',
-            fontSize: '2em'
+            fontSize: '2em',
+            marginBottom: '1em'
           }}
           type="textarea"
           name="message"

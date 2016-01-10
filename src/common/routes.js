@@ -10,6 +10,7 @@ import App from './containers/App';
 const Routes = (
   <Route path="/" component={App}>
     <IndexRoute component={WelcomePage} />
+    <Route path="/welcome" component={WelcomePage} />
     <Route path="/signin" component={SignIn} />
     <Route path="/signup" component={SignUp} />
     <Route path="/chat" component={ChatContainer} />

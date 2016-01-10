@@ -1,20 +1,24 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-const MessageListItem = (props) => {
-  const { message } = props;
-  return (
-    <li>
-      <span>
-        <b style={{color: '#66c'}}>{message.user} </b>
-        <i style={{color: '#aad', opacity: '0.8'}}>{message.time}</i>
-      </span>
-      <div style={{clear: 'both', paddingTop: '0.1em', marginTop: '-1px', paddingBottom: '0.3em'}}>{message.text}</div>
-    </li>
-  );
+export default class MessageListItem extends Component {
+
+  static propTypes = {
+    message: PropTypes.object.isRequired
+  };
+  handleClick(user) {
+    console.log(user);
+    this.props.handleSendPrivateMessage(user);
+  }
+  render() {
+    const { message } = this.props;
+    return (
+      <li>
+        <span>
+          <b style={{color: '#66c'}}><button style={{background: 'Transparent',backgroundRepeat: 'noRepeat', border: 'none', cursor: 'pointer', overflow: 'hidden', outline: 'none'}} onClick={this.handleClick.bind(this, message.user)}>{message.user.username}</button></b>
+          <i style={{color: '#aad', opacity: '0.8'}}>{message.time}</i>
+        </span>
+        <div style={{clear: 'both', paddingTop: '0.1em', marginTop: '-1px', paddingBottom: '0.3em'}}>{message.text}</div>
+      </li>
+    );
+  }
 }
-
-MessageListItem.propTypes = {
-  message: PropTypes.object.isRequired,
-}
-
-export default MessageListItem;

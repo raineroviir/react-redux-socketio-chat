@@ -22,6 +22,9 @@ export default class Channels extends Component {
     };
   }
   handleChangeChannel(channel) {
+    if(this.state.moreChannelsModal) {
+      this.closeMoreChannelsModal();
+    }
     this.props.onClick(channel);
   }
   openAddChannelModal() {
@@ -76,10 +79,6 @@ export default class Channels extends Component {
     this.closeMoreChannelsModal();
     this.openAddChannelModal();
   }
-  changeChannelWithinModal(channel) {
-    this.closeMoreChannelsModal();
-    this.handleChangeChannel(channel);
-  }
   render() {
     const { channels, actions, messages } = this.props;
     const filteredChannels = channels.slice(0, 8);
@@ -128,7 +127,7 @@ export default class Channels extends Component {
           <Modal.Body>
             <ul style={{height: 'auto', margin: '0', overflowY: 'auto', padding: '0'}}>
               {restOfTheChannels.map(channel =>
-                <ChannelListModalItem channel={channel} key={channel.id} {...actions} onClick={::this.changeChannelWithinModal} />
+                <ChannelListModalItem channel={channel} key={channel.id} {...actions} onClick={::this.handleChangeChannel} />
                 )}
             </ul>
           </Modal.Body>

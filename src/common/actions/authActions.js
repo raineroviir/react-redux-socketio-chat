@@ -25,23 +25,6 @@ export function fetchAuth() {
   }
 }
 
-export function signIn(user) {
-  return {
-    types: [types.AUTH_SIGNIN,
-      types.AUTH_SIGNIN_SUCCESS,
-      types.AUTH_SIGNIN_FAIL],
-    promise: UserAPIUtils.signIn(user)
-  };
-}
-
-export function signUp(user) {
-  return {
-    types: [types.AUTH_SIGNUP,
-      types.AUTH_SIGNUP_SUCCESS,
-      types.AUTH_SIGNUP_FAIL],
-    promise: UserAPIUtils.signUp(user)
-  };
-}
 
 function requestSignUp() {
   return {
@@ -49,11 +32,14 @@ function requestSignUp() {
   }
 }
 
-function receiveUser(json) {
-  console.log(json);
+function receiveUser(username) {
+  const newUser = {
+    name: username,
+    id: Symbol(username)
+  }
   return {
     type: types.AUTH_SIGNUP_SUCCESS,
-    json
+    newUser
   }
 }
 
@@ -79,5 +65,52 @@ export function signOut() {
         }
       })
       .catch(error => {throw error});
+  }
+}
+
+export function signUp(user) {
+  return dispatch => {
+    dispatch(requestSignUp())
+    return fetch('/api/sign_up', {
+      method: 'post',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+      })
+      .then(response => {
+        if(response.status === 200 || 201) {
+          dispatch(receiveUser(user.username));
+          browserHistory.push('/chat');
+        }
+      })
+      .catch(error => {throw error});
+  };
+}
+
+export function signIn(user) {
+  return {
+    types: [types.AUTH_SIGNIN,
+      types.AUTH_SIGNIN_SUCCESS,
+      types.AUTH_SIGNIN_FAIL],
+    promise: UserAPIUtils.signIn(user)
+  };
+}
+
+// function requestSignIn() {
+//   return {
+//     type: types.AUTH_SIGNIN
+//   }
+// }
+
+// function receiveSignIn()
+
+// export function signIn(user) {
+
+// }
+
+export function receiveSocket(socketID) {
+  return {
+    type: types.RECEIVE_SOCKET,
+    socketID
   }
 }

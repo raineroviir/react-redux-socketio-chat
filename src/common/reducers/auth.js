@@ -10,18 +10,20 @@ import {
   AUTH_SIGNOUT_FAIL,
   AUTH_SIGNUP,
   AUTH_SIGNUP_SUCCESS,
-  AUTH_SIGNUP_FAIL
+  AUTH_SIGNUP_FAIL,
+  RECEIVE_SOCKET
 } from '../constants/ActionTypes';
 
 const initialState = {
   loaded: false,
   user: {
     username: null,
-    id: null
+    id: null,
+    socketID: null
   }
 };
 
-export default function info(state = initialState, action = {}) {
+export default function auth(state = initialState, action = {}) {
   switch (action.type) {
   case AUTH_LOAD:
     return {
@@ -55,8 +57,8 @@ export default function info(state = initialState, action = {}) {
       ...state,
       signingIn: false,
       user: {
-        username: action.result.local.username,
-        id: action.result.id
+        username: action.json.local.username,
+        id: action.json.id
       }
     };
   case AUTH_SIGNIN_FAIL:
@@ -79,8 +81,9 @@ export default function info(state = initialState, action = {}) {
       ...state,
       signingUp: false,
       user: {
-        username: action.result.local.username,
-        id: action.result._id
+        username: action.newUser.name,
+        id: action.newUser.id,
+        socketID: null
       }
     };
   case AUTH_SIGNUP_FAIL:
@@ -110,6 +113,15 @@ export default function info(state = initialState, action = {}) {
       ...state,
       signingOut: false,
       signOutError: action.error
+    };
+
+  case RECEIVE_SOCKET:
+    console.log(action);
+    return {
+      ...state,
+      user: {...state.user,
+        socketID: action.socketID
+      }
     };
   default:
     return state;

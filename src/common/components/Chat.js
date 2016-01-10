@@ -6,8 +6,6 @@ import * as Actions from '../actions/Actions';
 import * as authActions from '../actions/authActions';
 import TypingListItem from './TypingListItem';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import io from 'socket.io-client';
-let socket = io(`http://localhost:3000`);
 
 export default class Chat extends Component {
 
@@ -17,26 +15,31 @@ export default class Chat extends Component {
     user: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     channels: PropTypes.array.isRequired,
-    activeChannel: PropTypes.object.isRequired,
-    typers: PropTypes.array.isRequired
+    activeChannel: PropTypes.string.isRequired,
+    typers: PropTypes.array.isRequired,
+    socket: PropTypes.object.isRequired
   };
   componentDidMount() {
-    const { actions } = this.props;
+    const { actions, socket, user, dispatch } = this.props;
     socket.on('new bc message', msg =>
       actions.receiveRawMessage(msg)
     );
-    socket.on('typing bc', username =>
-      actions.typing(username)
+    socket.on('typing bc', user =>
+      actions.typing(user)
     );
-    socket.on('stop typing bc', username =>
-      actions.stopTyping(username)
+    socket.on('stop typing bc', user =>
+      actions.stopTyping(user)
     );
     socket.on('new channel', channel =>
       actions.receiveRawChannel(channel)
     );
-    if (!this.props.user.username) {
-      authActions.fetchAuth();
-    }
+    socket.on('receive socket', socketID => {
+      dispatch(authActions.receiveSocket(socketID));
+    });
+    socket.emit('chat mounted', user);
+    socket.on('receive private channel', channel => {
+      actions.receiveRawChannel(channel)
+    })
   }
   componentDidUpdate() {
     const messageList = this.refs.messageList;
@@ -53,12 +56,25 @@ export default class Chat extends Component {
     dispatch(authActions.signOut());
   }
   changeActiveChannel(channel) {
-    const { actions } = this.props;
+    const { actions, socket, activeChannel } = this.props;
+    socket.emit('leave channel', activeChannel);
+    socket.emit('join channel', channel);
     actions.changeChannel(channel);
   }
+  handleSendPrivateMessage(user) {
+    const { dispatch, socket } = this.props;
+    const sendingUser = this.props.user;
+    const newChannel = {
+        name: `${user.username}+${sendingUser.username}`,
+        id: Date.now()
+      };
+    dispatch(Actions.createChannel(newChannel));
+    this.changeActiveChannel(newChannel);
+    socket.emit('new private channel', user.socketID, newChannel);
+  }
   render() {
-    const { messages, channels, actions, activeChannel, typers, dispatch} = this.props;
-    const filteredMessages = messages.filter(message => message.channelID === activeChannel.name);
+    const { messages, socket, channels, actions, activeChannel, typers, dispatch, user} = this.props;
+    const filteredMessages = messages.filter(message => message.channelID === activeChannel);
     const username = this.props.user.username;
     const dropDownMenu = (
       <div style={{'width': '21rem', 'top': '0', alignSelf: 'baseline', padding: '0', margin: '0', order: '1'}}>
@@ -78,20 +94,20 @@ export default class Chat extends Component {
         <div className="main">
           <header style={{background: '#FFFFFF', color: 'black', flexGrow: '0', order: '0', fontSize: '2.3em', paddingLeft: '0.2em'}}>
             <div>
-            {activeChannel.name}
+            {activeChannel}
             <span style={{fontSize: '0.5em', marginLeft: '2em'}}>
             Message Count: {filteredMessages.length}
             </span>
             </div>
           </header>
-          <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', width: '100%', flexGrow: '1', order: '1'}} ref="messageList">
+          <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
             {filteredMessages.map(message =>
-              <MessageListItem message={message} key={message.id} />
+              <MessageListItem handleSendPrivateMessage={::this.handleSendPrivateMessage} message={message} key={message.id} />
             )}
           </ul>
-          <MessageComposer socket={socket} activeChannel={activeChannel} user={username} onSave={::this.handleSave} />
+          <MessageComposer socket={socket} activeChannel={activeChannel} user={user} onSave={::this.handleSave} />
         </div>
-        <footer style={{fontSize: '0.9em', position: 'fixed', bottom: '0.2em', left: '21.5rem', color: '#000000', width: '100%', opacity: '0.5'}}>
+        <footer style={{fontSize: '1em', position: 'fixed', bottom: '0.2em', left: '21.5rem', color: '#000000', width: '100%', opacity: '0.5'}}>
           {typers.length === 1 &&
             <div>
               <span>

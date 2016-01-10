@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import fetch from 'isomorphic-fetch';
 
 export function signUp(user) {
+  console.log('signing up!');
   return new Promise((resolve, reject) => {
     superagent
     .post('/api/sign_up')
@@ -11,6 +12,7 @@ export function signUp(user) {
       if (err) {
         Promise.reject(err);
       } else {
+        console.log(res.body);
         resolve(res.body);
         browserHistory.push('/chat')
       }
@@ -18,6 +20,7 @@ export function signUp(user) {
   });
 }
 export function signIn(user) {
+  console.log('signing in!');
   return new Promise((resolve, reject) => {
     superagent
     .post('/api/sign_in')
@@ -26,6 +29,7 @@ export function signIn(user) {
       if (err) {
         reject(err);
       } else {
+        console.log(res.body);
         resolve(res.body);
         browserHistory.push('/chat')
       }

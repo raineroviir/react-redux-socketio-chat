@@ -6,7 +6,7 @@ var messageSchema = mongoose.Schema({
   id: String,
   channelID: String,
   text: String,
-  user: String,
+  user: Object,
   time: String
 });
 

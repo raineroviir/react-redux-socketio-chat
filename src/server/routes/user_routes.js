@@ -12,15 +12,16 @@ module.exports = function loadUserRoutes(router, passport) {
   }));
 
   router.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    session: false,
     successRedirect: '/',
     failureRedirect: '/'
   }));
 
-  router.post('/sign_up', passport.authenticate('local-signup'), function(req, res) {
+  router.post('/sign_up', passport.authenticate('local-signup', { session: false}), function(req, res) {
     res.json(req.user);
   });
 
-  router.post('/sign_in', passport.authenticate('local-login'), function(req, res) {
+  router.post('/sign_in', passport.authenticate('local-login', { session: false}), function(req, res) {
     res.json(req.user);
   });
 
@@ -35,7 +36,7 @@ module.exports = function loadUserRoutes(router, passport) {
   });
 
   // get usernames for validating whether a username is available
-  router.get('/allusers', function(req, res) {
+  router.get('/all_usernames', function(req, res) {
     User.find({'local.username': { $exists: true } }, {'local.username': 1, _id:0}, function(err, data) {
       if(err) {
         console.log(err);
@@ -43,20 +44,5 @@ module.exports = function loadUserRoutes(router, passport) {
       }
       res.json(data);
     });
-  })
-
-  // Check if username in DB
-  router.post('/validate_username', function(req, res) {
-    User.find({username: req.body.username}, function(err, data) {
-      if (err) {
-        console.log(err)
-        return res.status(500).json({msg: 'error validating username'})
-      }
-      if (data.length > 0) {
-        res.json({valid: false})
-      } else {
-        res.json({valid: true})
-      }
-    }).limit(1)
   })
 };

@@ -1,7 +1,7 @@
 import { TYPING, STOP_TYPING} from '../constants/ActionTypes';
 
 const initialState = [];
-export default function typing(state = initialState, action) {
+export default function typers(state = initialState, action) {
   switch (action.type) {
 
   case TYPING:
@@ -17,3 +17,5 @@ export default function typing(state = initialState, action) {
     return state;
   }
 }
+
+// state.filter(item => Object.keys(item)[0] === 'super')

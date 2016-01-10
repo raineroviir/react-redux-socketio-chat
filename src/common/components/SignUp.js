@@ -20,8 +20,10 @@ class SignUp extends Component {
     };
   }
   componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(Actions.usernameValidationList());
+    const { dispatch, userValidation } = this.props;
+    if(userValidation.length === 0) {
+      dispatch(Actions.usernameValidationList());
+    }
   }
   componentDidMount() {
     if (this.state.username.length) {
@@ -66,7 +68,7 @@ class SignUp extends Component {
   validateUsername() {
     const { userValidation } = this.props;
     if (userValidation.filter(user => {
-      return user.local.username === this.state.username.trim();
+      return user === this.state.username.trim();
     }).length > 0) {
       return 'error';
     }
