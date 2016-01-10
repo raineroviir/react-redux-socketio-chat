@@ -49,7 +49,8 @@ export default class Channels extends Component {
     }).length < 1) {
       const newChannel = {
         name: this.state.channelName.trim(),
-        id: Date.now()
+        id: Date.now(),
+        private: false
       };
       dispatch(Actions.createChannel(newChannel));
       this.handleChangeChannel(newChannel);

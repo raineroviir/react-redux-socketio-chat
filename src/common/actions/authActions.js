@@ -87,26 +87,41 @@ export function signUp(user) {
   };
 }
 
-export function signIn(user) {
+function requestSignIn() {
   return {
-    types: [types.AUTH_SIGNIN,
-      types.AUTH_SIGNIN_SUCCESS,
-      types.AUTH_SIGNIN_FAIL],
-    promise: UserAPIUtils.signIn(user)
-  };
+    type: types.AUTH_SIGNIN
+  }
 }
 
-// function requestSignIn() {
-//   return {
-//     type: types.AUTH_SIGNIN
-//   }
-// }
+function receiveSignIn(username) {
+  const user = {
+    name: username,
+    id: Symbol(username)
+  }
+  return {
+    type: types.AUTH_SIGNIN_SUCCESS,
+    user
+  }
+}
 
-// function receiveSignIn()
-
-// export function signIn(user) {
-
-// }
+export function signIn(user) {
+  return dispatch => {
+    dispatch(requestSignIn())
+     return fetch('/api/sign_in', {
+      method: 'post',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+      })
+      .then(response => {
+        if(response.status === 200 || 201) {
+          dispatch(receiveSignIn(user.username));
+          browserHistory.push('/chat');
+        }
+      })
+      .catch(error => {throw error});
+  };
+}
 
 export function receiveSocket(socketID) {
   return {

@@ -11,7 +11,7 @@ class ChatContainer extends Component {
   componentWillMount() {
     const { dispatch, user } = this.props;
     dispatch(Actions.fetchMessages());
-    dispatch(Actions.fetchChannels());
+    dispatch(Actions.fetchChannels(user.username));
   }
   render() {
     const actions = bindActionCreators(Actions, this.props.dispatch);

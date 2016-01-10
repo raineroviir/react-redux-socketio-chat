@@ -23,11 +23,6 @@ exports = module.exports = function(io) {
     socket.on('stop typing', function (data) {
       socket.broadcast.to(data.channel).emit('stop typing bc', data.user);
     });
-    // socket.on('private message', function(id, msg) {
-    //   console.log(id, msg);
-    //   socket.broadcast.to(id).emit('send private message', msg);
-    //   //socket.join(id) ?
-    // })
     socket.on('new private channel', function(socketID, channel) {
       console.log(socketID, channel);
       socket.broadcast.to(socketID).emit('receive private channel', channel);

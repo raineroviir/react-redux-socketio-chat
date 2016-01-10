@@ -53,12 +53,13 @@ export default function auth(state = initialState, action = {}) {
       signingIn: true
     };
   case AUTH_SIGNIN_SUCCESS:
+    console.log(action);
     return {
       ...state,
       signingIn: false,
       user: {
-        username: action.json.local.username,
-        id: action.json.id
+        username: action.user.name,
+        id: action.user.id
       }
     };
   case AUTH_SIGNIN_FAIL:

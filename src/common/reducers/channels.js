@@ -12,20 +12,14 @@ export default function channels(state = initialState, action) {
       return state;
     }
     return {...state,
-      data: [...state.data, {
-        name: action.channel.name,
-        id: (state.data.length === 0) ? 0 : state.data[state.data.length - 1].id + 1
-      }]
+      data: [...state.data, action.channel]
     };
   case RECEIVE_CHANNEL:
     if (state.data.filter(channel => channel.name === action.channel.name).length !== 0) {
       return state;
     }
     return {...state,
-      data: [...state.data, {
-        name: action.channel.name,
-        id: (state.data.length === 0) ? 0 : state.data[state.data.length - 1].id + 1
-      }]
+      data: [...state.data, action.channel]
     };
   case LOAD_CHANNELS:
     return {...state,

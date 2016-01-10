@@ -62,15 +62,25 @@ export default class Chat extends Component {
     actions.changeChannel(channel);
   }
   handleSendPrivateMessage(user) {
-    const { dispatch, socket } = this.props;
+    const { dispatch, socket, channels } = this.props;
     const sendingUser = this.props.user;
-    const newChannel = {
+    const doesPrivateChannelExist = channels.filter(item => {
+      return item.between.find(name => {
+        return name === (sendingUser.username || user.username)
+      })
+    })
+    console.log(doesPrivateChannelExist);
+    if (sendingUser.username !== user.username && doesPrivateChannelExist.length === 0) {
+      const newChannel = {
         name: `${user.username}+${sendingUser.username}`,
-        id: Date.now()
+        id: Date.now(),
+        private: true,
+        between: [user.username, sendingUser.username]
       };
-    dispatch(Actions.createChannel(newChannel));
-    this.changeActiveChannel(newChannel);
-    socket.emit('new private channel', user.socketID, newChannel);
+      dispatch(Actions.createChannel(newChannel));
+      this.changeActiveChannel(newChannel);
+      socket.emit('new private channel', user.socketID, newChannel);
+    }
   }
   render() {
     const { messages, socket, channels, actions, activeChannel, typers, dispatch, user} = this.props;

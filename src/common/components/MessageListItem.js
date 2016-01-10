@@ -6,7 +6,6 @@ export default class MessageListItem extends Component {
     message: PropTypes.object.isRequired
   };
   handleClick(user) {
-    console.log(user);
     this.props.handleSendPrivateMessage(user);
   }
   render() {
