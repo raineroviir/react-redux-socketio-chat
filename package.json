@@ -1,6 +1,6 @@
 {
   "name": "React-redux-socketio-chat",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "react frontend, socketio powered chat. redux as the flux implementation",
   "main": "server.js",
   "scripts": {
