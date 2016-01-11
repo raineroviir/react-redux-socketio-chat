@@ -17,5 +17,3 @@ export default function typers(state = initialState, action) {
     return state;
   }
 }
-
-// state.filter(item => Object.keys(item)[0] === 'super')
