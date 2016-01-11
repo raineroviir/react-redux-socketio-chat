@@ -1,6 +1,7 @@
 import * as types from '../constants/ActionTypes';
 import { browserHistory } from 'react-router';
 import fetch from 'isomorphic-fetch';
+import moment from 'moment';
 
 // NOTE:Chat actions
 
@@ -72,16 +73,6 @@ export function fetchChannels(user) {
   }
 }
 
-export function fetchPrivateChannels(user) {
-  return dispatch => {
-    dispatch(requestChannels())
-    return fetch(`/api/channels/${user}`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveChannels(json)))
-      .catch(error => {throw error});
-  }
-}
-
 function requestChannels() {
   return {
     type: types.LOAD_CHANNELS
@@ -101,30 +92,23 @@ function requestMessages() {
   }
 }
 
-// export function fetchMessages(channel) {
-//   return dispatch => {
-//     dispatch(requestMessages())
-//     return fetch(`/api/messages/${channel}`)
-//       .then(response => response.json())
-//       .then(json => dispatch(receiveMessages(json)))
-//       .catch(error => {throw error});
-//   }
-// }
-
-export function fetchMessages() {
+export function fetchMessages(channel) {
   return dispatch => {
     dispatch(requestMessages())
-    return fetch(`/api/messages`)
+    return fetch(`/api/messages/${channel}`)
       .then(response => response.json())
-      .then(json => dispatch(receiveMessages(json)))
+      .then(json => dispatch(receiveMessages(json, channel)))
       .catch(error => {throw error});
   }
 }
 
-function receiveMessages(json) {
+function receiveMessages(json, channel) {
+  const date = moment().format('lll');
   return {
     type: types.LOAD_MESSAGES_SUCCESS,
-    json
+    json,
+    channel,
+    date
   }
 }
 

@@ -2,7 +2,8 @@ import { ADD_MESSAGE, RECEIVE_MESSAGE, LOAD_MESSAGES, LOAD_MESSAGES_SUCCESS, LOA
 
 const initialState = {
   loaded: false,
-  data: []
+  data: [],
+  fetchHistory: []
 };
 export default function messages(state = initialState, action) {
   switch (action.type) {
@@ -22,7 +23,8 @@ export default function messages(state = initialState, action) {
     return {...state,
       loading: false,
       loaded: true,
-      data: [...state.data, ...action.json]
+      fetchHistory: [...state.fetchHistory, { lastFetch: action.date, channelName: action.channel }],
+      data: [...state.data.filter(message => message.channelID !== action.channel), ...action.json]
     };
   case LOAD_MESSAGES_FAIL:
     return {...state,
@@ -31,6 +33,12 @@ export default function messages(state = initialState, action) {
       error: action.error,
       data: [...state.data]
     };
+  case AUTH_SIGNOUT_SUCCESS:
+    return {
+      loaded: false,
+      data: [],
+      fetchHistory: []
+    }
   default:
     return state;
   }

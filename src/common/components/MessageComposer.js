@@ -67,6 +67,7 @@ export default class MessageComposer extends Component {
           }}
           type="textarea"
           name="message"
+          ref="messageComposer"
           autoFocus="true"
           placeholder="Type here to chat!"
           value={this.state.text}

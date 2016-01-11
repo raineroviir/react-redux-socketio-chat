@@ -1,4 +1,4 @@
-import { ADD_CHANNEL, RECEIVE_CHANNEL, LOAD_CHANNELS, LOAD_CHANNELS_SUCCESS, LOAD_CHANNELS_FAIL, RESET_CHANNELS_STATE} from '../constants/ActionTypes';
+import { ADD_CHANNEL, RECEIVE_CHANNEL, LOAD_CHANNELS, LOAD_CHANNELS_SUCCESS, LOAD_CHANNELS_FAIL} from '../constants/ActionTypes';
 
 const initialState = {
   loaded: false,
@@ -39,7 +39,7 @@ export default function channels(state = initialState, action) {
       error: action.error,
       data: [...state.data]
     };
-  case RESET_CHANNELS_STATE:
+  case AUTH_SIGNOUT_SUCCESS:
     return {
       loaded: false,
       data: []

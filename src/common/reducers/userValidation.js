@@ -24,6 +24,11 @@ export default function userValidation(state = initialState, action) {
       error: action.error,
       data: [...state.data]
     };
+  case AUTH_SIGNOUT_SUCCESS:
+    return {
+      loaded: false,
+      data: []
+    };
   default:
     return state;
   }

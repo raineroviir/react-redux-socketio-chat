@@ -65,11 +65,6 @@ export default class Chat extends Component {
   handleSendPrivateMessage(user) {
     const { dispatch, socket, channels } = this.props;
     const sendingUser = this.props.user;
-    // const doesPrivateChannelExist = channels.filter(item => {
-    //   return item.between.find(name => {
-    //     return name === (sendingUser.username || user.username)
-    //   })
-    // })
     const doesPrivateChannelExist = channels.filter(item => {
       return item.name === (`${user.username}+${sendingUser.username}` || `${sendingUser.username}+${user.username}`)
     })

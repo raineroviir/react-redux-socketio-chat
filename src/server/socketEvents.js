@@ -24,7 +24,6 @@ exports = module.exports = function(io) {
       socket.broadcast.to(data.channel).emit('stop typing bc', data.user);
     });
     socket.on('new private channel', function(socketID, channel) {
-      console.log(socketID, channel);
       socket.broadcast.to(socketID).emit('receive private channel', channel);
     })
   });
