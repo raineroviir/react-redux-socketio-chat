@@ -53,7 +53,6 @@ export default function auth(state = initialState, action = {}) {
       signingIn: true
     };
   case AUTH_SIGNIN_SUCCESS:
-    console.log(action);
     return {
       ...state,
       signingIn: false,
@@ -117,7 +116,6 @@ export default function auth(state = initialState, action = {}) {
     };
 
   case RECEIVE_SOCKET:
-    console.log(action);
     return {
       ...state,
       user: {...state.user,

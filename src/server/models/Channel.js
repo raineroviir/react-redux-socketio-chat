@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 var channelSchema = mongoose.Schema({
   name: { type:String, unique: true },
-  id: Number,
+  id: String,
   private: Boolean,
   between: Array
 });

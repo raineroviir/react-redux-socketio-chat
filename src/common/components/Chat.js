@@ -73,7 +73,6 @@ export default class Chat extends Component {
     const doesPrivateChannelExist = channels.filter(item => {
       return item.name === (`${user.username}+${sendingUser.username}` || `${sendingUser.username}+${user.username}`)
     })
-    console.log(doesPrivateChannelExist);
     if (sendingUser.username !== user.username && doesPrivateChannelExist.length === 0) {
       const newChannel = {
         name: `${user.username}+${sendingUser.username}`,
@@ -86,7 +85,6 @@ export default class Chat extends Component {
       socket.emit('new private channel', user.socketID, newChannel);
     }
     if(doesPrivateChannelExist.length > 0) {
-      console.log(doesPrivateChannelExist[0]);
       this.changeActiveChannel(doesPrivateChannelExist[0]);
     }
   }
@@ -113,9 +111,6 @@ export default class Chat extends Component {
           <header style={{background: '#FFFFFF', color: 'black', flexGrow: '0', order: '0', fontSize: '2.3em', paddingLeft: '0.2em'}}>
             <div>
             {activeChannel}
-            <span style={{fontSize: '0.5em', marginLeft: '2em'}}>
-            Message Count: {filteredMessages.length}
-            </span>
             </div>
           </header>
           <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
