@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import { Input } from 'react-bootstrap';
+import uuid from 'node-uuid';
 
 export default class MessageComposer extends Component {
 
@@ -23,7 +24,7 @@ export default class MessageComposer extends Component {
     if (event.which === 13) {
       event.preventDefault();
       var newMessage = {
-        id: Date.now(),
+        id: `${Date.now()}${uuid.v4()}`,
         channelID: this.props.activeChannel,
         text: text,
         user: user,

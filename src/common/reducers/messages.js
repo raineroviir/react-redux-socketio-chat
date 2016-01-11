@@ -8,23 +8,11 @@ export default function messages(state = initialState, action) {
   switch (action.type) {
   case ADD_MESSAGE:
     return {...state,
-      data: [...state.data, {
-        id: (state.data.length === 0 ) ? 0 : state.data[state.data.length - 1].id + 1,
-        channelID: action.message.channelID,
-        text: action.message.text,
-        user: action.message.user,
-        time: action.message.time
-      }]
+      data: [...state.data, action.message]
     };
   case RECEIVE_MESSAGE:
     return {...state,
-      data: [...state.data, {
-        id: (state.data.length === 0 ) ? 0 : state.data[state.data.length - 1].id + 1,
-        channelID: action.message.channelID,
-        text: action.message.text,
-        user: action.message.user,
-        time: action.message.time
-      }]
+      data: [...state.data, action.message]
     };
   case LOAD_MESSAGES:
     return {...state,
@@ -34,7 +22,7 @@ export default function messages(state = initialState, action) {
     return {...state,
       loading: false,
       loaded: true,
-      data: [...action.json]
+      data: [...state.data, ...action.json]
     };
   case LOAD_MESSAGES_FAIL:
     return {...state,

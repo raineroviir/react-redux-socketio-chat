@@ -1,4 +1,4 @@
-import configureStore from '../client/js/store/configureStore';
+import configureStore from '../src/common/store/configureStore';
 import expect from 'expect';
 
 const store = configureStore();

@@ -1,6 +1,6 @@
 import expect from 'expect';
-import reducer from '../client/js/reducers/messages';
-import * as types from '../client/js/constants/ActionTypes';
+import reducer from '../src/common/reducers/messages';
+import * as types from '../src/common/constants/ActionTypes';
 
 describe('add message reducer', () => {
   const initialState = { loaded: false, data: [] };

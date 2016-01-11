@@ -1,7 +1,7 @@
 import expect from 'expect';
 import {applyMiddleware} from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import promiseMiddleware from '../client/js/middleware/promiseMiddleware';
+import promiseMiddleware from '../src/common/middleware/promiseMiddleware';
 
 const middlewares = [ thunkMiddleware, promiseMiddleware ];
 

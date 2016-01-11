@@ -1,5 +1,4 @@
 import * as types from '../constants/ActionTypes';
-import * as UserAPIUtils from '../utils/UserAPIUtils';
 import { browserHistory } from 'react-router';
 import fetch from 'isomorphic-fetch';
 

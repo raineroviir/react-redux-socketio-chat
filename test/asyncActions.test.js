@@ -1,10 +1,10 @@
 import expect from 'expect';
 import { applyMiddleware } from 'redux';
-import * as actions from '../client/js/actions/Actions';
-import * as types from '../client/js/constants/ActionTypes';
+import * as actions from '../src/common/actions/Actions';
+import * as types from '../src/common/constants/ActionTypes';
 import nock from 'nock';
 import thunk from 'redux-thunk';
-import promiseMiddleware from '../client/js/middleware/promiseMiddleware';
+import promiseMiddleware from '../src/common/middleware/promiseMiddleware';
 
 import configureStore from 'redux-mock-store';
 

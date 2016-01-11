@@ -56,18 +56,22 @@ export default class Chat extends Component {
     dispatch(authActions.signOut());
   }
   changeActiveChannel(channel) {
-    const { actions, socket, activeChannel } = this.props;
+    const { actions, socket, activeChannel, dispatch } = this.props;
     socket.emit('leave channel', activeChannel);
     socket.emit('join channel', channel);
     actions.changeChannel(channel);
+    dispatch(Actions.fetchMessages(channel.name));
   }
   handleSendPrivateMessage(user) {
     const { dispatch, socket, channels } = this.props;
     const sendingUser = this.props.user;
+    // const doesPrivateChannelExist = channels.filter(item => {
+    //   return item.between.find(name => {
+    //     return name === (sendingUser.username || user.username)
+    //   })
+    // })
     const doesPrivateChannelExist = channels.filter(item => {
-      return item.between.find(name => {
-        return name === (sendingUser.username || user.username)
-      })
+      return item.name === (`${user.username}+${sendingUser.username}` || `${sendingUser.username}+${user.username}`)
     })
     console.log(doesPrivateChannelExist);
     if (sendingUser.username !== user.username && doesPrivateChannelExist.length === 0) {
@@ -80,6 +84,10 @@ export default class Chat extends Component {
       dispatch(Actions.createChannel(newChannel));
       this.changeActiveChannel(newChannel);
       socket.emit('new private channel', user.socketID, newChannel);
+    }
+    if(doesPrivateChannelExist.length > 0) {
+      console.log(doesPrivateChannelExist[0]);
+      this.changeActiveChannel(doesPrivateChannelExist[0]);
     }
   }
   render() {

@@ -21,6 +21,7 @@ export default function channels(state = initialState, action) {
     return {...state,
       data: [...state.data, action.channel]
     };
+
   case LOAD_CHANNELS:
     return {...state,
       loading: true
@@ -29,7 +30,7 @@ export default function channels(state = initialState, action) {
     return {...state,
       loading: false,
       loaded: true,
-      data: action.json
+      data: [...state.data, ...action.json]
     };
   case LOAD_CHANNELS_FAIL:
     return {...state,

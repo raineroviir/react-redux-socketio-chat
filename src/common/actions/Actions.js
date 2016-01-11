@@ -1,5 +1,4 @@
 import * as types from '../constants/ActionTypes';
-import * as UserAPIUtils from '../utils/UserAPIUtils';
 import { browserHistory } from 'react-router';
 import fetch from 'isomorphic-fetch';
 
@@ -74,7 +73,6 @@ export function fetchChannels(user) {
 }
 
 export function fetchPrivateChannels(user) {
-  console.log(user);
   return dispatch => {
     dispatch(requestChannels())
     return fetch(`/api/channels/${user}`)
@@ -103,10 +101,20 @@ function requestMessages() {
   }
 }
 
+// export function fetchMessages(channel) {
+//   return dispatch => {
+//     dispatch(requestMessages())
+//     return fetch(`/api/messages/${channel}`)
+//       .then(response => response.json())
+//       .then(json => dispatch(receiveMessages(json)))
+//       .catch(error => {throw error});
+//   }
+// }
+
 export function fetchMessages() {
   return dispatch => {
     dispatch(requestMessages())
-    return fetch('/api/messages')
+    return fetch(`/api/messages`)
       .then(response => response.json())
       .then(json => dispatch(receiveMessages(json)))
       .catch(error => {throw error});

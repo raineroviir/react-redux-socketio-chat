@@ -3,6 +3,7 @@ import ChannelListItem from './ChannelListItem';
 import ChannelListModalItem from './ChannelListModalItem';
 import { Modal, Glyphicon, Input, Button } from 'react-bootstrap';
 import * as Actions from '../actions/Actions';
+import uuid from 'node-uuid';
 
 export default class Channels extends Component {
 
@@ -49,7 +50,7 @@ export default class Channels extends Component {
     }).length < 1) {
       const newChannel = {
         name: this.state.channelName.trim(),
-        id: Date.now(),
+        id: `${Date.now()}${uuid.v4()}`,
         private: false
       };
       dispatch(Actions.createChannel(newChannel));
