@@ -45,4 +45,3 @@ then to open the database open a new terminal and type in `mongo` and type in `u
 * small profile page for users
 * link accounts together for fb/local users
 * install redux-local storage so on refresh we don't ping the server
-* when changing channels, we need a new request to fetch messages that were new.
