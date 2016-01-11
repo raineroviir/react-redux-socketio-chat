@@ -4,4 +4,3 @@
 npm-debug.log
 db/
 static/
-config/oAuthConfig.js
