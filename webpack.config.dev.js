@@ -2,18 +2,18 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'inline-source-map',
   entry: [
+    'babel-polyfill',
     'webpack-hot-middleware/client',
-    './client/index'
+    './src/client/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.resolve(__dirname, './static/dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '/dist/'
   },
   plugins: [
-
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
@@ -23,16 +23,32 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['babel'],
-      include: path.join(__dirname, 'client')
-    }, {
-      test: /\.css?$/,
-      loaders: ['style', 'raw']
-    }, {
-      test: /\.json$/,
-      loader: 'json-loader'
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel',
+        query: {
+          plugins: [
+            [
+              'react-transform', {
+                transforms: [{
+                  transform: 'react-transform-hmr',
+                  imports: ['react'],
+                  locals: ['module']
+                }, {
+                  transform: 'react-transform-catch-errors',
+                  imports: ['react', 'redbox-react']
+                }]
+              }
+            ]
+          ]
+        },
+        include: [path.resolve(__dirname, 'src')]
+      },
+      {
+        test: /\.css?$/,
+        loaders: ['style', 'raw']
+      }
+    ]
   }
 };
