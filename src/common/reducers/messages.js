@@ -38,7 +38,7 @@ export default function messages(state = initialState, action) {
       loaded: false,
       data: [],
       fetchHistory: []
-    }
+    };
   default:
     return state;
   }

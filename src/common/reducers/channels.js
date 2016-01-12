@@ -43,7 +43,7 @@ export default function channels(state = initialState, action) {
     return {
       loaded: false,
       data: []
-    }
+    };
   default:
     return state;
   }

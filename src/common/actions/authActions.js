@@ -53,11 +53,6 @@ function receiveSignOut() {
   }
 }
 
-function resetChannelsState() {
-  return {
-    type: types.RESET_CHANNELS_STATE
-  }
-}
 export function signOut() {
   return dispatch => {
     dispatch(requestSignOut())
@@ -65,7 +60,6 @@ export function signOut() {
       .then(response => {
         if(response.status === 200 || 201) {
           dispatch(receiveSignOut())
-          dispatch(resetChannelsState())
           browserHistory.push('/')
         }
       })
