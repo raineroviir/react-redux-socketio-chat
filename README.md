@@ -10,7 +10,8 @@ First off, clone the repository and then `cd react-redux-socketio-chat`and `npm 
 
 
 You can create channels with the + sign on the nav bar on the left.
-If you click on a user's name it will create a private channel with you and that user, allowing you to send private messages.
+If you click on a user's name to send him a private message (opens a private channel)
+
 
 ### Development
 
@@ -47,5 +48,3 @@ then to open the database open a new terminal and type in `mongo` and type in `u
 
 ## Todos
 * small profile page for users
-* link accounts together for fb/local users
-* install redux-local storage so on refresh we don't ping the server

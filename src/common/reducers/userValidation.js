@@ -1,4 +1,4 @@
-import { LOAD_USERVALIDATION, LOAD_USERVALIDATION_SUCCESS, LOAD_USERVALIDATION_FAIL, AUTH_SIGNOUT_SUCCESS} from '../constants/ActionTypes';
+import { LOAD_USERVALIDATION, LOAD_USERVALIDATION_SUCCESS, LOAD_USERVALIDATION_FAIL} from '../constants/ActionTypes';
 
 const initialState = {
   loaded: false,
@@ -23,11 +23,6 @@ export default function userValidation(state = initialState, action) {
       loaded: false,
       error: action.error,
       data: [...state.data]
-    };
-  case AUTH_SIGNOUT_SUCCESS:
-    return {
-      loaded: false,
-      data: []
     };
   default:
     return state;
