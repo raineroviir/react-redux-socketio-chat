@@ -12,7 +12,6 @@ import configureStore from '../common/store/configureStore'
 import { RouterContext, match } from 'react-router';
 import routes from '../common/routes';
 import { createLocation } from 'history';
-import DevTools from '../common/containers/DevTools';
 import cors from 'cors';
 
 import User from './models/User.js';
@@ -69,7 +68,6 @@ app.get('/*', function(req, res) {
       <Provider className="root" store={store}>
         <div style={{height: '100%'}}>
           <RouterContext {...renderProps} />
-          {process.env.NODE_ENV !== 'production' && <DevTools />}
         </div>
       </Provider>
     );
