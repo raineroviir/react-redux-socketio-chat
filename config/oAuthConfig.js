@@ -1,6 +1,6 @@
 var ids = {
   facebook: {
-    clientID: process.env.FBCLIENTID
+    clientID: process.env.FBCLIENTID,
     clientSecret: process.env.FBCLIENTSECRET
   }
 }

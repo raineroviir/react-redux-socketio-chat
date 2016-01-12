@@ -8,6 +8,10 @@ To see the live version of the app go to http://slackclone.herokuapp.com
 
 First off, clone the repository and then `cd react-redux-socketio-chat`and `npm install`
 
+
+You can create channels with the + sign on the nav bar on the left.
+If you click on a user's name it will create a private channel with you and that user, allowing you to send private messages.
+
 ### Development
 
 Comes with [redux-dev tools](https://github.com/gaearon/redux-devtools) and [react-transform](https://github.com/gaearon/react-transform-boilerplate
