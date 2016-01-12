@@ -48,3 +48,6 @@ then to open the database open a new terminal and type in `mongo` and type in `u
 
 ## Todos
 * small profile page for users
+* implement reselect
+* implement async-props
+* 
