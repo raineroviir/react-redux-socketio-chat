@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import {initEnvironment} from '../actions/Actions';
+import {initEnvironment} from '../actions/actions';
 import { connect } from 'react-redux';
 
 class App extends React.Component {

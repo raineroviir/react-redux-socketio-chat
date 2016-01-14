@@ -2,20 +2,10 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../src/server/models/User');
 var oAuthConfig = require('./oAuthConfig');
-var host = process.env.NODE_ENV === 'development' ? 'localhost:3000' : 'slackclone.herokuapp.com'
+var host = process.env.NODE_ENV !== 'production' ? 'localhost:3000' : 'slackclone.herokuapp.com'
+var cookies = require('js-cookie');
 
 module.exports = function(passport) {
-  // passport.serializeUser(function(user, done) {
-  //   console.log('serializeUser: ' + user.id);
-  //   done(null, user.id);
-  // });
-
-  // passport.deserializeUser(function(id, done) {
-  //   User.findById(id, function(err, user) {
-  //     console.log('deserializeUser: ' + user);
-  //     done(err, user);
-  //   });
-  // });
 
   passport.use('local-signup', new LocalStrategy({
     usernameField: 'username',
@@ -70,12 +60,13 @@ module.exports = function(passport) {
     callbackURL: "http://" + host + "/api/auth/facebook/callback"
   },
     function(accessToken, refreshToken, profile, done) {
+      cookies.set('username', profile.displayName)
       User.findOne({ 'facebook.id': profile.id }, function(err, user) {
         if (err) { console.log(err); }
         if (!err && user !== null) {
           done(null, user);
         } else {
-          var newUser = new User({ 'facebook.id': profile.id, 'facebook.username': profile.displayName, online: true});
+          var newUser = new User({ 'facebook.id': profile.id, 'facebook.username': profile.displayName});
           newUser.save(function(err, user) {
             if (err) {
               console.log(err);

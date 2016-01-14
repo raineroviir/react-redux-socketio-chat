@@ -2,14 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import ChannelListItem from './ChannelListItem';
 import ChannelListModalItem from './ChannelListModalItem';
 import { Modal, Glyphicon, Input, Button } from 'react-bootstrap';
-import * as Actions from '../actions/Actions';
+import * as actions from '../actions/actions';
 import uuid from 'node-uuid';
 
 export default class Channels extends Component {
 
   static propTypes = {
     channels: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,
     messages: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired
@@ -53,7 +52,7 @@ export default class Channels extends Component {
         id: `${Date.now()}${uuid.v4()}`,
         private: false
       };
-      dispatch(Actions.createChannel(newChannel));
+      dispatch(actions.createChannel(newChannel));
       this.handleChangeChannel(newChannel);
       socket.emit('new channel', newChannel);
       this.setState({channelName: ''});
@@ -82,7 +81,7 @@ export default class Channels extends Component {
     this.openAddChannelModal();
   }
   render() {
-    const { channels, actions, messages } = this.props;
+    const { channels, messages } = this.props;
     const filteredChannels = channels.slice(0, 8);
     const moreChannelsBoolean = channels.length > 8;
     const restOfTheChannels = channels.slice(8);
@@ -129,7 +128,7 @@ export default class Channels extends Component {
           <Modal.Body>
             <ul style={{height: 'auto', margin: '0', overflowY: 'auto', padding: '0'}}>
               {restOfTheChannels.map(channel =>
-                <ChannelListModalItem channel={channel} key={channel.id} {...actions} onClick={::this.handleChangeChannel} />
+                <ChannelListModalItem channel={channel} key={channel.id} onClick={::this.handleChangeChannel} />
                 )}
             </ul>
           </Modal.Body>
@@ -155,7 +154,7 @@ export default class Channels extends Component {
             {filteredChannels.map(channel =>
               <ChannelListItem  style={{paddingLeft: '0.8em', background: '#2E6DA4', height: '0.7em'}} messageCount={messages.filter(msg => {
                 return msg.channelID === channel.name;
-              }).length} channel={channel} key={channel.id} {...actions} onClick={::this.handleChangeChannel} />
+              }).length} channel={channel} key={channel.id} onClick={::this.handleChangeChannel} />
               )}
           </ul>
           {moreChannelsBoolean && <a onClick={::this.openMoreChannelsModal} style={{'cursor': 'pointer', 'color': '#85BBE9'}}> + {channels.length - 8} more...</a>}
