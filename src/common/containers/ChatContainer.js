@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import * as Actions from '../actions/Actions';
+import * as actions from '../actions/actions';
+import {receiveAuth} from '../actions/authActions';
 import Chat from '../components/Chat';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -11,13 +12,15 @@ const initialChannel = 'Lobby'; // NOTE: I hard coded this value for my example.
 class ChatContainer extends Component {
   componentWillMount() {
     const { dispatch, user } = this.props;
-    dispatch(Actions.fetchMessages(initialChannel));
-    dispatch(Actions.fetchChannels(user.username));
+    if(!user.username) {
+      dispatch(receiveAuth());
+    }
+    dispatch(actions.fetchMessages(initialChannel));
+    dispatch(actions.fetchChannels(user.username));
   }
   render() {
-    const actions = bindActionCreators(Actions, this.props.dispatch);
     return (
-      <Chat {...this.props} actions={actions} socket={socket} />
+      <Chat {...this.props} socket={socket} />
     );
   }
 }

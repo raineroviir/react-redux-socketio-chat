@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import {welcomePage} from '../actions/Actions';
+import {welcomePage} from '../actions/actions';
 import { connect } from 'react-redux';
 import { Input, Button } from 'react-bootstrap';
 import FBSignIn from './FBSignIn';
 import SignIn from './SignIn';
-
 
 class WelcomePage extends Component {
 
@@ -35,14 +34,15 @@ class WelcomePage extends Component {
   render() {
     return (
       <div>
-        <header style={{display: 'flex', justifyContent: 'center', flexGrow: '0', order: '0', flexDirection: 'column'}}>
-          <p style={{fontSize: '1.5em', marginRight: '1em'}}>Welcome to React Redux Socket.io Chat</p>
+        <header style={{display: 'flex', justifyContent: 'center', flexGrow: '0', order: '0'}}>
+          <div style={{justifyContent: 'center'}}><p style={{fontSize: '1.5em', marginRight: '1em'}}>Welcome to React Redux Socket.io Chat</p>
            <p>
           This is an open source chat program.
           </p>
+          </div>
         </header>
 
-        {process.env.NODE_ENV === 'production' && <FBSignIn />}
+        <FBSignIn />
         <main style={{display: 'flex', justifyContent: 'center'}}>
 
           <form style={{height: '20rem', display: 'flex', justifyContent: 'center'}}>
@@ -69,7 +69,7 @@ class WelcomePage extends Component {
               </Link>
             </section>
           </form>
-          <div style={{height: '3.5em', marginBottom: '1em', width: '12em', alignSelf: 'center', display: 'flex', marginLeft: '1em'}}>
+          <div style={{height: '3.5em', width: '12em', alignSelf: 'center', display: 'flex', marginLeft: '1em'}}>
             <p style={{marginRight: '1em', marginTop: '1em'}}> Or </p>
             <Link to="/signin">
               <Button style={{margin: 'auto', height: '3.5em'}} bsStyle="default" >Sign in</Button>
