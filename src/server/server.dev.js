@@ -61,7 +61,7 @@ app.get('/*', function(req, res) {
     const initialState = {
       auth: {
         user: {
-          username: 'tester123',
+          username: '__test__123',
           id: 0,
           socketID: null
         }

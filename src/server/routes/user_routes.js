@@ -19,11 +19,11 @@ module.exports = function loadUserRoutes(router, passport) {
   }));
 
   router.post('/sign_up', passport.authenticate('local-signup', { session: false}), function(req, res) {
-    res.json(req.user);
+    res.end();
   });
 
   router.post('/sign_in', passport.authenticate('local-login', { session: false}), function(req, res) {
-    res.json(req.user);
+    res.end()
   });
 
   router.get('/signout', function(req, res) {
@@ -33,6 +33,7 @@ module.exports = function loadUserRoutes(router, passport) {
 
   //get auth credentials from server
   router.get('/load_auth_into_state', function(req, res) {
+    console.log(req.user);
     res.json(req.user);
   });
 

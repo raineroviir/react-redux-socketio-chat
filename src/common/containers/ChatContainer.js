@@ -12,7 +12,7 @@ const initialChannel = 'Lobby'; // NOTE: I hard coded this value for my example.
 class ChatContainer extends Component {
   componentWillMount() {
     const { dispatch, user } = this.props;
-    if(!user.username) {
+    if(!user.username || user.username === '__test__123') {
       dispatch(receiveAuth());
     }
     dispatch(actions.fetchMessages(initialChannel));
