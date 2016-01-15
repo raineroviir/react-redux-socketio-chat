@@ -7,13 +7,14 @@ module.exports = function loadUserRoutes(router, passport) {
   router.use(bodyparser.json());
 
   router.get('/auth/facebook', passport.authenticate('facebook', {
-    successRedirect: '/',
+    session: false,
+    successRedirect: '/chat',
     failureRedirect: '/'
   }));
 
   router.get('/auth/facebook/callback', passport.authenticate('facebook', {
     session: false,
-    successRedirect: '/',
+    successRedirect: '/chat',
     failureRedirect: '/'
   }));
 

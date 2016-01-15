@@ -11,7 +11,7 @@ import React from 'react';
 import configureStore from '../common/store/configureStore'
 import { RouterContext, match } from 'react-router';
 import routes from '../common/routes';
-import { createLocation } from 'history';
+import {createLocation} from 'history';
 import DevTools from '../common/containers/DevTools';
 import cors from 'cors';
 import webpack from 'webpack';
@@ -32,7 +32,6 @@ mongoose.connect(process.env.MONGOLAB_URI);
 process.on('uncaughtException', function (err) {
   console.log(err);
 });
-
 app.use(cors());
 app.use(passport.initialize());
 
@@ -56,10 +55,24 @@ app.use('/api', channelRouter);
 app.use('/', express.static(path.join(__dirname, '..', 'static')));
 
 app.get('/*', function(req, res) {
-
   const location = createLocation(req.url)
-
   match({ routes, location }, (err, redirectLocation, renderProps) => {
+
+    const initialState = {
+      auth: {
+        user: {
+          username: 'tester123',
+          id: 0,
+          socketID: null
+        }
+      }
+    }
+    const store = configureStore(initialState);
+    // console.log(redirectLocation);
+    // if(redirectLocation) {
+    //   return res.status(302).end(redirectLocation);
+    // }
+
 
     if(err) {
       console.error(err);
@@ -69,9 +82,6 @@ app.get('/*', function(req, res) {
     if(!renderProps) {
       return res.status(404).end('Not found');
     }
-
-    const store = configureStore();
-
     const InitialView = (
       <Provider className="root" store={store}>
         <div style={{height: '100%'}}>
@@ -81,9 +91,9 @@ app.get('/*', function(req, res) {
       </Provider>
     );
 
-    const initialState = store.getState();
+    const finalState = store.getState();
     const html = renderToString(InitialView)
-    res.status(200).end(renderFullPage(html, initialState));
+    res.status(200).end(renderFullPage(html, finalState));
   })
 })
 
@@ -105,9 +115,10 @@ function renderFullPage(html, initialState) {
       <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="icon" href="./favicon.ico" type="image/x-icon" />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-        <title>spotify3x</title>
+        <title>React Redux Socket.io Chat</title>
       </head>
       <body>
         <container id="react">${html}</container>

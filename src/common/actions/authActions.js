@@ -1,29 +1,22 @@
 import * as types from '../constants/ActionTypes';
 import { browserHistory } from 'react-router';
 import fetch from 'isomorphic-fetch';
+import cookie from 'react-cookie';
 
-function requestAuth() {
-  return {
-    type: types.AUTH_LOAD
-  }
-}
-
-function receiveAuth(json) {
+export function receiveAuth() {
+  const user = cookie.load('username');
   return {
     type: types.AUTH_LOAD_SUCCESS,
-    json
+    user
   }
 }
 
-export function fetchAuth() {
-  return dispatch => {
-    dispatch(requestAuth())
-    return fetch('/api/load_auth_into_state')
-      .then(response => response.json())
-      .then(json => dispatch(receiveAuth(json)))
+export function checkAuth() {
+  if (cookie.load('username')) {
+    return true;
   }
+  return false;
 }
-
 
 function requestSignUp() {
   return {
@@ -53,19 +46,14 @@ function receiveSignOut() {
   }
 }
 
-function resetChannelsState() {
-  return {
-    type: types.RESET_CHANNELS_STATE
-  }
-}
 export function signOut() {
   return dispatch => {
     dispatch(requestSignOut())
     return fetch('/api/signout')
       .then(response => {
-        if(response.status === 200 || 201) {
+        if(response.ok) {
+          cookie.remove('username')
           dispatch(receiveSignOut())
-          dispatch(resetChannelsState())
           browserHistory.push('/')
         }
       })
@@ -83,7 +71,8 @@ export function signUp(user) {
       body: JSON.stringify(user)
       })
       .then(response => {
-        if(response.status === 200 || 201) {
+        if(response.ok) {
+          cookie.save('username', user.username)
           dispatch(receiveUser(user.username));
           browserHistory.push('/chat');
         }
@@ -119,7 +108,8 @@ export function signIn(user) {
       body: JSON.stringify(user)
       })
       .then(response => {
-        if(response.status === 200 || 201) {
+        if(response.ok) {
+          cookie.save('username', user.username)
           dispatch(receiveSignIn(user.username));
           browserHistory.push('/chat');
         }

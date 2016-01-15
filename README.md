@@ -8,6 +8,11 @@ To see the live version of the app go to http://slackclone.herokuapp.com
 
 First off, clone the repository and then `cd react-redux-socketio-chat`and `npm install`
 
+
+You can create channels with the + sign on the nav bar on the left.
+If you click on a user's name to send him a private message (opens a private channel)
+
+
 ### Development
 
 Comes with [redux-dev tools](https://github.com/gaearon/redux-devtools) and [react-transform](https://github.com/gaearon/react-transform-boilerplate
@@ -43,6 +48,3 @@ then to open the database open a new terminal and type in `mongo` and type in `u
 
 ## Todos
 * small profile page for users
-* link accounts together for fb/local users
-* install redux-local storage so on refresh we don't ping the server
-* when changing channels, we need a new request to fetch messages that were new.

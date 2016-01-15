@@ -28,12 +28,12 @@ export default class MessageComposer extends Component {
         channelID: this.props.activeChannel,
         text: text,
         user: user,
-        time: moment().format('lll')
+        time: moment.utc().format('lll')
       };
       socket.emit('new message', newMessage);
+      socket.emit('stop typing', { user: user.username, channel: activeChannel });
       this.props.onSave(newMessage);
       this.setState({ text: '', typing: false });
-      socket.emit('stop typing', { user: user.username, channel: activeChannel });
     }
   }
   handleChange(event) {
@@ -67,6 +67,7 @@ export default class MessageComposer extends Component {
           }}
           type="textarea"
           name="message"
+          ref="messageComposer"
           autoFocus="true"
           placeholder="Type here to chat!"
           value={this.state.text}

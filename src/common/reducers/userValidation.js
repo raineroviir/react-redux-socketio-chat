@@ -1,4 +1,4 @@
-import { LOAD_USERVALIDATION, LOAD_USERVALIDATION_SUCCESS, LOAD_USERVALIDATION_FAIL } from '../constants/ActionTypes';
+import { LOAD_USERVALIDATION, LOAD_USERVALIDATION_SUCCESS, LOAD_USERVALIDATION_FAIL} from '../constants/ActionTypes';
 
 const initialState = {
   loaded: false,

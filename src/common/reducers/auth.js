@@ -35,10 +35,7 @@ export default function auth(state = initialState, action = {}) {
       ...state,
       loading: false,
       loaded: true,
-      user: {
-        username: action.result.facebook ?  action.result.facebook.username : action.result.local.username,
-        id: action.result._id
-      }
+      user: { ...state.user, username: action.user }
     };
   case AUTH_LOAD_FAIL:
     return {

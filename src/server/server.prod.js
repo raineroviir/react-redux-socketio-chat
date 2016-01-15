@@ -12,7 +12,6 @@ import configureStore from '../common/store/configureStore'
 import { RouterContext, match } from 'react-router';
 import routes from '../common/routes';
 import { createLocation } from 'history';
-import DevTools from '../common/containers/DevTools';
 import cors from 'cors';
 
 import User from './models/User.js';
@@ -69,7 +68,6 @@ app.get('/*', function(req, res) {
       <Provider className="root" store={store}>
         <div style={{height: '100%'}}>
           <RouterContext {...renderProps} />
-          {process.env.NODE_ENV !== 'production' && <DevTools />}
         </div>
       </Provider>
     );
@@ -98,9 +96,10 @@ function renderFullPage(html, initialState) {
       <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="icon" href="./favicon.ico" type="image/x-icon" />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-        <title>spotify3x</title>
+        <title>React Redux Socket.io Chat</title>
       </head>
       <body>
         <container id="react">${html}</container>
