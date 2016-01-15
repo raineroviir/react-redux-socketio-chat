@@ -11,7 +11,7 @@ import React from 'react';
 import configureStore from '../common/store/configureStore'
 import { RouterContext, match } from 'react-router';
 import routes from '../common/routes';
-import { createLocation } from 'history';
+import {createLocation} from 'history';
 import DevTools from '../common/containers/DevTools';
 import cors from 'cors';
 import webpack from 'webpack';
@@ -58,17 +58,26 @@ app.get('/*', function(req, res) {
   const location = createLocation(req.url)
   match({ routes, location }, (err, redirectLocation, renderProps) => {
 
-
-    const store = configureStore();
+    const initialState = {
+      auth: {
+        user: {
+          username: 'tester123',
+          id: 0,
+          socketID: null
+        }
+      }
+    }
+    const store = configureStore(initialState);
     // console.log(redirectLocation);
     // if(redirectLocation) {
     //   return res.status(302).end(redirectLocation);
     // }
+
+
     if(err) {
       console.error(err);
       return res.status(500).end('Internal server error');
     }
-
 
     if(!renderProps) {
       return res.status(404).end('Not found');
@@ -82,9 +91,9 @@ app.get('/*', function(req, res) {
       </Provider>
     );
 
-    const initialState = store.getState();
+    const finalState = store.getState();
     const html = renderToString(InitialView)
-    res.status(200).end(renderFullPage(html, initialState));
+    res.status(200).end(renderFullPage(html, finalState));
   })
 })
 

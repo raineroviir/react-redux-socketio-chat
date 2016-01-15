@@ -21,7 +21,6 @@ export default function channels(state = initialState, action) {
     return {...state,
       data: [...state.data, action.channel]
     };
-
   case LOAD_CHANNELS:
     return {...state,
       loading: true

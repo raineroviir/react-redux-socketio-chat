@@ -42,7 +42,7 @@ class WelcomePage extends Component {
           </div>
         </header>
 
-        {/*<FBSignIn />*/}
+        <FBSignIn />
         <main style={{display: 'flex', justifyContent: 'center'}}>
 
           <form style={{height: '20rem', display: 'flex', justifyContent: 'center'}}>

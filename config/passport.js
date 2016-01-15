@@ -1,9 +1,14 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../src/server/models/User');
-var oAuthConfig = require('./oAuthConfig');
+var cookies = require('react-cookie');
+
 var host = process.env.NODE_ENV !== 'production' ? 'localhost:3000' : 'slackclone.herokuapp.com'
-var cookies = require('js-cookie');
+if (process.env.NODE_ENV !== 'production') {
+  var oAuthConfig = require('./oAuthConfig.dev');
+} else {
+  var oAuthConfig = require('./oAuthConfig.prod');
+}
 
 module.exports = function(passport) {
 
@@ -60,7 +65,7 @@ module.exports = function(passport) {
     callbackURL: "http://" + host + "/api/auth/facebook/callback"
   },
     function(accessToken, refreshToken, profile, done) {
-      cookies.set('username', profile.displayName)
+      cookies.save('username', profile.displayName)
       User.findOne({ 'facebook.id': profile.id }, function(err, user) {
         if (err) { console.log(err); }
         if (!err && user !== null) {

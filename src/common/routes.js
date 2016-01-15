@@ -19,7 +19,8 @@ const Routes = (
     <Route path="/welcome" component={WelcomePage} />
     <Route path="/signin" component={SignIn} />
     <Route path="/signup" component={SignUp} />
-    <Route path="/chat" component={ChatContainer} />
+    <Route path="/chat" component={ChatContainer}>
+    </Route>
   </Route>
 );
 

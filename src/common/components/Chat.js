@@ -5,7 +5,7 @@ import Channels from './Channels';
 import * as actions from '../actions/actions';
 import * as authActions from '../actions/authActions';
 import TypingListItem from './TypingListItem';
-import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { Modal, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 
 export default class Chat extends Component {
 
@@ -18,6 +18,13 @@ export default class Chat extends Component {
     typers: PropTypes.array.isRequired,
     socket: PropTypes.object.isRequired
   };
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      privateChannelModal: false,
+      targetedUser: ''
+    }
+  }
   componentDidMount() {
     const { socket, user, dispatch } = this.props;
     socket.emit('chat mounted', user);
@@ -61,26 +68,33 @@ export default class Chat extends Component {
     dispatch(actions.changeChannel(channel));
     dispatch(actions.fetchMessages(channel.name));
   }
-  handleSendPrivateMessage(user) {
-    const { dispatch, socket, channels } = this.props;
-    const sendingUser = this.props.user;
+  handleClickOnUser(user) {
+    this.setState({ privateChannelModal: true, targetedUser: user });
+  }
+  closePrivateChannelModal() {
+    event.preventDefault();
+    this.setState({privateChannelModal: false});
+  }
+  handleSendDirectMessage() {
+    const { dispatch, socket, channels, user } = this.props;
     const doesPrivateChannelExist = channels.filter(item => {
-      return item.name === (`${user.username}+${sendingUser.username}` || `${sendingUser.username}+${user.username}`)
+      return item.name === (`${this.state.targetedUser.username}+${user.username}` || `${user.username}+${this.state.targetedUser.username}`)
     })
-    if (sendingUser.username !== user.username && doesPrivateChannelExist.length === 0) {
+    if (user.username !== this.state.targetedUser.username && doesPrivateChannelExist.length === 0) {
       const newChannel = {
-        name: `${user.username}+${sendingUser.username}`,
+        name: `${this.state.targetedUser.username}+${user.username}`,
         id: Date.now(),
         private: true,
-        between: [user.username, sendingUser.username]
+        between: [this.state.targetedUser.username, user.username]
       };
       dispatch(actions.createChannel(newChannel));
       this.changeActiveChannel(newChannel);
-      socket.emit('new private channel', user.socketID, newChannel);
+      socket.emit('new private channel', this.state.targetedUser.socketID, newChannel);
     }
     if(doesPrivateChannelExist.length > 0) {
       this.changeActiveChannel(doesPrivateChannelExist[0]);
     }
+    this.setState({ privateChannelModal: false, targetedUser: '' });
   }
   render() {
     const { messages, socket, channels, activeChannel, typers, dispatch, user} = this.props;
@@ -91,6 +105,25 @@ export default class Chat extends Component {
         <DropdownButton key={1} style={{'width': '21rem'}} id="user-menu"  bsSize="large" bsStyle="primary" title={username}>
           <MenuItem style={{'width': '21rem'}} eventKey="4" onSelect={::this.handleSignOut}>Sign out</MenuItem>
         </DropdownButton>
+      </div>
+    );
+    const PrivateMessageModal = (
+      <div>
+        <Modal bsSize="small" key={1} show={this.state.privateChannelModal} onHide={::this.closePrivateChannelModal}>
+        <Modal.Header>
+          {this.state.targetedUser.username}
+        </Modal.Header>
+        <Modal.Body>
+          <Button onClick={this.handleSendDirectMessage.bind(this)}>
+            Direct Message
+          </Button>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.closePrivateChannelModal.bind(this)}>
+            Close
+          </Button>
+        </Modal.Footer>
+        </Modal>
       </div>
     );
     return (
@@ -107,9 +140,10 @@ export default class Chat extends Component {
             {activeChannel}
             </div>
           </header>
+          {PrivateMessageModal}
           <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
             {filteredMessages.map(message =>
-              <MessageListItem handleSendPrivateMessage={::this.handleSendPrivateMessage} message={message} key={message.id} />
+              <MessageListItem handleClickOnUser={::this.handleClickOnUser} message={message} key={message.id} />
             )}
           </ul>
           <MessageComposer socket={socket} activeChannel={activeChannel} user={user} onSave={::this.handleSave} />
