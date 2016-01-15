@@ -1,7 +1,7 @@
 var ids = {
   facebook: {
-    clientID: '509315679243380',
-    clientSecret: '442b39ce1ee0ae99eec51fe832519cb0'
+    clientID: '509360805905534',
+    clientSecret: '6866390927213d6a21946f0fc852a881'
   }
 }
 module.exports = ids;

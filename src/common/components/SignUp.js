@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as Actions from '../actions/Actions';
+import * as actions from '../actions/actions';
 import { Input, Button } from 'react-bootstrap';
 import * as authActions from '../actions/authActions';
 
@@ -22,7 +22,7 @@ class SignUp extends Component {
   componentWillMount() {
     const { dispatch, userValidation } = this.props;
     if(userValidation.length === 0) {
-      dispatch(Actions.usernameValidationList());
+      dispatch(actions.usernameValidationList());
     }
   }
   componentDidMount() {

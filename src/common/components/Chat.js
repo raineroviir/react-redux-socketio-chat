@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import MessageComposer from './MessageComposer';
 import MessageListItem from './MessageListItem';
 import Channels from './Channels';
-import * as Actions from '../actions/Actions';
+import * as actions from '../actions/actions';
 import * as authActions from '../actions/authActions';
 import TypingListItem from './TypingListItem';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
@@ -11,7 +11,6 @@ export default class Chat extends Component {
 
   static propTypes = {
     messages: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     channels: PropTypes.array.isRequired,
@@ -20,26 +19,26 @@ export default class Chat extends Component {
     socket: PropTypes.object.isRequired
   };
   componentDidMount() {
-    const { actions, socket, user, dispatch } = this.props;
+    const { socket, user, dispatch } = this.props;
+    socket.emit('chat mounted', user);
     socket.on('new bc message', msg =>
-      actions.receiveRawMessage(msg)
+      dispatch(actions.receiveRawMessage(msg))
     );
     socket.on('typing bc', user =>
-      actions.typing(user)
+      dispatch(actions.typing(user))
     );
     socket.on('stop typing bc', user =>
-      actions.stopTyping(user)
+      dispatch(actions.stopTyping(user))
     );
     socket.on('new channel', channel =>
-      actions.receiveRawChannel(channel)
+      dispatch(actions.receiveRawChannel(channel))
     );
-    socket.on('receive socket', socketID => {
-      dispatch(authActions.receiveSocket(socketID));
-    });
-    socket.emit('chat mounted', user);
-    socket.on('receive private channel', channel => {
-      actions.receiveRawChannel(channel)
-    })
+    socket.on('receive socket', socketID =>
+      dispatch(authActions.receiveSocket(socketID))
+    );
+    socket.on('receive private channel', channel =>
+      dispatch(actions.receiveRawChannel(channel))
+    );
   }
   componentDidUpdate() {
     const messageList = this.refs.messageList;
@@ -48,7 +47,7 @@ export default class Chat extends Component {
   handleSave(newMessage) {
     const { dispatch } = this.props;
     if (newMessage.text.length !== 0) {
-      dispatch(Actions.createMessage(newMessage));
+      dispatch(actions.createMessage(newMessage));
     }
   }
   handleSignOut() {
@@ -56,11 +55,11 @@ export default class Chat extends Component {
     dispatch(authActions.signOut());
   }
   changeActiveChannel(channel) {
-    const { actions, socket, activeChannel, dispatch } = this.props;
+    const { socket, activeChannel, dispatch } = this.props;
     socket.emit('leave channel', activeChannel);
     socket.emit('join channel', channel);
-    actions.changeChannel(channel);
-    dispatch(Actions.fetchMessages(channel.name));
+    dispatch(actions.changeChannel(channel));
+    dispatch(actions.fetchMessages(channel.name));
   }
   handleSendPrivateMessage(user) {
     const { dispatch, socket, channels } = this.props;
@@ -75,7 +74,7 @@ export default class Chat extends Component {
         private: true,
         between: [user.username, sendingUser.username]
       };
-      dispatch(Actions.createChannel(newChannel));
+      dispatch(actions.createChannel(newChannel));
       this.changeActiveChannel(newChannel);
       socket.emit('new private channel', user.socketID, newChannel);
     }
@@ -84,7 +83,7 @@ export default class Chat extends Component {
     }
   }
   render() {
-    const { messages, socket, channels, actions, activeChannel, typers, dispatch, user} = this.props;
+    const { messages, socket, channels, activeChannel, typers, dispatch, user} = this.props;
     const filteredMessages = messages.filter(message => message.channelID === activeChannel);
     const username = this.props.user.username;
     const dropDownMenu = (
@@ -99,7 +98,7 @@ export default class Chat extends Component {
         <div className="nav">
           {dropDownMenu}
           <section style={{order: '2', marginTop: '1.5em'}}>
-            <Channels socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} actions={actions} dispatch={dispatch} />
+            <Channels socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} dispatch={dispatch} />
           </section>
         </div>
         <div className="main">
