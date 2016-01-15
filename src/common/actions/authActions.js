@@ -10,6 +10,14 @@ export function receiveAuth() {
     user
   }
 }
+
+export function checkAuth() {
+  if (cookie.load('username')) {
+    return true;
+  }
+  return false;
+}
+
 function requestSignUp() {
   return {
     type: types.AUTH_SIGNUP

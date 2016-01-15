@@ -55,22 +55,24 @@ app.use('/api', channelRouter);
 app.use('/', express.static(path.join(__dirname, '..', 'static')));
 
 app.get('/*', function(req, res) {
-
   const location = createLocation(req.url)
-
   match({ routes, location }, (err, redirectLocation, renderProps) => {
 
+
+    const store = configureStore();
+    // console.log(redirectLocation);
+    // if(redirectLocation) {
+    //   return res.status(302).end(redirectLocation);
+    // }
     if(err) {
       console.error(err);
       return res.status(500).end('Internal server error');
     }
 
+
     if(!renderProps) {
       return res.status(404).end('Not found');
     }
-
-    const store = configureStore();
-
     const InitialView = (
       <Provider className="root" store={store}>
         <div style={{height: '100%'}}>

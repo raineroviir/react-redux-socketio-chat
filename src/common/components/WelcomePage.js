@@ -34,7 +34,7 @@ class WelcomePage extends Component {
   render() {
     return (
       <div>
-        <header style={{display: 'flex', justifyContent: 'center', flexGrow: '0', order: '0', flexDirection: 'column'}}>
+        <header style={{display: 'flex', justifyContent: 'center', flexGrow: '0', order: '0'}}>
           <div style={{justifyContent: 'center'}}><p style={{fontSize: '1.5em', marginRight: '1em'}}>Welcome to React Redux Socket.io Chat</p>
            <p>
           This is an open source chat program.
@@ -69,7 +69,7 @@ class WelcomePage extends Component {
               </Link>
             </section>
           </form>
-          <div style={{height: '3.5em', marginBottom: '1em', width: '12em', alignSelf: 'center', display: 'flex', marginLeft: '1em'}}>
+          <div style={{height: '3.5em', width: '12em', alignSelf: 'center', display: 'flex', marginLeft: '1em'}}>
             <p style={{marginRight: '1em', marginTop: '1em'}}> Or </p>
             <Link to="/signin">
               <Button style={{margin: 'auto', height: '3.5em'}} bsStyle="default" >Sign in</Button>
