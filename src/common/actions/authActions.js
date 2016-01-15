@@ -18,6 +18,16 @@ export function checkAuth() {
   return false;
 }
 
+// export function checkReqUser() {
+//   return dispatch => {
+//     console.log('hello checkrequser');
+//     return fetch('/api/load_auth_into_state')
+//       .then(response => response.json())
+//       .then(json => dispatch(receiveAuth(json)))
+//       .catch(error => {throw error})
+//   }
+// }
+
 function requestSignUp() {
   return {
     type: types.AUTH_SIGNUP
