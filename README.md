@@ -12,9 +12,7 @@ First off, clone the repository and then `cd react-redux-socketio-chat`and `npm 
 You can create channels with the + sign on the nav bar on the left.
 If you click on a user's name to send him a private message (opens a private channel)
 
-### Development
-
-##### Setting up MongoDB
+### Setting up MongoDB
 
 Note: You need MongoDB set up and running to run this program. [Installation instructions](https://docs.mongodb.org/manual/installation/)
 
@@ -28,6 +26,8 @@ Then open a new terminal and type in `mongo` and type in `use chat_dev`
 This is your database interface.  You can query the database for records for example: `db.users.find()` or `db.stats()`.
 
 Now that you've done all that, you can go go ahead and code away!
+
+### Development
 
 ```
 npm run dev
