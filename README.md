@@ -14,13 +14,30 @@ If you click on a user's name to send him a private message (opens a private cha
 
 ### Development
 
-Comes with [redux-dev tools](https://github.com/gaearon/redux-devtools) and [react-transform](https://github.com/gaearon/react-transform-boilerplate
-)
+## Setting up MongoDB
+
+Note: You need MongoDB set up and running to run this program. [Installation instructions](https://docs.mongodb.org/manual/installation/)
+
+Once you've done start up the MongoDB server
+```
+mkdir db
+mongod --dbpath=./db --smallfiles
+```
+
+Then open a new terminal and type in `mongo` and type in `use chat_dev`
+This is your database interface.  You can query the database for records for example: `db.users.find()` or `db.stats()`.
+
+Now that you've done all that, you can go go ahead and code away!
 
 ```
 npm run dev
 ```
 And then point your browser to `localhost:3000`
+
+Note:
+This program comes with [redux-dev tools](https://github.com/gaearon/redux-devtools)
+* To hide the dev tool panel press ctrl+h
+* To change position press ctrl+m
 
 ### Production
 
@@ -29,15 +46,6 @@ npm run build
 npm start
 ```
 And then point your browser to `localhost:3000`
-
-For setting up mongoDB in your local environment
-
-```
-mkdir db
-mongod --dbpath=./db --smallfiles
-```
-
-then to open the database open a new terminal and type in `mongo` and type in `use chat_dev`
 
 ## Helpful Resources and Inspiring Projects
 
