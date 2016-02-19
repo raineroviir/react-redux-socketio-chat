@@ -2,17 +2,15 @@
 
 # React-redux-socketio-chat
 
-![alt tag](mystreamable.mp4)
+![alt tag](ReadmeVideo.mp4)
 To see the live version of the app go to http://slackclone.herokuapp.com
 
 ## Use Guide
 
 First off, clone the repository and then `cd react-redux-socketio-chat`and `npm install`
 
-
 You can create channels with the + sign on the nav bar on the left.
 If you click on a user's name to send him a private message (opens a private channel)
-
 
 ### Development
 
