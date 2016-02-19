@@ -39,7 +39,8 @@ function mapStateToProps(state) {
       channels: state.channels.data,
       activeChannel: state.activeChannel.name,
       user: state.auth.user,
-      typers: state.typers
+      typers: state.typers,
+      screenWidth: state.environment.screenWidth
   }
 }
 export default connect(mapStateToProps)(ChatContainer)

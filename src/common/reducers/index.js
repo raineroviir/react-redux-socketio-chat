@@ -7,6 +7,7 @@ import welcomePage from './welcomePage';
 import userValidation from './userValidation';
 import environment from './environment';
 import {combineReducers} from 'redux';
+import {reducer as formReducer} from 'redux-form'
 
 const rootReducer = combineReducers({
   messages,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   typers,
   welcomePage,
   userValidation,
-  environment
+  environment,
+  formReducer
 });
 
 export default rootReducer;

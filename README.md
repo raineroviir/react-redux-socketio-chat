@@ -17,6 +17,7 @@ If you click on a user's name to send him a private message (opens a private cha
 Note: You need MongoDB set up and running to run the code locally. [Installation instructions](https://docs.mongodb.org/manual/installation/)
 
 Once you've installed MongoDB start up the MongoDB server in a new terminal with the following commands:
+
 ```
 mkdir db
 mongod --dbpath=./db --smallfiles
