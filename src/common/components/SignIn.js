@@ -6,7 +6,8 @@ import * as authActions from '../actions/authActions';
 class SignIn extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    welcomePage: PropTypes.string.isRequired,
+    dispatch: PropTypes.func.isRequired
   };
   constructor(props, context) {
     super(props, context);
@@ -16,7 +17,11 @@ class SignIn extends Component {
     };
   }
   componentDidMount() {
-    this.refs.usernameInput.getInputDOMNode().focus();
+    if (this.state.username.length) {
+      this.refs.passwordInput.getInputDOMNode().focus();
+    } else {
+      this.refs.usernameInput.getInputDOMNode().focus();
+    }
   }
   handleChange(event) {
     if (event.target.name === 'username') {

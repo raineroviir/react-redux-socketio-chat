@@ -19,6 +19,7 @@ If you click on a user's name to send him a private message (opens a private cha
 Note: You need MongoDB set up and running to run this program. [Installation instructions](https://docs.mongodb.org/manual/installation/)
 
 Once you've done start up the MongoDB server
+
 ```
 mkdir db
 mongod --dbpath=./db --smallfiles
