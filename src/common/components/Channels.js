@@ -27,11 +27,11 @@ export default class Channels extends Component {
     }
     this.props.onClick(channel);
   }
-  openAddChannelModal() {
+  openAddChannelModal(event) {
     event.preventDefault();
     this.setState({addChannelModal: true});
   }
-  closeAddChannelModal() {
+  closeAddChannelModal(event) {
     event.preventDefault();
     this.setState({addChannelModal: false});
   }
@@ -68,11 +68,11 @@ export default class Channels extends Component {
     }
     return 'success';
   }
-  openMoreChannelsModal() {
+  openMoreChannelsModal(event) {
     event.preventDefault();
     this.setState({moreChannelsModal: true});
   }
-  closeMoreChannelsModal() {
+  closeMoreChannelsModal(event) {
     event.preventDefault();
     this.setState({moreChannelsModal: false});
   }
