@@ -71,7 +71,7 @@ export default class Chat extends Component {
   handleClickOnUser(user) {
     this.setState({ privateChannelModal: true, targetedUser: user });
   }
-  closePrivateChannelModal() {
+  closePrivateChannelModal(event) {
     event.preventDefault();
     this.setState({privateChannelModal: false});
   }
