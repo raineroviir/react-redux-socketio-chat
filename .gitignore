@@ -5,3 +5,4 @@ npm-debug.log
 db/
 Procfile
 .DS_Store
+static/
