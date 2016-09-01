@@ -72,6 +72,7 @@
     "clean-webpack-plugin": "^0.1.6",
     "cors": "^2.7.1",
     "express": "^4.12.4",
+    "history": "^3.0.0",
     "isomorphic-fetch": "^2.2.0",
     "lodash": "^3.9.3",
     "moment": "^2.10.6",
