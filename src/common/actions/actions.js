@@ -80,7 +80,6 @@ function requestChannels() {
 }
 
 function receiveChannels(json) {
-  console.log(json)
   return {
     type: types.LOAD_CHANNELS_SUCCESS,
     json

@@ -51,6 +51,12 @@ class SignUp extends Component {
         confirmPassword: this.state.confirmPassword
       };
       dispatch(authActions.signUp(userObj))
+      const initLobby = {
+        name: "Lobby",
+        id: 0,
+        private: false
+      };
+      dispatch(actions.createChannel(initLobby));
       this.setState({ username: '', password: '', confirmPassword: ''});
     }
   }

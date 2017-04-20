@@ -82,7 +82,6 @@ export default class Channels extends Component {
   }
   render() {
     const { channels, messages } = this.props;
-    console.log(channels)
     const filteredChannels = channels.slice(0, 8);
     const moreChannelsBoolean = channels.length > 8;
     const restOfTheChannels = channels.slice(8);
