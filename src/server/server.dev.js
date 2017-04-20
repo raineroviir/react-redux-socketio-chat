@@ -11,7 +11,7 @@ import React from 'react';
 import configureStore from '../common/store/configureStore'
 import { RouterContext, match } from 'react-router';
 import routes from '../common/routes';
-import { createMemoryHistory } from 'history';
+import createHistory from 'history/createMemoryHistory'
 import DevTools from '../common/containers/DevTools';
 import cors from 'cors';
 import webpack from 'webpack';
@@ -55,10 +55,8 @@ app.use('/api', channelRouter);
 app.use('/', express.static(path.join(__dirname, '..', 'static')));
 
 app.get('/*', function(req, res) {
-  const history = createMemoryHistory();
-  const location = history.createLocation({
-    pathname: req.url
-  })
+  const history = createHistory()
+  const location = history.location
   match({ routes, location }, (err, redirectLocation, renderProps) => {
 
     const initialState = {
