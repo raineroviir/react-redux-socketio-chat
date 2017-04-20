@@ -10,7 +10,7 @@ const socket = io('', { path: '/api/chat' });
 const initialChannel = 'Lobby'; // NOTE: I hard coded this value for my example.  Change this as you see fit
 
 class ChatContainer extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { dispatch, user } = this.props;
     if(!user.username) {
       dispatch(receiveAuth());

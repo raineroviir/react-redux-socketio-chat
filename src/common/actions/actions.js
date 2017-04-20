@@ -80,6 +80,7 @@ function requestChannels() {
 }
 
 function receiveChannels(json) {
+  console.log(json)
   return {
     type: types.LOAD_CHANNELS_SUCCESS,
     json
@@ -109,21 +110,6 @@ function receiveMessages(json, channel) {
     json,
     channel,
     date
-  }
-}
-
-function shouldFetchMessages(state) {
-  const messages = state.messages.data;
-  if (!messages) {
-    return true
-  }
-}
-
-export function fetchMessagesIfNeeded() {
-  return (dispatch, getState) => {
-    if (shouldFetchMessages(getState())) {
-      return dispatch(fetchMessages())
-    }
   }
 }
 
@@ -169,14 +155,15 @@ export function createMessage(message) {
 
 export function createChannel(channel) {
   return dispatch => {
-    dispatch(addChannel(channel))
-    return fetch ('/api/channels/new_channel', {
+    return fetch('/api/channels/new_channel', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(channel)})
-      .catch(error => {throw error});
+      .catch(error => {throw error}).then((val) =>
+      {},
+      () => {dispatch(addChannel(channel))})
   }
 }
 

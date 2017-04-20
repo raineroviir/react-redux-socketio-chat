@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import {initEnvironment} from '../actions/actions';
 import { connect } from 'react-redux';
+import * as actions from '../actions/actions';
 
 class App extends React.Component {
 
@@ -9,7 +10,6 @@ class App extends React.Component {
     const {dispatch} = this.props;
     dispatch(initEnvironment());
   }
-
   render() {
     const {screenHeight, isMobile, screenWidth} = this.props.environment;
     if (isMobile) {
