@@ -1,5 +1,3 @@
-[![Circle CI](https://circleci.com/gh/raineroviir/react-redux-socketio-chat.svg?style=svg)](https://circleci.com/gh/raineroviir/react-redux-socketio-chat)
-
 # React-redux-socketio-chat
 
 ![alt tag](ReadmeVideo.gif)
@@ -55,6 +53,5 @@ And then point your browser to `localhost:3000`
 * The awesome community of reactiflux https://discordapp.com/channels/102860784329052160/102860784329052160
 
 ## Todos
-* small profile page for users
-* implement reselect
-* implement async-props
+* Implement virtual scrolling for the chat and channel modal, so that the dom elements load faster!
+* Figure out a way to make the initial load quicker, loading only above the fold content? pagination? or some other idea
