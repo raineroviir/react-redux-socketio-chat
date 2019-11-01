@@ -81,7 +81,7 @@
     "passport": "^0.2.2",
     "passport-facebook": "^2.0.0",
     "passport-local": "^1.0.0",
-    "react": "^16.11.0",
+    "react": "^0.14.6",
     "react-bootstrap": "^0.28.1",
     "react-cookie": "^0.4.3",
     "react-dom": "^0.14.6",
