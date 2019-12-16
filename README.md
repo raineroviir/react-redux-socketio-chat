@@ -53,7 +53,7 @@ And then point your browser to `localhost:3000`
 * The awesome community of reactiflux https://discordapp.com/channels/102860784329052160/102860784329052160
 
 ## Todos
-* Implement virtual scrolling for the chat and channel modal, so that the dom elements load faster!
+* Implement virtual scrolling for the chat and channel model, so that the dom elements load faster!
 * Figure out a way to make the initial load quicker, loading only above the fold content? pagination? or some other idea
 
 ---------------------------------------
