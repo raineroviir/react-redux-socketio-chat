@@ -56,4 +56,5 @@ And then point your browser to `localhost:3000`
 
 ## Todos
 * Implement virtual scrolling for the chat and channel modal, so that the dom elements load faster!
-* Figure out a way to make the initial load quicker, loading only above the fold content? pagination? or some other idea
+* Implement SSR
+* Implement graphQL API + hasura
