@@ -74,7 +74,7 @@
     "express": "^4.12.4",
     "history": "4.6.1",
     "isomorphic-fetch": "^2.2.0",
-    "lodash": "^3.9.3",
+    "lodash": "^4.17.19",
     "moment": "^2.10.6",
     "mongoose": "^4.0.5",
     "node-uuid": "^1.4.7",
